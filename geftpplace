@@ -1,0 +1,291 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+-- Function to teleport the character to a specified CFrame
+local function teleportCharacterToCFrame(cframe)
+    local character = game.Players.LocalPlayer.Character
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    humanoidRootPart.CFrame = cframe
+end
+
+-- Function for button fade effect
+local function buttonFadeEffect(button)
+    local defaultColor = button.BackgroundColor3
+    button.MouseButton1Down:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        wait(0.1)
+        button.BackgroundColor3 = defaultColor
+    end)
+end
+
+-- Function to animate button slide
+local function animateButtonSlide(button, targetPosition)
+    local originalPosition = button.Position
+    button.Position = targetPosition
+    button.Visible = true
+    button:TweenPosition(originalPosition, Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.5, true)
+end
+
+-- Function to get current time of day
+local function getTimeOfDay()
+    local hour = tonumber(os.date("%H"))
+    if hour >= 6 and hour < 18 then
+        return "Day"
+    else
+        return "Night"
+    end
+end
+
+-- Function to format time in seconds to HH:MM:SS
+local function formatTime(seconds)
+    local hours = math.floor(seconds / 3600)
+    local minutes = math.floor((seconds % 3600) / 60)
+    local remainingSeconds = seconds % 60
+    return string.format("%02d:%02d:%02d", hours, minutes, remainingSeconds)
+end
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MyScreenGui"
+screenGui.ResetOnSpawn = false 
+screenGui.Draggable = true
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create frame for buttons
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 350, 0, 250)
+frame.Position = UDim2.new(0, 20, 0, 20)
+frame.BackgroundTransparency = 0.5
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.Parent = screenGui
+
+-- Create minimize/expand button
+local minimizeExpandButton = Instance.new("TextButton")
+minimizeExpandButton.Text = "_"
+minimizeExpandButton.Size = UDim2.new(0, 20, 0, 20)
+minimizeExpandButton.Position = UDim2.new(1, -45, 0, 25)
+minimizeExpandButton.Parent = frame
+buttonFadeEffect(minimizeExpandButton)
+
+-- Create teleport buttons with small size
+local buttonSize = UDim2.new(0, 100, 0, 20)
+
+local teleportWorkshopButton = Instance.new("TextButton")
+teleportWorkshopButton.Text = "Teleport to Workshop"
+teleportWorkshopButton.Size = buttonSize
+teleportWorkshopButton.Position = UDim2.new(0, 10, 0, 60)
+teleportWorkshopButton.Parent = frame
+teleportWorkshopButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(483.749878, 3.25000095, -19.7498322))
+end)
+buttonFadeEffect(teleportWorkshopButton)
+
+local towerButton = Instance.new("TextButton")
+towerButton.Text = "Teleport to Tower"
+towerButton.Size = buttonSize
+towerButton.Position = UDim2.new(0, 10, 0, 90)
+towerButton.Parent = frame
+towerButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(-117.500183, 52.5, -676.999817))
+end)
+buttonFadeEffect(towerButton)
+
+local miniHouseButton = Instance.new("TextButton")
+miniHouseButton.Text = "Teleport to Mini House"
+miniHouseButton.Size = buttonSize
+miniHouseButton.Position = UDim2.new(0, 10, 0, 120)
+miniHouseButton.Parent = frame
+miniHouseButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(581, 1, -435))
+end)
+buttonFadeEffect(miniHouseButton)
+
+local safePlaceButton = Instance.new("TextButton")
+safePlaceButton.Text = "Teleport to Safe Place"
+safePlaceButton.Size = buttonSize
+safePlaceButton.Position = UDim2.new(0, 10, 0, 150)
+safePlaceButton.Parent = frame
+safePlaceButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(37.0005646, 5.37508202, 297.246735))
+end)
+buttonFadeEffect(safePlaceButton)
+
+local secondFloorHouseButton = Instance.new("TextButton")
+secondFloorHouseButton.Text = "Teleport to 2nd Floor House"
+secondFloorHouseButton.Size = buttonSize
+secondFloorHouseButton.Position = UDim2.new(0, 180, 0, 60)
+secondFloorHouseButton.Parent = frame
+secondFloorHouseButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(-228.5, 2.50001144, -120.5))
+end)
+buttonFadeEffect(secondFloorHouseButton)
+
+local shop1Button = Instance.new("TextButton")
+shop1Button.Text = "Teleport to Shop 1"
+shop1Button.Size = buttonSize
+shop1Button.Position = UDim2.new(0, 180, 0, 90)
+shop1Button.Parent = frame
+shop1Button.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(-20.9999962, 5, 12))
+end)
+buttonFadeEffect(shop1Button)
+
+-- Create button for Hospital 3rd Floor
+local hospital3rdFloorButton = Instance.new("TextButton")
+hospital3rdFloorButton.Text = "Teleport to Hospital 3rd Floor"
+hospital3rdFloorButton.Size = buttonSize
+hospital3rdFloorButton.Position = UDim2.new(0, 10, 0, 180)
+hospital3rdFloorButton.Parent = frame
+hospital3rdFloorButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(643, 42.4999962, 254, -1, 0, 0, 0, 1, 0, 0, 0, -1))
+end)
+buttonFadeEffect(hospital3rdFloorButton)
+
+-- Create button for Hospital 1st Floor
+local hospital1stFloorButton = Instance.new("TextButton")
+hospital1stFloorButton.Text = "Teleport to Hospital 1st Floor"
+hospital1stFloorButton.Size = buttonSize
+hospital1stFloorButton.Position = UDim2.new(0, 180, 0, 180)
+hospital1stFloorButton.Parent = frame
+hospital1stFloorButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(635, 22.4999943, 147.5, -1, 0, 0, 0, 1, 0, 0, 0, -1))
+end)
+buttonFadeEffect(hospital1stFloorButton)
+
+-- Create button for Water Tank
+local waterTankButton = Instance.new("TextButton")
+waterTankButton.Text = "Teleport to Water Tank"
+waterTankButton.Size = buttonSize
+waterTankButton.Position = UDim2.new(0, 180, 0, 210)
+waterTankButton.Parent = frame
+waterTankButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(-363.50177, 55.3741302, -291.122589, 0, -1, 0, 1, 0, 0, 0, 0, 1))
+end)
+buttonFadeEffect(waterTankButton)
+
+-- Create button for Spawn
+local spawnButton = Instance.new("TextButton")
+spawnButton.Text = "Teleport to Spawn"
+spawnButton.Size = buttonSize
+spawnButton.Position = UDim2.new(0, 10, 0, 210)
+spawnButton.Parent = frame
+spawnButton.MouseButton1Click:Connect(function()
+    teleportCharacterToCFrame(CFrame.new(-66, 0.600000381, -49, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+end)
+buttonFadeEffect(spawnButton)
+
+-- Function to toggle visibility of buttons
+local function toggleButtonsVisibility(visible)
+    minimizeExpandButton.Visible = visible
+    teleportWorkshopButton.Visible = visible
+    towerButton.Visible = visible
+    miniHouseButton.Visible = visible
+    safePlaceButton.Visible = visible
+    secondFloorHouseButton.Visible = visible
+    shop1Button.Visible = visible
+    hospital3rdFloorButton.Visible = visible
+    hospital1stFloorButton.Visible = visible
+    waterTankButton.Visible = visible
+    spawnButton.Visible = visible
+    if visible then
+        animateButtonSlide(minimizeExpandButton, UDim2.new(1, -45, 0, 25))
+        animateButtonSlide(teleportWorkshopButton, UDim2.new(0, 10, 0, 60))
+        animateButtonSlide(towerButton, UDim2.new(0, 10, 0, 90))
+        animateButtonSlide(miniHouseButton, UDim2.new(0, 10, 0, 120))
+        animateButtonSlide(safePlaceButton, UDim2.new(0, 10, 0, 150))
+        animateButtonSlide(secondFloorHouseButton, UDim2.new(0, 180, 0, 60))
+        animateButtonSlide(shop1Button, UDim2.new(0, 180, 0, 90))
+        animateButtonSlide(hospital3rdFloorButton, UDim2.new(0, 10, 0, 180))
+        animateButtonSlide(hospital1stFloorButton, UDim2.new(0, 180, 0, 180))
+        animateButtonSlide(waterTankButton, UDim2.new(0, 180, 0, 210))
+        animateButtonSlide(spawnButton, UDim2.new(0, 10, 0, 210))
+    else
+        animateButtonSlide(minimizeExpandButton, UDim2.new(2, -100, 0, 25))
+        animateButtonSlide(teleportWorkshopButton, UDim2.new(2, -100, 0, 60))
+        animateButtonSlide(towerButton, UDim2.new(2, -100, 0, 90))
+        animateButtonSlide(miniHouseButton, UDim2.new(2, -100, 0, 120))
+        animateButtonSlide(safePlaceButton, UDim2.new(2, -100, 0, 150))
+        animateButtonSlide(secondFloorHouseButton, UDim2.new(2, -100, 0, 60))
+        animateButtonSlide(shop1Button, UDim2.new(2, -100, 0, 90))
+        animateButtonSlide(hospital3rdFloorButton, UDim2.new(2, -100, 0, 180))
+        animateButtonSlide(hospital1stFloorButton, UDim2.new(2, -100, 0, 180))
+        animateButtonSlide(waterTankButton, UDim2.new(2, -100, 0, 210))
+        animateButtonSlide(spawnButton, UDim2.new(2, -100, 0, 210))
+    end
+end
+
+-- Set the initial visibility of buttons
+toggleButtonsVisibility(false)
+
+-- Variable to store uptime in seconds
+local uptimeSeconds = 0
+
+-- Variable to track the status of minimize button
+local isMinimized = false
+
+-- Minimize/expand button click event
+minimizeExpandButton.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    if isMinimized then
+        -- Set frame background transparency
+        frame.BackgroundTransparency = 1
+        
+        -- Set transparency and disable click for all buttons and text except minimize button
+        for _, button in ipairs(frame:GetChildren()) do
+            if button ~= minimizeExpandButton then
+                if button:IsA("TextButton") then
+                    button.TextTransparency = 1
+                end
+                button.BackgroundTransparency = 1
+                button.Size = UDim2.new(0, 0, 0, 0)
+            end
+        end
+
+        -- Set the visibility of buttons to false
+        minimizeExpandButton.Text = "+"
+    else
+        -- Restore frame background transparency
+        frame.BackgroundTransparency = 0.5
+        
+        -- Restore transparency and enable click for all buttons and text except minimize button
+        for _, button in ipairs(frame:GetChildren()) do
+            if button ~= minimizeExpandButton then
+                if button:IsA("TextButton") then
+                    button.TextTransparency = 0
+                end
+                button.BackgroundTransparency = 0
+                button.Size = UDim2.new(0, 100, 0, 20)
+            end
+        end
+
+        -- Set the visibility of buttons to true
+        minimizeExpandButton.Text = "-"
+    end
+end)
+
+-- Button (+) click event to restore buttons and text
+minimizeExpandButton.MouseButton1Click:Connect(function()
+    if isMinimized then
+        -- Restore transparency and enable click for all buttons and text except minimize button
+        for _, button in ipairs(frame:GetChildren()) do
+            if button ~= minimizeExpandButton then
+                if button:IsA("TextButton") then
+                    button.TextTransparency = 0
+                end
+                button.BackgroundTransparency = 0
+                button.Size = UDim2.new(0, 100, 0, 20)
+            end
+        end
+    end
+end)
+
+-- Update button visibility and uptime based on time of day every 5 seconds
+RunService.Heartbeat:Connect(function()
+    local timeOfDay = getTimeOfDay()
+    if timeOfDay == "Day" then
+        toggleButtonsVisibility(true)
+    else
+        toggleButtonsVisibility(false)
+    end
+    uptimeSeconds = uptimeSeconds + 1
+end)
