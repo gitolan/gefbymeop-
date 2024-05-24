@@ -1,0 +1,111 @@
+-- Setup awal
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Buat ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.ResetOnSpawn = false
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+-- Buat Frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 150, 0, 80) -- Ukuran frame disesuaikan untuk menampung dua tombol
+frame.Position = UDim2.new(0, 10, 0, 10) -- Posisi di kiri atas dengan margin 10px
+frame.Parent = screenGui
+
+-- Buat Button untuk teleport dan kembali
+local teleportButton = Instance.new("TextButton")
+teleportButton.Size = UDim2.new(1, 0, 0.5, 0) -- Ukuran button diperkecil
+teleportButton.Position = UDim2.new(0, 0, 0, 0)
+teleportButton.Text = "Teleport / Kembali"
+teleportButton.TextScaled = true
+teleportButton.Parent = frame
+
+-- Buat Button untuk teleport ke (0, 400, 0) dan buat block di (0, 397, 0)
+local teleportAndCreateBlockButton = Instance.new("TextButton")
+teleportAndCreateBlockButton.Size = UDim2.new(1, 0, 0.5, 0) -- Ukuran button diperkecil
+teleportAndCreateBlockButton.Position = UDim2.new(0, 0, 0.5, 0)
+teleportAndCreateBlockButton.Text = "Teleport & Buat Block"
+teleportAndCreateBlockButton.TextScaled = true
+teleportAndCreateBlockButton.Parent = frame
+
+-- Variabel untuk menyimpan posisi awal dan status teleportasi
+local initialPosition
+local isTeleported = false
+
+-- Fungsi untuk menambahkan hitbox ke HumanoidRootPart
+local function addHitbox(playerCharacter)
+    local humanoidRootPart = playerCharacter:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        local hitboxCount = 0
+        for _, child in ipairs(humanoidRootPart:GetChildren()) do
+            if child.Name == "Hitbox" and child:IsA("Part") then
+                hitboxCount = hitboxCount + 1
+            end
+        end
+
+        if hitboxCount < 2 then
+            local hitbox = Instance.new("Part")
+            hitbox.Size = Vector3.new(4, 6, 4) -- Ukuran hitbox
+            hitbox.Transparency = 0.5 -- Transparansi hitbox
+            hitbox.Anchored = false
+            hitbox.CanCollide = false
+            hitbox.Name = "Hitbox"
+            hitbox.Parent = humanoidRootPart
+            hitbox.CFrame = humanoidRootPart.CFrame
+            local weld = Instance.new("WeldConstraint")
+            weld.Part0 = humanoidRootPart
+            weld.Part1 = hitbox
+            weld.Parent = hitbox
+        end
+    end
+end
+
+-- Fungsi untuk teleportasi atau kembali
+local function toggleTeleport()
+    if isTeleported then
+        -- Kembali ke posisi awal
+        if initialPosition then
+            player.Character:SetPrimaryPartCFrame(CFrame.new(initialPosition))
+            isTeleported = false
+            teleportButton.Text = "Teleport / Kembali"
+        end
+    else
+        -- Teleportasi ke pemain dengan PlayerRole "Crown", "Runner", "Survivor", "Juggernaut", atau "Tagger"
+        for _, otherPlayer in ipairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer:FindFirstChild("PlayerRole") then
+                if otherPlayer.PlayerRole.Value == "Crown" or otherPlayer.PlayerRole.Value == "Runner" or otherPlayer.PlayerRole.Value == "Survivor" or otherPlayer.PlayerRole.Value == "Juggernaut" or otherPlayer.PlayerRole.Value == "Tagger" then
+                    initialPosition = player.Character.PrimaryPart.Position
+                    player.Character:SetPrimaryPartCFrame(otherPlayer.Character.PrimaryPart.CFrame)
+                    addHitbox(otherPlayer.Character) -- Tambahkan hitbox pada player yang di-teleport
+                    isTeleported = true
+                    teleportButton.Text = "Kembali ke Posisi Awal"
+                    break
+                end
+            end
+        end
+    end
+end
+
+-- Fungsi untuk teleport local player ke (0, 400, 0) dan buat block di (0, 397, 0)
+local function teleportAndCreateBlock()
+    -- Teleport local player ke (0, 400, 0)
+    initialPosition = player.Character.PrimaryPart.Position
+    player.Character:SetPrimaryPartCFrame(CFrame.new(0, 400, 0))
+    isTeleported = true
+    teleportButton.Text = "Kembali ke Posisi Awal"
+    
+    -- Buat block kotak di (0, 397, 0) dengan tinggi 3 dan lebar 100
+    local block = Instance.new("Part")
+    block.Size = Vector3.new(100, 3, 100)
+    block.Position = Vector3.new(0, 397, 0)
+    block.Anchored = true
+    block.Material = Enum.Material.Plastic -- Atur material block menjadi plastik
+    block.Color = Color3.new(1, 1, 1) -- Atur warna block menjadi putih
+    block.Transparency = 0.4 -- Atur transparansi block menjadi 0.4
+    block.Parent = workspace
+end
+
+-- Hubungkan fungsi ke button
+teleportButton.MouseButton1Click:Connect(toggleTeleport)
+teleportAndCreateBlockButton.MouseButton1Click:Connect(teleportAndCreateBlock)
