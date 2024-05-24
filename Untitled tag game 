@@ -17,7 +17,7 @@ frame.Parent = screenGui
 local teleportButton = Instance.new("TextButton")
 teleportButton.Size = UDim2.new(1, 0, 0.5, 0) -- Ukuran button diperkecil
 teleportButton.Position = UDim2.new(0, 0, 0, 0)
-teleportButton.Text = "Teleport / Kembali"
+teleportButton.Text = "Teleport / Back"
 teleportButton.TextScaled = true
 teleportButton.Parent = frame
 
@@ -25,7 +25,7 @@ teleportButton.Parent = frame
 local teleportAndCreateBlockButton = Instance.new("TextButton")
 teleportAndCreateBlockButton.Size = UDim2.new(1, 0, 0.5, 0) -- Ukuran button diperkecil
 teleportAndCreateBlockButton.Position = UDim2.new(0, 0, 0.5, 0)
-teleportAndCreateBlockButton.Text = "Teleport & Buat Block"
+teleportAndCreateBlockButton.Text = "Teleport & Create Blocks"
 teleportAndCreateBlockButton.TextScaled = true
 teleportAndCreateBlockButton.Parent = frame
 
@@ -68,7 +68,7 @@ local function toggleTeleport()
         if initialPosition then
             player.Character:SetPrimaryPartCFrame(CFrame.new(initialPosition))
             isTeleported = false
-            teleportButton.Text = "Teleport / Kembali"
+            teleportButton.Text = "Teleport / Back"
         end
     else
         -- Teleportasi ke pemain dengan PlayerRole "Crown", "Runner", "Survivor", "Juggernaut", atau "Tagger"
@@ -79,7 +79,7 @@ local function toggleTeleport()
                     player.Character:SetPrimaryPartCFrame(otherPlayer.Character.PrimaryPart.CFrame)
                     addHitbox(otherPlayer.Character) -- Tambahkan hitbox pada player yang di-teleport
                     isTeleported = true
-                    teleportButton.Text = "Kembali ke Posisi Awal"
+                    teleportButton.Text = "Return to Starting Position"
                     break
                 end
             end
@@ -93,7 +93,7 @@ local function teleportAndCreateBlock()
     initialPosition = player.Character.PrimaryPart.Position
     player.Character:SetPrimaryPartCFrame(CFrame.new(0, 400, 0))
     isTeleported = true
-    teleportButton.Text = "Kembali ke Posisi Awal"
+    teleportButton.Text = "Return to Starting Position"
     
     -- Buat block kotak di (0, 397, 0) dengan tinggi 3 dan lebar 100
     local block = Instance.new("Part")
@@ -102,7 +102,7 @@ local function teleportAndCreateBlock()
     block.Anchored = true
     block.Material = Enum.Material.Plastic -- Atur material block menjadi plastik
     block.Color = Color3.new(1, 1, 1) -- Atur warna block menjadi putih
-    block.Transparency = 0.4 -- Atur transparansi block menjadi 0.4
+    block.Transparency = 0.1 -- Atur transparansi block menjadi 0.4
     block.Parent = workspace
 end
 
