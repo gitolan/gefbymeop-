@@ -118,7 +118,7 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
     })
     screenGui:Destroy()
     wait(3)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeind2/main/Untitled%20tag%20game"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Error",
@@ -160,7 +160,7 @@ SubmitButton.MouseButton1Click:Connect(function()
         local keyString = "FaeGrQpyjaF8"
         writefile("GEFKeySystem.txt", keyString)
         
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeind2/main/Untitled%20tag%20game"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
     else
         game:GetService("StarterGui"):SetCore("SendNotification", {
             Title = "Wrong Key",
@@ -226,7 +226,7 @@ for i, v in pairs(Players:GetPlayers()) do
             Duration = 5
         })
         wait(0.2)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeind2/main/Untitled%20tag%20game"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
         screenGui:Destroy()
     end
 end
