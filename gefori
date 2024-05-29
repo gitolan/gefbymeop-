@@ -709,8 +709,7 @@ for i = 1, 12 do
     if i == 1 then
         Button.Text = "GefScript no void+ teleport"
         Button.MouseButton1Click:Connect(function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/gefop.txt"))() -- error 112,433
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/gefop.txt"))()
         end)
         elseif i == 2 then
         Button.Text = "Dex Mobile need key no work"
