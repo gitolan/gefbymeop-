@@ -171,7 +171,7 @@ SubmitButton.MouseButton1Click:Connect(function()
 end)
 
 GetKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("https://gateway.platoboost.com/l/21621/h1ig1ba8")
+    setclipboard("https://gateway.platoboost.com/l/21621/gf8eahd3")
 end)
 
 --------------------------------------------------------------------------
