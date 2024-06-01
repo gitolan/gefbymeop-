@@ -69,61 +69,11 @@ local isTeleported = false
 local lastTeleportedPlayer
 local createdBlocks = 0
 local maxBlocks = 2
-local hitboxCount = 0
-local maxHitboxes = 2
 local blockInstances = {}
 
 local debounce = false
 local heartbeatConnections = {}
 local EspConnections = {}
-
-local function cleanupHitboxes(playerCharacter)
-    local humanoidRootPart = playerCharacter:FindFirstChild("HumanoidRootPart")
-    if humanoidRootPart then
-        for _, child in ipairs(humanoidRootPart:GetChildren()) do
-            if child.Name == "Hitbox" and child:IsA("Part") then
-                child:Destroy()
-                hitboxCount = hitboxCount - 1
-            end
-        end
-    end
-end
-
-local function addHitbox(playerCharacter)
-    local humanoidRootPart = playerCharacter:FindFirstChild("HumanoidRootPart")
-    local torso = playerCharacter:FindFirstChild("Torso") or playerCharacter:FindFirstChild("TorsoPart")
-    if humanoidRootPart and torso then
-        if hitboxCount >= maxHitboxes then
-            cleanupHitboxes(playerCharacter)
-        end
-        local hitbox = Instance.new("Part")
-        hitbox.Size = Vector3.new(7, 6, 7)
-        hitbox.Transparency = 0.5
-        hitbox.Anchored = false
-        hitbox.CanCollide = false
-        hitbox.Name = "Hitbox"
-        hitbox.Parent = torso
-        hitbox.CFrame = humanoidRootPart.CFrame
-
-        local connection
-        connection = runService.Heartbeat:Connect(function()
-            if humanoidRootPart and hitbox then
-                hitbox.CFrame = humanoidRootPart.CFrame
-            else
-                connection:Disconnect()
-            end
-        end)
-        table.insert(heartbeatConnections, connection)
-        hitboxCount = hitboxCount + 1
-    end
-end
-
-local function clearHeartbeatConnections()
-    for _, connection in ipairs(heartbeatConnections) do
-        connection:Disconnect()
-    end
-    heartbeatConnections = {}
-end
 
 local function teleportToPlayer(targetPlayer)
     initialPosition = player.Character.PrimaryPart.Position
@@ -136,15 +86,39 @@ end
 
 local function findNextPlayer()
     local playerRole = player:FindFirstChild("PlayerRole") and player.PlayerRole.Value or nil
+    local eligiblePlayers = {}
+
     for _, otherPlayer in ipairs(Players:GetPlayers()) do
         if otherPlayer ~= player and otherPlayer ~= lastTeleportedPlayer and otherPlayer:FindFirstChild("PlayerRole") then
             local otherPlayerRole = otherPlayer.PlayerRole.Value
-            if (otherPlayerRole == "Crown" or otherPlayerRole == "Runner" or otherPlayerRole == "Survivor" or otherPlayerRole == "Juggernaut" or otherPlayerRole == "B/FreezeRunner") or
-               (playerRole == "RedTeam" and otherPlayerRole == "BlueTeam") or (playerRole == "BlueTeam" and otherPlayerRole == "RedTeam") then
-                return otherPlayer
+            if otherPlayerRole ~= "Dead" and ((playerRole == "Runner" and otherPlayerRole == "Frozen") or 
+               (otherPlayerRole == "Crown" or otherPlayerRole == "Runner" or otherPlayerRole == "Survivor" or otherPlayerRole == "Juggernaut" or otherPlayerRole == "B/FreezeRunner" or otherPlayerRole == "B/Crown" or otherPlayerRole == "Alone" or otherPlayerRole == "Frozen") or
+               (playerRole == "RedTeam" and otherPlayerRole == "BlueTeam") or (playerRole == "BlueTeam" and otherPlayerRole == "RedTeam")) then
+                table.insert(eligiblePlayers, otherPlayer)
             end
         end
     end
+
+if #eligiblePlayers > 0 then
+        local randomIndex = math.random(1, #eligiblePlayers)
+        return eligiblePlayers[randomIndex]
+    else
+        -- Fallback: Teleport to a random player except those with the same role or "Dead"
+        local fallbackPlayers = {}
+        for _, otherPlayer in ipairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer:FindFirstChild("PlayerRole") then
+                local otherPlayerRole = otherPlayer.PlayerRole.Value
+                if otherPlayerRole ~= "Dead" and otherPlayerRole ~= playerRole then
+                    table.insert(fallbackPlayers, otherPlayer)
+                end
+            end
+        end
+        if #fallbackPlayers > 0 then
+            local randomIndex = math.random(1, #fallbackPlayers)
+            return fallbackPlayers[randomIndex]
+        end
+    end
+
     return nil
 end
 
@@ -154,8 +128,6 @@ local function toggleTeleport()
 
     if isTeleported then
         if initialPosition then
-            clearHeartbeatConnections()
-            cleanupHitboxes(player.Character)
             player.Character:SetPrimaryPartCFrame(CFrame.new(initialPosition))
             isTeleported = false
             teleportButton.Text = "Teleport / Back (B/FreezeRunner)"
@@ -164,24 +136,16 @@ local function toggleTeleport()
         local targetPlayer = findNextPlayer()
         if targetPlayer then
             teleportToPlayer(targetPlayer)
+        else
+            print("No eligible players to teleport to.")
+            teleportButton.Text = "No eligible players"
+            wait(2)  -- Delay to show message
+            teleportButton.Text = "Teleport / Back (B/FreezeRunner)"
         end
     end
 
     debounce = false
 end
-
-local function teleportAndCreateBlock()
-    if debounce then return end
-    debounce = true
-
-    if createdBlocks >= maxBlocks then
-        -- Remove the oldest block
-        if #blockInstances > 0 then
-            local oldestBlock = table.remove(blockInstances, 1)
-            oldestBlock:Destroy()
-            createdBlocks = createdBlocks - 1
-        end
-    end
 
     initialPosition = player.Character.PrimaryPart.Position
     player.Character:SetPrimaryPartCFrame(CFrame.new(0, 400, 0))
@@ -217,26 +181,6 @@ local function refreshTeleport()
     debounce = false
 end
 
-local function createEspForPlayers()
-    for _, connection in ipairs(EspConnections) do
-        connection:Disconnect()
-    end
-    EspConnections = {}
-
-    for _, otherPlayer in ipairs(Players:GetPlayers()) do
-        if otherPlayer ~= player and otherPlayer:FindFirstChild("PlayerRole") and otherPlayer.PlayerRole.Value ~= "Dead" then
-            local character = otherPlayer.Character
-            if character then
-                local Esp = Instance.new("Highlight")
-                Esp.FillColor = (otherPlayer.PlayerRole.Value == player.PlayerRole.Value) and Color3.new(0, 1, 0) or Color3.new(1, 0, 0)
-                Esp.Parent = character
-                local connection = otherPlayer.CharacterRemoving:Connect(function()
-                    Esp:Destroy()
-                end)
-                table.insert(EspConnections, connection)
-            end
-        end
-    end
 
     local notification = Instance.new("TextLabel")
     notification.Size = UDim2.new(0, 270, 0, 50)
