@@ -1312,9 +1312,9 @@ local function toggleBackground()
     while true do
         for i = 1, 3 do
             MainFrame.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
-            wait(0.2)
+            wait(0.1)
             MainFrame.BackgroundColor3 = Color3.new(1, 1, 1)
-            wait(0.2)
+            wait(0.1)
             MainFrame.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
             wait(0.1)
         end
