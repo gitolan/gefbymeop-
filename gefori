@@ -876,15 +876,21 @@ for i = 1, 12 do
     elseif i == 10 then
     Button.Text = "BigGef No kill"
     Button.MouseButton1Click:Connect(function()
-        local GEFs = game:GetService("Workspace"):FindFirstChild("GEFs")
-        -- Check if GEFs exists
+        local GEFs = game:GetService("Workspace"):FindFirstChild("GEF")
         if GEFs then
             local RootPart = GEFs:FindFirstChild("RootPart")
-            if RootPart and RootPart:IsA("BasePart") then
-                RootPart:Destroy()
+            if RootPart then
+                local KillHitbox = RootPart:FindFirstChild("KillHitbox")
+                if KillHitbox and KillHitbox:IsA("BasePart") then
+                    KillHitbox:Destroy()
+                else
+                    warn("KillHitbox not found or is not a BasePart")
+                end
+            else
+                warn("RootPart not found in GEF")
             end
         else
-            warn("GEFs not found in the Workspace")
+            warn("GEF not found in the Workspace")
         end
     end)
         elseif i == 11 then
