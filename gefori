@@ -296,71 +296,88 @@ for i = 1, 13 do
         end
     end
 
-    -- Define teleport buttons
+    local UserInputService = game:GetService("UserInputService")
+
+local function simulateKeyPress()
+    -- Simulate key press 'E'
+    UserInputService.InputBegan:Fire({
+        UserInputType = Enum.UserInputType.Keyboard,
+        KeyCode = Enum.KeyCode.E
+    })
+end
+
+local function handleButton(i, Button)
     if i == 1 then
         Button.Text = "Shotgun"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Shotgun.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 2 then
-        Button.Text = "Ammo (Shorgun)"
+        Button.Text = "Shells"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Shells.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 3 then
         Button.Text = "Medkit"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Medkit.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 4 then
         Button.Text = "Food"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Food.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 5 then
         Button.Text = "Bat"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Bat.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 6 then
         Button.Text = "Crowbar"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Crowbar.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 7 then
         Button.Text = "Hammer"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Hammer.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 8 then
         Button.Text = "Soda"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Soda.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 9 then
         Button.Text = "Money"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Money.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 10 then
         Button.Text = "Handgun"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Handgun.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 11 then
         Button.Text = "Lantern"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Lantern.CFrame)
+            simulateKeyPress()
         end)
     elseif i == 12 then
         Button.Text = "GPS"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.GPS.CFrame)
-        end)
-elseif i == 13 then
-        Button.Text = "Ammo (HandGun)"
-        Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Bullets.CFrame)
+            simulateKeyPress()
         end)
     end
 end
