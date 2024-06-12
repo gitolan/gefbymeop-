@@ -61,7 +61,11 @@ OpenButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
--- Set properties for XButton
+-- Declare aimbotEnabled as a global variable
+local aimbotEnabled = false
+
+-- Create the XButton
+local XButton = Instance.new("TextButton")
 XButton.Name = "XButton"
 XButton.Parent = ScreenGui
 XButton.BackgroundColor3 = colors.red
@@ -70,7 +74,7 @@ XButton.Position = OpenButton.Position + UDim2.new(0, -30, 0, 0) -- Start positi
 XButton.Size = UDim2.new(0, 25, 0, 25)
 XButton.Text = "X"
 XButton.MouseButton1Click:Connect(function()
-    aimbotEnabled = false -- Nonaktifkan aimbot
+    aimbotEnabled = false -- Disable aimbot
     MainFrame.Visible = false
     OpenButton.Visible = false
     XButton.Visible = false
@@ -1224,7 +1228,6 @@ Services.RunService.Heartbeat:Connect(function()
         
         elseif i == 6 then
     Button.Text = "Aimbot off"
-    local aimbotEnabled = false -- Flag to enable or disable aimbot
     Button.MouseButton1Click:Connect(function()
         aimbotEnabled = not aimbotEnabled
         Button.Text = aimbotEnabled and "Aimbot off" or "Aimbot on"
@@ -1262,7 +1265,7 @@ Services.RunService.Heartbeat:Connect(function()
     local function aimAtTarget(target)
         if target then
             local targetPosition = target.Position
-            
+
             -- Adjust the camera CFrame to aim at the target
             local desiredCFrame = CFrame.new(camera.CFrame.Position, targetPosition)
             camera.CFrame = desiredCFrame
@@ -1284,7 +1287,6 @@ Services.RunService.Heartbeat:Connect(function()
             aimAtTarget(nearestTarget)
         end
     end)
-end
 end
 
 print("end")
