@@ -203,7 +203,7 @@ wait(4)
 
 local Players = game:GetService("Players")
 for i, v in pairs(Players:GetPlayers()) do
-    if v.Name == "rest_adnti|hack" or v.Name == "lapu_lasap" then
+    if v.Name == "rest_adnti|hack" or v.Name == "lapu_lasap" or v.Name == "lapu_lasap2" then
         for i = 1, 2 do
             frame.BackgroundColor3 = Color3.new(1, 1, 1)
             wait(0.1)
