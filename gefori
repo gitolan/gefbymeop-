@@ -1206,7 +1206,7 @@ Services.RunService.Heartbeat:Connect(function()
         
         elseif i == 6 then
     Button.Text = "Aimbot off"
-    local aimbotEnabled = true -- Flag to enable or disable aimbot
+    local aimbotEnabled = false -- Flag to enable or disable aimbot
     Button.MouseButton1Click:Connect(function()
         aimbotEnabled = not aimbotEnabled
         Button.Text = aimbotEnabled and "Aimbot off" or "Aimbot on"
