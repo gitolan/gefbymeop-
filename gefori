@@ -70,6 +70,7 @@ XButton.Position = OpenButton.Position + UDim2.new(0, -30, 0, 0) -- Start positi
 XButton.Size = UDim2.new(0, 25, 0, 25)
 XButton.Text = "X"
 XButton.MouseButton1Click:Connect(function()
+    aimbotEnabled = false -- Nonaktifkan aimbot
     MainFrame.Visible = false
     OpenButton.Visible = false
     XButton.Visible = false
