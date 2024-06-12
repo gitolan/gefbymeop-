@@ -1281,7 +1281,7 @@ local function createSeparator(parent, position)
 end
 
 -- สร้างเส้นขีดสีแดงใน TeleportMenu
-for i = 1, 14 do
+for i = 1, 13 do
     createSeparator(TeleportMenu, UDim2.new(0, 0, 0, (i * 25) - 4))
 end
 
