@@ -302,7 +302,7 @@ for i = 1, 12 do
             handleTeleport(game:GetService("Workspace").Pickups.Shotgun.CFrame)
         end)
     elseif i == 2 then
-        Button.Text = "Shells"
+        Button.Text = "Ammo (Shorgun"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Shells.CFrame)
         end)
@@ -355,6 +355,11 @@ for i = 1, 12 do
         Button.Text = "GPS"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.GPS.CFrame)
+        end)
+elseif i == 13 then
+        Button.Text = "Ammo (HandGun)"
+        Button.MouseButton1Click:Connect(function()
+            handleTeleport(game:GetService("Workspace").Pickups.Bullets.CFrame)
         end)
     end
 end
@@ -1276,7 +1281,7 @@ local function createSeparator(parent, position)
 end
 
 -- สร้างเส้นขีดสีแดงใน TeleportMenu
-for i = 1, 12 do
+for i = 1, 14 do
     createSeparator(TeleportMenu, UDim2.new(0, 0, 0, (i * 25) - 4))
 end
 
