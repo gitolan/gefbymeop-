@@ -19,16 +19,14 @@ local title = Instance.new("TextLabel")
 local title2 = Instance.new("TextLabel")
 local Checkbox = Instance.new("TextButton")
 print("loading...")
--- 483, 6, -21
--- 478, 3, -43
 
--- ตั้งค่าสี
+-- Set Colors
 local colors = {
     red = Color3.fromRGB(255, 0, 0),
     black = Color3.fromRGB(0, 0, 0),
-    gray = Color3.fromRGB(128,128,128),
+    gray = Color3.fromRGB(128, 128, 128),
     darkgrey = Color3.fromRGB(59, 59, 59),
-    white = Color3.fromRGB(1, 1, 1),
+    white = Color3.fromRGB(255, 255, 255), -- Corrected white color
     green = Color3.fromRGB(11, 128, 37)
 }
 -- end
@@ -40,7 +38,7 @@ ScreenGui.ResetOnSpawn = false
 
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(59, 59, 59) 
+MainFrame.BackgroundColor3 = colors.darkgrey
 MainFrame.BorderColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
 MainFrame.BorderSizePixel = 4
 MainFrame.Position = UDim2.new(0.5, -200, 0.5, -100)
@@ -49,7 +47,6 @@ MainFrame.Draggable = true
 MainFrame.Active = true
 MainFrame.Visible = false
 
--- Set properties for OpenButton
 OpenButton.Name = "OpenButton"
 OpenButton.Parent = ScreenGui
 OpenButton.BackgroundColor3 = colors.green
@@ -127,8 +124,8 @@ makeDraggable(OpenButton, XButton)
 -- Set properties for CloseButton
 CloseButton.Name = "CloseButton"
 CloseButton.Parent = MainFrame
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red
-CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- White
+CloseButton.BackgroundColor3 = colors.red -- Using colors table
+CloseButton.TextColor3 = colors.white -- Using colors table
 CloseButton.Position = UDim2.new(1, -25, 0, 0)
 CloseButton.Size = UDim2.new(0, 25, 0, 25)
 CloseButton.Text = "x"
@@ -138,92 +135,70 @@ end)
 
 print("UI loaded and draggable functionality applied.")
 
--- ตั้งค่า TeleportButton
+-- Set properties for TeleportButton
 TeleportButton.Name = "TeleportButton"
 TeleportButton.Parent = MainFrame
-TeleportButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- สีแดง
+TeleportButton.BackgroundColor3 = colors.red -- Using colors table
 TeleportButton.Size = UDim2.new(0, 190, 0, 50)
 TeleportButton.Text = "Teleport"
 
--- ตั้งค่า EspButton
+-- Set properties for EspButton
 EspButton.Name = "EspButton"
 EspButton.Parent = MainFrame
-EspButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- สีแดง
+EspButton.BackgroundColor3 = colors.red -- Using colors table
 EspButton.Position = UDim2.new(0, 0, 0, 50)
 EspButton.Size = UDim2.new(0, 190, 0, 50)
 EspButton.Text = "Esp"
 
 PlayerButton.Name = "PlayerButton"
 PlayerButton.Parent = MainFrame
-PlayerButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
+PlayerButton.BackgroundColor3 = colors.red -- Using colors table
 PlayerButton.Position = UDim2.new(0, 0, 0, 100)
 PlayerButton.Size = UDim2.new(0, 190, 0, 50)
 PlayerButton.Text = "Player"
 
 OtherButton.Name = "OtherButton"
 OtherButton.Parent = MainFrame
-OtherButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+OtherButton.BackgroundColor3 = colors.red -- Using colors table
 OtherButton.Position = UDim2.new(0, 0, 0, 150)
 OtherButton.Size = UDim2.new(0, 190, 0, 50)
 OtherButton.Text = "Other"
 
 Teleport2Button.Name = "Teleport2Button"
 Teleport2Button.Parent = MainFrame
-Teleport2Button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Teleport2Button.BackgroundColor3 = colors.red -- Using colors table
 Teleport2Button.Position = UDim2.new(0, 0, 0, 200)
 Teleport2Button.Size = UDim2.new(0, 190, 0, 50)
 Teleport2Button.Text = "Teleport2"
 
 Player2Button.Name = "Player2Button"
 Player2Button.Parent = MainFrame
-Player2Button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Player2Button.BackgroundColor3 = colors.red -- Using colors table
 Player2Button.Position = UDim2.new(0, 0, 0, 250)
 Player2Button.Size = UDim2.new(0, 190, 0, 50)
 Player2Button.Text = "Player2"
 
 TeleportMenu.Name = "TeleportMenu"
 TeleportMenu.Parent = MainFrame
-TeleportMenu.BackgroundColor3 = Color3.fromRGB(128,128,128)
+TeleportMenu.BackgroundColor3 = colors.gray -- Using colors table
 TeleportMenu.Position = UDim2.new(0, 200, 0, 0)
 TeleportMenu.Size = UDim2.new(0, 200, 0, 190)
 TeleportMenu.Visible = false
 
--- ตั้งค่า EspMenu
+-- Set properties for EspMenu
 EspMenu.Name = "EspMenu"
 EspMenu.Parent = MainFrame
-EspMenu.BackgroundColor3 = Color3.fromRGB(128,128,128)
+EspMenu.BackgroundColor3 = colors.gray -- Using colors table
 EspMenu.Position = UDim2.new(0, 200, 0, 0)
 EspMenu.Size = UDim2.new(0, 200, 0, 100)
 EspMenu.Visible = false
 
 PlayerMenu.Name = "PlayerMenu"
 PlayerMenu.Parent = MainFrame
-PlayerMenu.BackgroundColor3 = Color3.fromRGB(128,128,128)
+PlayerMenu.BackgroundColor3 = colors.gray -- Using colors table
 PlayerMenu.Position = UDim2.new(0, 200, 0, 0)
-PlayerMenu.Size = UDim2.new(0, 200, 0, 190)
+PlayerMenu.Size = UDim2.new(0, 200, 0, 100)
 PlayerMenu.Visible = false
-
-OtherMenu.Name = "OtherMenu"
-OtherMenu.Parent = MainFrame
-OtherMenu.BackgroundColor3 = Color3.fromRGB(128,128,128)
-OtherMenu.Position = UDim2.new(0, 200, 0, 0)
-OtherMenu.Size = UDim2.new(0, 200, 0, 146)
-OtherMenu.Visible = false
-
--- ตั้งค่า TeleportMenu
-Teleport2Menu.Name = "Teleport2Menu"
-Teleport2Menu.Parent = MainFrame
-Teleport2Menu.BackgroundColor3 = Color3.fromRGB(128,128,128)
-Teleport2Menu.Position = UDim2.new(0, 200, 0, 0)
-Teleport2Menu.Size = UDim2.new(0, 200, 0, 190)
-Teleport2Menu.Visible = false
-
-Player2Menu.Name = "Player2Menu"
-Player2Menu.Parent = MainFrame
-Player2Menu.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
-Player2Menu.Position = UDim2.new(0, 200, 0, 0)
-Player2Menu.Size = UDim2.new(0, 200, 0, 170)
-Player2Menu.Visible = false
 
 title.Size = UDim2.new(1, 0, 0, 20)
 title.Position = UDim2.new(0, 0, 0, -20) -- Mengubah nilai Y menjadi negatif untuk menempatkannya di atas
