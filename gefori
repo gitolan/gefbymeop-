@@ -1069,18 +1069,40 @@ for i = 1, 6 do
     Button.Size = UDim2.new(0, 200, 0, 20)
     Button.Position = UDim2.new(0, 1, 0, (i - 1) * 25)
     
-          if i == 1 then
+          -- Assuming `i` and `Button` are already defined
+
+if i == 1 then
     Button.Text = "Infammo"
     Button.MouseButton1Click:Connect(function()
-        game:GetService("Workspace").Ammo.Shells.Value = 5000
-        game.Players.LocalPlayer.RunData.Ammo.Shells.Value = 5000
+        local workspaceAmmo = game:GetService("Workspace").Ammo.Shells
+        local playerAmmo = game.Players.LocalPlayer.RunData.Ammo.Shells
+
+        -- Ensure these objects exist before setting their values
+        if workspaceAmmo and playerAmmo then
+            workspaceAmmo.Value = 5000
+            playerAmmo.Value = 5000
+        else
+            warn("Ammo objects not found")
+        end
     end)
 elseif i == 2 then
     Button.Text = "Infbullets"
     Button.MouseButton1Click:Connect(function()
-        game:GetService("Workspace").Ammo.Bullets.Value = 5000
-        game.Players.LocalPlayer.RunData.Ammo.Bullets.Value = 5000
+        local workspaceAmmo = game:GetService("Workspace").Ammo.Bullets
+        local playerAmmo = game.Players.LocalPlayer.RunData.Ammo.Bullets
+
+        -- Ensure these objects exist before setting their values
+        if workspaceAmmo and playerAmmo then
+            workspaceAmmo.Value = 5000
+            playerAmmo.Value = 5000
+        else
+            warn("Ammo objects not found")
+        end
     end)
+else
+    warn("Invalid value of i")
+ end
+end)
 elseif i == 3 then
     Button.Text = "Inf Money Visual"
     Button.MouseButton1Click:Connect(function()
