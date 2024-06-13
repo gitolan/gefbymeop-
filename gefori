@@ -222,14 +222,14 @@ Player2Menu.Size = UDim2.new(0, 200, 0, 100)
 Player2Menu.Visible = false
 
 title.Size = UDim2.new(1, 0, 0, 20)
-title.Position = UDim2.new(0, 0, 0, -20) -- Mengubah nilai Y menjadi negatif untuk menempatkannya di atas
+title.Position = UDim2.new(0, 0, 0, -20) 
 title.Text = "Rof Hub"
 title.Parent = MainFrame
 title.TextColor3 = Color3.new(1, 1, 1)
 title.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
 
 title2.Size = UDim2.new(1, 0, 0, 20)
-title2.Position = UDim2.new(0, 0, 0.95, 0) -- Mengubah nilai Y menjadi 0.95 untuk menempatkannya sedikit ke atas
+title2.Position = UDim2.new(0, 0, 0.95, 0) 
 title2.Text = "Gef Script V2"
 title2.Parent = MainFrame
 title2.TextColor3 = Color3.new(1, 1, 1)
@@ -239,7 +239,7 @@ title2.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
 local teleportAndReturnEnabled = false
 
 Checkbox.Parent = TeleportMenu
-Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red
+Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
 Checkbox.Size = UDim2.new(0, 200, 0, 20)
 Checkbox.Position = UDim2.new(0, 1, 0, 0)
 Checkbox.Text = "Teleport and Return (Disabled)"
@@ -248,10 +248,10 @@ Checkbox.MouseButton1Click:Connect(function()
     teleportAndReturnEnabled = not teleportAndReturnEnabled
     if teleportAndReturnEnabled then
         Checkbox.Text = "Teleport and Return (Enabled)"
-        Checkbox.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Green
+        Checkbox.BackgroundColor3 = Color3.fromRGB(0, 255, 0) 
     else
         Checkbox.Text = "Teleport and Return (Disabled)"
-        Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red
+        Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
     end
 end)
 
@@ -265,11 +265,10 @@ for i = 1, 13 do
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
         local rootPart = player.Character.HumanoidRootPart
-        -- Add a small offset to avoid falling through the ground
         local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
 
         rootPart.CFrame = adjustedCFrame
-        wait(0.1) -- Small delay to help character settle
+        wait(0.1) 
     end
 
     local function teleportAndReturn(destinationCFrame)
@@ -300,7 +299,7 @@ for i = 1, 13 do
             handleTeleport(game:GetService("Workspace").Pickups.Shotgun.CFrame)
         end)
     elseif i == 2 then
-        Button.Text = "Ammo (Shotgun"
+        Button.Text = "Ammo (Shotgun)"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Shells.CFrame)
         end)
@@ -310,7 +309,7 @@ for i = 1, 13 do
             handleTeleport(game:GetService("Workspace").Pickups.Medkit.CFrame)
         end)
     elseif i == 4 then
-        Button.Text = "Food"
+        Button.Text = "Coklat"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Food.CFrame)
         end)
@@ -330,7 +329,7 @@ for i = 1, 13 do
             handleTeleport(game:GetService("Workspace").Pickups.Hammer.CFrame)
         end)
     elseif i == 8 then
-        Button.Text = "Soda"
+        Button.Text = "Drink"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Soda.CFrame)
         end)
@@ -345,12 +344,12 @@ for i = 1, 13 do
             handleTeleport(game:GetService("Workspace").Pickups.Handgun.CFrame)
         end)
     elseif i == 11 then
-        Button.Text = "Lantern"
+        Button.Text = "Lamp"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.Lantern.CFrame)
         end)
     elseif i == 12 then
-        Button.Text = "GPS"
+        Button.Text = "Radar"
         Button.MouseButton1Click:Connect(function()
             handleTeleport(game:GetService("Workspace").Pickups.GPS.CFrame)
         end)
@@ -866,7 +865,6 @@ for i = 1, 12 do
     Button.Text = "Gef No kill"
     Button.MouseButton1Click:Connect(function()
         local GEFs = game:GetService("Workspace").GEFs
-        -- Loop through each "Mini GEF" in "GEFs" and destroy "hurtbox"
         for _, miniGEF in pairs(GEFs:GetChildren()) do
             if miniGEF.Name == "Mini GEF" then
                 local hurtbox = miniGEF:FindFirstChild("Hurtbox")
