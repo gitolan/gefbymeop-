@@ -200,6 +200,27 @@ PlayerMenu.Position = UDim2.new(0, 200, 0, 0)
 PlayerMenu.Size = UDim2.new(0, 200, 0, 100)
 PlayerMenu.Visible = false
 
+OtherMenu.Name = "OtherMenu"
+OtherMenu.Parent = MainFrame
+OtherMenu.BackgroundColor3 = colors.gray -- Using colors table
+OtherMenu.Position = UDim2.new(0, 200, 0, 0)
+OtherMenu.Size = UDim2.new(0, 200, 0, 100)
+OtherMenu.Visible = false
+
+Teleport2Menu.Name = "Teleport2Menu"
+Teleport2Menu.Parent = MainFrame
+Teleport2Menu.BackgroundColor3 = colors.gray -- Using colors table
+Teleport2Menu.Position = UDim2.new(0, 200, 0, 0)
+Teleport2Menu.Size = UDim2.new(0, 200, 0, 100)
+Teleport2Menu.Visible = false
+
+Player2Menu.Name = "Player2Menu"
+Player2Menu.Parent = MainFrame
+Player2Menu.BackgroundColor3 = colors.gray -- Using colors table
+Player2Menu.Position = UDim2.new(0, 200, 0, 0)
+Player2Menu.Size = UDim2.new(0, 200, 0, 100)
+Player2Menu.Visible = false
+
 title.Size = UDim2.new(1, 0, 0, 20)
 title.Position = UDim2.new(0, 0, 0, -20) -- Mengubah nilai Y menjadi negatif untuk menempatkannya di atas
 title.Text = "Rof Hub"
