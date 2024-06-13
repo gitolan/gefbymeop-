@@ -116,9 +116,10 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
         Text = "Please wait",
         Duration = 5
     })
-    screenGui:Destroy()
     wait(3)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+screenGui:Destroy()
+
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Error",
