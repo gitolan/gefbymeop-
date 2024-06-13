@@ -56,7 +56,7 @@ OpenButton.BackgroundColor3 = colors.green
 OpenButton.TextColor3 = colors.white
 OpenButton.Position = UDim2.new(0.5, -425, 0.5, 4)
 OpenButton.Size = UDim2.new(0, 70, 0, 40)
-OpenButton.Text = "Open Rof Hub"
+OpenButton.Text = "Open Gui"
 OpenButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
@@ -65,7 +65,6 @@ end)
 local aimbotEnabled = false
 
 -- Create the XButton
-local XButton = Instance.new("TextButton")
 XButton.Name = "XButton"
 XButton.Parent = ScreenGui
 XButton.BackgroundColor3 = colors.red
@@ -1214,7 +1213,7 @@ Services.RunService.Heartbeat:Connect(function()
     Button.MouseButton1Click:Connect(function()
         aimbotEnabled = not aimbotEnabled
         Button.Text = aimbotEnabled and "Aimbot off" or "Aimbot on"
-    end)
+    end
 
     -- Services
     local Players = game:GetService("Players")
@@ -1270,6 +1269,7 @@ Services.RunService.Heartbeat:Connect(function()
             aimAtTarget(nearestTarget)
         end
     end)
+end
 end
 
 print("end")
