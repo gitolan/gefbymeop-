@@ -58,8 +58,8 @@ OpenButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
--- Declare aimbotEnabled as a global variable
-local aimbotEnabled = false
+-- Pindahkan deklarasi aimbotEnabled ke luar untuk menjadikannya global
+local aimbotEnabled = true
 
 -- Create the XButton
 XButton.Name = "XButton"
@@ -73,6 +73,7 @@ XButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = false
     OpenButton.Visible = false
     XButton.Visible = false
+    aimbotEnabled = false -- Nonaktifkan aimbot
     ScreenGui:Destroy()
 end)
 
@@ -1065,225 +1066,202 @@ end
 for i = 1, 6 do
     local Button = Instance.new("TextButton")
     Button.Parent = Player2Menu
-    Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- สีขาว
+    Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Warna putih
     Button.Size = UDim2.new(0, 200, 0, 20)
     Button.Position = UDim2.new(0, 1, 0, (i - 1) * 25)
     
-          -- Assuming `i` and `Button` are already defined
+    if i == 1 then
+        Button.Text = "Infammo"
+        Button.MouseButton1Click:Connect(function()
+            game:GetService("Workspace").Ammo.Shells.Value = 5000
+            game.Players.LocalPlayer.RunData.Ammo.Shells.Value = 5000
+        end)
+    elseif i == 2 then
+        Button.Text = "Infbullets"
+        Button.MouseButton1Click:Connect(function()
+            game:GetService("Workspace").Ammo.Bullets.Value = 5000
+            game.Players.LocalPlayer.RunData.Ammo.Bullets.Value = 5000
+        end)
+    elseif i == 3 then
+        Button.Text = "Inf Money Visual"
+        Button.MouseButton1Click:Connect(function()
+            local Players = game:GetService("Players")
+            local localPlayer = Players.LocalPlayer
+            local originalMoneyValue = nil
 
-if i == 1 then
-    Button.Text = "Infammo"
-    Button.MouseButton1Click:Connect(function()
-        local workspaceAmmo = game:GetService("Workspace").Ammo.Shells
-        local playerAmmo = game.Players.LocalPlayer.RunData.Ammo.Shells
-
-        -- Ensure these objects exist before setting their values
-        if workspaceAmmo and playerAmmo then
-            workspaceAmmo.Value = 5000
-            playerAmmo.Value = 5000
-        else
-            warn("Ammo objects not found")
-        end
-    end)
-elseif i == 2 then
-    Button.Text = "Infbullets"
-    Button.MouseButton1Click:Connect(function()
-        local workspaceAmmo = game:GetService("Workspace").Ammo.Bullets
-        local playerAmmo = game.Players.LocalPlayer.RunData.Ammo.Bullets
-
-        -- Ensure these objects exist before setting their values
-        if workspaceAmmo and playerAmmo then
-            workspaceAmmo.Value = 5000
-            playerAmmo.Value = 5000
-        else
-            warn("Ammo objects not found")
-        end
-    end)
-else
-    warn("Invalid value of i")
- end
-end)
-elseif i == 3 then
-    Button.Text = "Inf Money Visual"
-    Button.MouseButton1Click:Connect(function()
-local Players = game:GetService("Players")
-local localPlayer = Players.LocalPlayer
-local originalMoneyValue = nil
-
-if localPlayer then
-    local moneyValue = localPlayer:FindFirstChild("Money")
-    if moneyValue then
-        if not originalMoneyValue then
-            originalMoneyValue = moneyValue.Value
-        end
-        
-        if moneyValue.Value == originalMoneyValue then
-            moneyValue.Value = 100000
-        else
-            moneyValue.Value = originalMoneyValue
-        end
-    else
-        warn("Value Money tidak ditemukan di LocalPlayer")
-    end
-else
-    warn("LocalPlayer tidak ditemukan di Players service")
-end
-end)
-elseif i == 4 then
+            if localPlayer then
+                local moneyValue = localPlayer:FindFirstChild("Money")
+                if moneyValue then
+                    if not originalMoneyValue then
+                        originalMoneyValue = moneyValue.Value
+                    end
+                    
+                    if moneyValue.Value == originalMoneyValue then
+                        moneyValue.Value = 100000
+                    else
+                        moneyValue.Value = originalMoneyValue
+                    end
+                else
+                    warn("Value Money tidak ditemukan di LocalPlayer")
+                end
+            else
+                warn("LocalPlayer tidak ditemukan di Players service")
+            end
+        end)
+    elseif i == 4 then
         Button.Text = "Delete all Plank"
         Button.MouseButton1Click:Connect(function()
-        workspace.Planks:Destroy()
+            workspace.Planks:Destroy()
         end)
-        elseif i == 5 then
+    elseif i == 5 then
         Button.Text = "Anti Fling"
         Button.MouseButton1Click:Connect(function()
-        -- // Constants \\ --
--- [ Services ] --
-local Services = setmetatable({}, {__index = function(Self, Index)
-local NewService = game.GetService(game, Index)
-if NewService then
-Self[Index] = NewService
-end
-return NewService
-end})
-
--- [ LocalPlayer ] --
-local LocalPlayer = Services.Players.LocalPlayer
-
--- // Functions \\ --
-local function PlayerAdded(Player)
-   local Detected = false
-   local Character;
-   local PrimaryPart;
-
-   local function CharacterAdded(NewCharacter)
-       Character = NewCharacter
-       repeat
-           wait()
-           PrimaryPart = NewCharacter:FindFirstChild("HumanoidRootPart")
-       until PrimaryPart
-       Detected = false
-   end
-
-   CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
-   Player.CharacterAdded:Connect(CharacterAdded)
-   Services.RunService.Heartbeat:Connect(function()
-       if (Character and Character:IsDescendantOf(workspace)) and (PrimaryPart and PrimaryPart:IsDescendantOf(Character)) then
-           if PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 or PrimaryPart.AssemblyLinearVelocity.Magnitude > 100 then
-               if Detected == false then
-                   game.StarterGui:SetCore("ChatMakeSystemMessage", {
-                       Text = "Fling Exploit detected, Player: " .. tostring(Player);
-                       Color = Color3.fromRGB(255, 200, 0);
-                   })
-               end
-               Detected = true
-               for i,v in ipairs(Character:GetDescendants()) do
-                   if v:IsA("BasePart") then
-                       v.CanCollide = false
-                       v.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-                       v.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-                       v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-                   end
-               end
-               PrimaryPart.CanCollide = false
-               PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-               PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-               PrimaryPart.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-           end
-       end
-   end)
-end
-
--- // Event Listeners \\ --
-for i,v in ipairs(Services.Players:GetPlayers()) do
-   if v ~= LocalPlayer then
-       PlayerAdded(v)
-   end
-end
-Services.Players.PlayerAdded:Connect(PlayerAdded)
-
-local LastPosition = nil
-Services.RunService.Heartbeat:Connect(function()
-   pcall(function()
-       local PrimaryPart = LocalPlayer.Character.PrimaryPart
-       if PrimaryPart.AssemblyLinearVelocity.Magnitude > 250 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 250 then
-           PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-           PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-           PrimaryPart.CFrame = LastPosition
-
-           game.StarterGui:SetCore("ChatMakeSystemMessage", {
-               Text = "You were fling. Neutralizing velocity.";
-               Color = Color3.fromRGB(255, 0, 0);
-           })
-       elseif PrimaryPart.AssemblyLinearVelocity.Magnitude < 50 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 then
-           LastPosition = PrimaryPart.CFrame
-       end
-       end)
-       end)
-        end)
-        
-        elseif i == 6 then
-    Button.Text = "Aimbot off"
-    Button.MouseButton1Click:Connect(function()
-        aimbotEnabled = not aimbotEnabled
-        Button.Text = aimbotEnabled and "Aimbot off" or "Aimbot on"
-    end
-
-    -- Services
-    local Players = game:GetService("Players")
-    local RunService = game:GetService("RunService")
-
-    -- Player and Camera
-    local player = Players.LocalPlayer
-    local camera = workspace.CurrentCamera
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-    -- Function to get the nearest target
-    local function getNearestTarget()
-        local nearestTarget = nil
-        local shortestDistance = math.huge
-
-        for _, obj in pairs(workspace.GEFs:GetChildren()) do
-            if obj:FindFirstChild("RootPart") then
-                local distance = (humanoidRootPart.Position - obj.RootPart.Position).Magnitude
-                if distance < shortestDistance then
-                    shortestDistance = distance
-                    nearestTarget = obj.RootPart
+            -- // Constants \\ --
+            -- [ Services ] --
+            local Services = setmetatable({}, {__index = function(Self, Index)
+                local NewService = game:GetService(Index)
+                if NewService then
+                    Self[Index] = NewService
                 end
+                return NewService
+            end})
+
+            -- [ LocalPlayer ] --
+            local LocalPlayer = Services.Players.LocalPlayer
+
+            -- // Functions \\ --
+            local function PlayerAdded(Player)
+                local Detected = false
+                local Character
+                local PrimaryPart
+
+                local function CharacterAdded(NewCharacter)
+                    Character = NewCharacter
+                    repeat
+                        wait()
+                        PrimaryPart = NewCharacter:FindFirstChild("HumanoidRootPart")
+                    until PrimaryPart
+                    Detected = false
+                end
+
+                CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
+                Player.CharacterAdded:Connect(CharacterAdded)
+                Services.RunService.Heartbeat:Connect(function()
+                    if (Character and Character:IsDescendantOf(workspace)) and (PrimaryPart and PrimaryPart:IsDescendantOf(Character)) then
+                        if PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 or PrimaryPart.AssemblyLinearVelocity.Magnitude > 100 then
+                            if Detected == false then
+                                game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                                    Text = "Fling Exploit detected, Player: " .. tostring(Player),
+                                    Color = Color3.fromRGB(255, 200, 0),
+                                })
+                            end
+                            Detected = true
+                            for _,v in ipairs(Character:GetDescendants()) do
+                                if v:IsA("BasePart") then
+                                    v.CanCollide = false
+                                    v.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                                    v.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                                    v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+                                end
+                            end
+                            PrimaryPart.CanCollide = false
+                            PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                            PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                            PrimaryPart.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+                        end
+                    end
+                end)
+            end
+
+            -- // Event Listeners \\ --
+            for _,v in ipairs(Services.Players:GetPlayers()) do
+                if v ~= LocalPlayer then
+                    PlayerAdded(v)
+                end
+            end
+            Services.Players.PlayerAdded:Connect(PlayerAdded)
+
+            local LastPosition = nil
+            Services.RunService.Heartbeat:Connect(function()
+                pcall(function()
+                    local PrimaryPart = LocalPlayer.Character.PrimaryPart
+                    if PrimaryPart.AssemblyLinearVelocity.Magnitude > 250 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 250 then
+                        PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                        PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                        PrimaryPart.CFrame = LastPosition
+
+                        game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                            Text = "You were fling. Neutralizing velocity.",
+                            Color = Color3.fromRGB(255, 0, 0),
+                        })
+                    elseif PrimaryPart.AssemblyLinearVelocity.Magnitude < 50 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 then
+                        LastPosition = PrimaryPart.CFrame
+                    end
+                end)
+            end)
+        end)
+    elseif i == 6 then
+        Button.Text = "Aimbot off"
+        Button.MouseButton1Click:Connect(function()
+            aimbotEnabled = not aimbotEnabled
+            Button.Text = aimbotEnabled and "Aimbot off" or "Aimbot on"
+        end)
+
+        -- Services
+        local Players = game:GetService("Players")
+        local RunService = game:GetService("RunService")
+
+        -- Player and Camera
+        local player = Players.LocalPlayer
+        local camera = workspace.CurrentCamera
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        -- Function to get the nearest target
+        local function getNearestTarget()
+            local nearestTarget = nil
+            local shortestDistance = math.huge
+
+            for _, obj in pairs(workspace.GEFs:GetChildren()) do
+                if obj:FindFirstChild("RootPart") then
+                    local distance = (humanoidRootPart.Position - obj.RootPart.Position).Magnitude
+                    if distance < shortestDistance then
+                        shortestDistance = distance
+                        nearestTarget = obj.RootPart
+                    end
+                end
+            end
+
+            return nearestTarget
+        end
+
+        -- Function to aim at the nearest target
+        local function aimAtTarget(target)
+            if target then
+                local targetPosition = target.Position
+                
+                -- Adjust the camera CFrame to aim at the target
+                local desiredCFrame = CFrame.new(camera.CFrame.Position, targetPosition)
+                camera.CFrame = desiredCFrame
             end
         end
 
-        return nearestTarget
-    end
-
-    -- Function to aim at the nearest target
-    local function aimAtTarget(target)
-        if target then
-            local targetPosition = target.Position
-
-            -- Adjust the camera CFrame to aim at the target
-            local desiredCFrame = CFrame.new(camera.CFrame.Position, targetPosition)
-            camera.CFrame = desiredCFrame
+        -- Update character and humanoidRootPart references when character respawns
+        local function onCharacterAdded(newCharacter)
+            character = newCharacter
+            humanoidRootPart = character:WaitForChild("HumanoidRootPart")
         end
+
+        player.CharacterAdded:Connect(onCharacterAdded)
+
+        -- Main loop to aim at the nearest target
+        RunService.RenderStepped:Connect(function()
+            if aimbotEnabled and character and humanoidRootPart then
+                local nearestTarget = getNearestTarget()
+                aimAtTarget(nearestTarget)
+            end
+        end)
     end
-
-    -- Update character and humanoidRootPart references when character respawns
-    local function onCharacterAdded(newCharacter)
-        character = newCharacter
-        humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-    end
-
-    player.CharacterAdded:Connect(onCharacterAdded)
-
-    -- Main loop to aim at the nearest target
-    RunService.RenderStepped:Connect(function()
-        if aimbotEnabled and character and humanoidRootPart then
-            local nearestTarget = getNearestTarget()
-            aimAtTarget(nearestTarget)
-        end
-    end)
-end
 end
 
 print("end")
