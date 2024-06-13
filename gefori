@@ -242,7 +242,6 @@ title2.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
 -- สร้างปุ่มย่อยใน TeleportMenu และกำหนดฟังก์ชันเทเลพอร์ต 
 local teleportAndReturnEnabled = false
 
-local Checkbox = Instance.new("TextButton")
 Checkbox.Parent = TeleportMenu
 Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red
 Checkbox.Size = UDim2.new(0, 200, 0, 20)
