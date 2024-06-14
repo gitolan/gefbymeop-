@@ -119,9 +119,7 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
     wait(3)
     screenGui:Destroy()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
-    
-
-else
+    else 
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Error",
         Text = "KeySystem is missing or incorrect",
