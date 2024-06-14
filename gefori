@@ -375,56 +375,56 @@ if i == 1 then
     Button.MouseButton1Click:Connect(function()
         
         local function createESP(part)
-            local billboardGui = Instance.new("BillboardGui")
-            billboardGui.AlwaysOnTop = true
-            billboardGui.Size = UDim2.new(0, 200, 0, 40)
-            billboardGui.StudsOffset = Vector3.new(0, 3, 0)
-            
-            local textLabel = Instance.new("TextLabel")
-            textLabel.BackgroundTransparency = 1
-            textLabel.Size = UDim2.new(1, 0, 1, 0)
-            textLabel.Text = part.Name
-            textLabel.TextScaled = false
-            textLabel.TextSize = 24
-            textLabel.Font = Enum.Font.SourceSansBold
-            textLabel.TextColor3 = Color3.new(1, 1, 1)
-            textLabel.TextStrokeTransparency = 0.4  
-            textLabel.Parent = billboardGui
-            
-            billboardGui.Parent = part
-            
-            local box = Instance.new("BoxHandleAdornment")
-            box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
-            box.Adornee = part
-            box.Color3 = Color3.new(0, 1, 0)
-            box.Transparency = 0.5
-            box.AlwaysOnTop = true
-            box.ZIndex = 5
-            box.Parent = part
-        end
+    local billboardGui = Instance.new("BillboardGui")
+    billboardGui.AlwaysOnTop = true
+    billboardGui.Size = UDim2.new(0, 200, 0, 40)
+    billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+    
+    local textLabel = Instance.new("TextLabel")
+    textLabel.BackgroundTransparency = 1
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.Text = part.Name
+    textLabel.TextScaled = false
+    textLabel.TextSize = 24
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.TextStrokeTransparency = 0.4  
+    textLabel.Parent = billboardGui
+    
+    billboardGui.Parent = part
+    
+    local box = Instance.new("BoxHandleAdornment")
+    box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
+    box.Adornee = part
+    box.Color3 = Color3.new(0, 1, 0)
+    box.Transparency = 0.5
+    box.AlwaysOnTop = true
+    box.ZIndex = 5
+    box.Parent = part
+end
 
-        local function updateESPSize()
-            local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-            for _, part in ipairs(workspace.Pickups:GetChildren()) do
-                if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
-                    local distance = (part.Position - playerPosition).Magnitude
-                    part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
-                end
-            end
+local function updateESPSize()
+    local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    for _, part in ipairs(workspace.Pickups:GetChildren()) do
+        if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
+            local distance = (part.Position - playerPosition).Magnitude
+            part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
         end
+    end
+end
 
-        local function handleNewItems(item)
-            if item:IsA("BasePart") then
-                createESP(item)
-            end
-        end
+local function handleNewItems(item)
+    if item:IsA("BasePart") then
+        createESP(item)
+    end
+end
 
-        for _, part in ipairs(workspace.Pickups:GetChildren()) do
-            handleNewItems(part)
-        end
+for _, part in ipairs(workspace.Pickups:GetChildren()) do
+    handleNewItems(part)
+end
 
-        game:GetService("RunService").RenderStepped:Connect(updateESPSize)
-        workspace.Pickups.ChildAdded:Connect(handleNewItems)
+game:GetService("RunService").RenderStepped:Connect(updateESPSize)
+workspace.Pickups.ChildAdded:Connect(handleNewItems)
     end)
 elseif i == 2 then
     Button.Text = "Esp Menu Players"
