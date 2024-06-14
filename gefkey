@@ -209,33 +209,33 @@ end)
 wait(4)
 
 local Players = game:GetService("Players")
-for i, v in pairs(Players:GetPlayers()) do
-    if v.Name == "rest_adnti|hack" or v.Name == "lapu_laasap" or v.Name == "lapu_alasap2" then
-        for i = 1, 2 do
-            frame.BackgroundColor3 = Color3.new(1, 1, 1)
-            wait(0.1)
-            frame.BackgroundColor3 = Color3.new(0, 0, 0)
-            wait(0.1)
-        end
-        for i = 1, 5 do
-            frame.BackgroundTransparency = frame.BackgroundTransparency + 0.1
-            wait(0.1) 
-        end
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "You are whitelisted",
-            Text = "",
-            Duration = 5
-        })
-        wait(4)
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Open Menu..",
-            Text = "",
-            Duration = 5
-        })
-        wait(0.2)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
-        screenGui:Destroy()
+local localPlayer = Players.LocalPlayer
+
+if localPlayer.Name == "rest_antihack" or localPlayer.Name == "lapu_laa√sap" or localPlayer.Name == "lapu_✓lasap2" then
+    for i = 1, 2 do
+        frame.BackgroundColor3 = Color3.new(1, 1, 1)
+        wait(0.1)
+        frame.BackgroundColor3 = Color3.new(0, 0, 0)
+        wait(0.1)
     end
+    for i = 1, 5 do
+        frame.BackgroundTransparency = frame.BackgroundTransparency + 0.1
+        wait(0.1)
+    end
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "You are whitelisted",
+        Text = "",
+        Duration = 5
+    })
+    wait(4)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Open Menu..",
+        Text = "",
+        Duration = 5
+    })
+    wait(0.2)
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+    screenGui:Destroy()
 end
 
 game:GetService("RunService").Heartbeat:Connect(function()
