@@ -1201,10 +1201,10 @@ for i = 1, 6 do
             end)
         end)
     elseif i == 6 then
-        Button.Text = "Aimbot off"
+        Button.Text = "Aimbot off Only for Gef"
         Button.MouseButton1Click:Connect(function()
             aimbotEnabled = not aimbotEnabled
-            Button.Text = aimbotEnabled and "Aimbot off" or "Aimbot on"
+            Button.Text = aimbotEnabled and "Aimbot off Only for Gef" or "Aimbot on Only for Gef"
         end)
 
         -- Services
