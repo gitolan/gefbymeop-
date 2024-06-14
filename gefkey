@@ -160,7 +160,14 @@ SubmitButton.MouseButton1Click:Connect(function()
         end
         -- Write KeySystem to a file
         local keyString = "LZtFFzJkgcoKQtGfg"
-        writefile("GEFKeySystem.txt", keyString)
+        local writeSuccess, errorMsg = pcall(writefile, "GEFKeySystem.txt", keyString)
+        if not writeSuccess then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "Executor Not Supported",
+                Text = "Please Use Arceus X Neo",
+                Duration = 5
+            })
+        end
         
         loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
     else
