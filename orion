@@ -560,7 +560,7 @@ local function NoclipLoop()
 end
 
 Tab:AddToggle({
-    Name = "This is a toggle!",
+    Name = "Noclip",
     Default = false,
     Callback = function(Value)
         aimbotEnabled = Value
@@ -597,60 +597,7 @@ Tab:AddButton({
             end
         end)
       end    
-})
-local Lighting = game:GetService("Lighting")
-local RunService = game:GetService("RunService")
-
-local fullbrightEnabled = false
-local fullbrightValue = 3 -- Default value from the slider
-
--- Function to update the Lighting settings based on fullbrightEnabled state and fullbrightValue
-local function updateLighting()
-    if fullbrightEnabled then
-        Lighting.Brightness = fullbrightValue
-        Lighting.FogEnd = 100000
-        Lighting.GlobalShadows = false
-        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-    else
-        Lighting.Brightness = 2
-        Lighting.FogEnd = 10000
-        Lighting.GlobalShadows = true
-        Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
-    end
-end
-
--- Initial call to set the default lighting settings
-updateLighting()
-
--- Connect to the Heartbeat event to update lighting settings
-RunService.Heartbeat:Connect(function()
-    updateLighting()
-end)
-
-Tab:AddSlider({
-    Name = "Light Value",
-    Min = 2,
-    Max = 8,
-    Default = 3,
-    Color = Color3.fromRGB(255, 255, 255),
-    Increment = 1,
-    ValueName = "fullbright",
-    Callback = function(Value)
-        fullbrightValue = Value
-        if fullbrightEnabled then
-            updateLighting()
-        end
-    end
-})
-
-Tab:AddButton({
-    Name = "Fullbright",
-    Callback = function()
-        fullbrightEnabled = not fullbrightEnabled
-        updateLighting()
-    end
-})
-
+})
 Tab:AddButton({
     Name = "Reset Karacter",
     Callback = function()
@@ -1048,14 +995,62 @@ Tab:AddToggle({
 	end
 })
 local players = game:GetService("Players")
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+local localPlayer = players.LocalPlayer
 
 local options = {}
 for _, player in ipairs(players:GetPlayers()) do
-    table.insert(options, player.Name)
+    if player ~= localPlayer then
+        table.insert(options, player.Name)
+    end
 end
 
 local selectedPlayer = nil
 local flingEnabled = false
+local fullbrightEnabled = false
+local fullbrightValue = 3 -- Default value from the slider
+
+local function updateLighting()
+    if fullbrightEnabled then
+        Lighting.Brightness = fullbrightValue
+        Lighting.FogEnd = 100000
+        Lighting.GlobalShadows = false
+        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+    else
+        Lighting.Brightness = 2
+        Lighting.FogEnd = 10000
+        Lighting.GlobalShadows = true
+        Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
+    end
+end
+
+local function flingPlayer(player)
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.Velocity = Vector3.new(1000, 1000, 1000)
+    end
+end
+
+local function startFlinging()
+    spawn(function()
+        while flingEnabled do
+            if selectedPlayer then
+                flingPlayer(selectedPlayer)
+            end
+            wait(0.1) -- Jeda waktu antar fling
+        end
+    end)
+end
+
+local function stopFlinging()
+    -- Tidak perlu melakukan apapun di sini karena loop akan berhenti saat flingEnabled menjadi false
+end
+
+-- Initial call to set the default lighting settings
+updateLighting()
+
+-- Connect to the Heartbeat event to update lighting settings
+RunService.Heartbeat:Connect(updateLighting)
 
 -- Membuat Dropdown untuk pemain
 Tab:AddDropdown({
@@ -1069,11 +1064,13 @@ Tab:AddDropdown({
 
 -- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
 players.PlayerAdded:Connect(function(player)
-    table.insert(options, player.Name)
-    Tab:UpdateDropdown({
-        Name = "PlayerDropdown",
-        Options = options
-    })
+    if player ~= localPlayer then
+        table.insert(options, player.Name)
+        Tab:UpdateDropdown({
+            Name = "PlayerDropdown",
+            Options = options
+        })
+    end
 end)
 
 players.PlayerRemoving:Connect(function(leavingPlayer)
@@ -1095,32 +1092,37 @@ Tab:AddToggle({
     Default = false,
     Callback = function(Value)
         flingEnabled = Value
-        if not flingEnabled then
-            stopFlinging()
-        else
+        if flingEnabled then
             startFlinging()
+        else
+            stopFlinging()
         end
     end
 })
 
-local function flingPlayer(player)
-    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        player.Character.HumanoidRootPart.Velocity = Vector3.new(1000, 1000, 1000)
-    end
-end
-
-local function startFlinging()
-    while flingEnabled do
-        if selectedPlayer then
-            flingPlayer(selectedPlayer)
+Tab:AddSlider({
+    Name = "Light Value",
+    Min = 2,
+    Max = 8,
+    Default = 3,
+    Color = Color3.fromRGB(255, 255, 255),
+    Increment = 1,
+    ValueName = "fullbright",
+    Callback = function(Value)
+        fullbrightValue = Value
+        if fullbrightEnabled then
+            updateLighting()
         end
-        wait(0.1) -- Jeda waktu antar fling
     end
-end
+})
 
-local function stopFlinging()
-    -- Tidak perlu melakukan apapun di sini karena loop akan berhenti saat flingEnabled menjadi false
-end
+Tab:AddButton({
+    Name = "Fullbright",
+    Callback = function()
+        fullbrightEnabled = not fullbrightEnabled
+        updateLighting()
+    end
+})
 
 -- Initialize the library
 OrionLib:Init()
