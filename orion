@@ -602,23 +602,6 @@ Tab:AddButton({
         end)
       end    
 })
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local Lighting = game:GetService("Lighting")
-
-local brightLoop
-local fullbrightEnabled = false
-local fullbrightValue = 5 -- Default value from the slider
-
-local function updateLighting()
-    if fullbrightEnabled then
-        Lighting.Brightness = fullbrightValue
-        Lighting.FogEnd = 100000
-        Lighting.GlobalShadows = false
-        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-    end
-end
-
 Tab:AddSlider({
     Name = "Slider",
     Min = 3,
@@ -651,10 +634,10 @@ Tab:AddButton({
                 brightLoop = nil
             end
             -- Reset to default lighting settings
-            Lighting.Brightness = 3
-            Lighting.FogEnd = 10000
-            Lighting.GlobalShadows = true
-            Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
+        Lighting.Brightness = fullbrightValue
+        Lighting.FogEnd = 100000
+        Lighting.GlobalShadows = false
+        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
         end
     end    
 })
