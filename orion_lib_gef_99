@@ -1,0 +1,1041 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "Gef Script OP", HidePremium = false, SaveConfig = true, ConfigFolder = "GefGui"})
+
+local Tab = Window:MakeTab({
+	Name = "Teleport",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+Tab:AddButton({
+    Name = "Ammo (Shotgun)",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Shells
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Ammo (Handgun)",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Bullets
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "chocolate",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Food
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Medkit",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Medkit
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Bat",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Bat
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Crowbar",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Crowbar
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Shotgun",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Shotgun
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Glock",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Handgun
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Money",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Money
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Hammer",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Hammer
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Lamp",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Lantern
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Drink",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.Soda
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+Tab:AddButton({
+    Name = "Radar",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+              local character = player.Character
+              local pickup = game.Workspace.Pickups.GPS
+              if character and character:FindFirstChild("HumanoidRootPart") then
+                  character.HumanoidRootPart.CFrame = pickup.CFrame
+              end
+      end    
+})
+local Tab = Window:MakeTab({
+	Name = "Teleport 2",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+Tab:AddButton({
+    Name = "TpWorkshop",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(483.749878, 3.25000095, -19.7498322)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "1 St Floor Hospital",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(635, 22.4999943, 149.5, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Tower",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-117.500183, 54.5, -676.999817)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Shop",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-20.9999962, 6, 12)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "small house",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(581, 3, -435)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "2nd floor house",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-361, 7, 514)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Water Tank",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-360, 43, -287)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Spawn",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-65, 4, -49)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Small house2",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-22, 5, -521)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "House2",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(-280, 6, 347)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "tower2",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(819, 57, -680)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "3rd Hospital",
+    Callback = function()
+              local character = game.Players.LocalPlayer.Character
+        if character then
+            local newPosition = CFrame.new(643, 44.4999962, 254, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+            character:SetPrimaryPartCFrame(newPosition)
+        else
+            print("Karakter tidak ditemukan.")
+        end
+      end    
+})
+local Tab = Window:MakeTab({
+	Name = "Esp",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+Tab:AddButton({
+    Name = "Esp All Item",
+    Callback = function()
+              local function createESP(part)
+            local billboardGui = Instance.new("BillboardGui")
+            billboardGui.AlwaysOnTop = true
+            billboardGui.Size = UDim2.new(0, 200, 0, 40)
+            billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+            
+            local textLabel = Instance.new("TextLabel")
+            textLabel.BackgroundTransparency = 1
+            textLabel.Size = UDim2.new(1, 0, 1, 0)
+            textLabel.Text = part.Name
+            textLabel.TextScaled = false
+            textLabel.TextSize = 24
+            textLabel.Font = Enum.Font.SourceSansBold
+            textLabel.TextColor3 = Color3.new(1, 1, 1)
+            textLabel.TextStrokeTransparency = 0.4  
+            textLabel.Parent = billboardGui
+            
+            billboardGui.Parent = part
+            
+            local box = Instance.new("BoxHandleAdornment")
+            box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
+            box.Adornee = part
+            box.Color3 = Color3.new(0, 1, 0)
+            box.Transparency = 0.5
+            box.AlwaysOnTop = true
+            box.ZIndex = 5
+            box.Parent = part
+        end
+
+        local function updateESPSize()
+            local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            for _, part in ipairs(workspace.Pickups:GetChildren()) do
+                if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
+                    local distance = (part.Position - playerPosition).Magnitude
+                    part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
+                end
+            end
+        end
+
+        local function handleNewItems(item)
+            if item:IsA("BasePart") then
+                createESP(item)
+            end
+        end
+
+        for _, part in ipairs(workspace.Pickups:GetChildren()) do
+            handleNewItems(part)
+        end
+
+        game:GetService("RunService").RenderStepped:Connect(updateESPSize)
+        workspace.Pickups.ChildAdded:Connect(handleNewItems)
+      end    
+})
+Tab:AddButton({
+    Name = "Player Esp gui",
+    Callback = function()
+              loadstring(game:HttpGet("https://pastebin.com/raw/USEXe42D"))()
+      end    
+})
+Tab:AddButton({
+    Name = "Gefs Esp",
+    Callback = function()
+              local function createESPForRootPart(part)
+            local espGui = Instance.new("BillboardGui", part)
+            espGui.Adornee = part
+            espGui.Size = UDim2.new(0, 200, 0, 50)
+            espGui.AlwaysOnTop = true
+            espGui.StudsOffset = Vector3.new(0, 3, 0)
+            
+            local nameLabel = Instance.new("TextLabel", espGui)
+            nameLabel.Text = "GEFs"
+            nameLabel.BackgroundTransparency = 1
+            nameLabel.Size = UDim2.new(0, 200, 0, 20)
+            nameLabel.Font = Enum.Font.SourceSansBold
+            nameLabel.TextSize = 18
+            
+            local distanceLabel = Instance.new("TextLabel", espGui)
+            distanceLabel.BackgroundTransparency = 1
+            distanceLabel.Size = UDim2.new(0, 200, 0, 20)
+            distanceLabel.Font = Enum.Font.SourceSansBold
+            distanceLabel.TextSize = 18
+            distanceLabel.Position = UDim2.new(0, 0, 0, 20)
+            
+            game:GetService("RunService").RenderStepped:Connect(function()
+                local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
+                distanceLabel.Text = string.format("Distance: %.2f", distance)
+                
+                if distance < 50 then
+                    nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                    distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                elseif distance < 100 then
+                    nameLabel.TextColor3 = Color3.new(1, 1, 0)
+                    distanceLabel.TextColor3 = Color3.new(1, 1, 0)
+                else
+                    nameLabel.TextColor3 = Color3.new(0, 1, 0)
+                    distanceLabel.TextColor3 = Color3.new(0, 1, 0)
+                end
+            end)
+        end
+        
+        local espEnabled = true
+        
+        local function toggleESP()
+            while espEnabled do
+                for _, part in pairs(workspace:GetDescendants()) do
+                    if part:IsA("BasePart") and part.Name == "RootPart" then
+                        if not part:FindFirstChildOfClass("BillboardGui") then
+                            createESPForRootPart(part)
+                        end
+                    end
+                end
+                wait(60)
+            end
+        end
+        toggleESP()
+      end    
+})
+Tab:AddButton({
+    Name = "GEF esp",
+    Callback = function()
+              local espEnabled = true
+        
+        local function createESPForGEF(part)
+            local espGui = Instance.new("BillboardGui", part)
+            espGui.Adornee = part
+            espGui.Size = UDim2.new(0, 200, 0, 50)
+            espGui.AlwaysOnTop = true
+            espGui.StudsOffset = Vector3.new(0, 3, 0)
+            
+            local nameLabel = Instance.new("TextLabel", espGui)
+            nameLabel.Text = "GEF"
+            nameLabel.BackgroundTransparency = 1
+            nameLabel.Size = UDim2.new(0, 200, 0, 20)
+            nameLabel.Font = Enum.Font.SourceSansBold
+            nameLabel.TextSize = 18
+            
+            local distanceLabel = Instance.new("TextLabel", espGui)
+            distanceLabel.BackgroundTransparency = 1
+            distanceLabel.Size = UDim2.new(0, 200, 0, 20)
+            distanceLabel.Font = Enum.Font.SourceSansBold
+            distanceLabel.TextSize = 18
+            distanceLabel.Position = UDim2.new(0, 0, 0, 20)
+            
+            game:GetService("RunService").RenderStepped:Connect(function()
+                if part.Parent and espGui.Parent then
+                    local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
+                    distanceLabel.Text = string.format("Distance: %.2f", distance)
+                    
+                    if distance < 50 then
+                        nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                        distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                    elseif distance < 100 then
+                        nameLabel.TextColor3 = Color3.new(1, 1, 0)
+                        distanceLabel.TextColor3 = Color3.new(1, 1, 0)
+                    else
+                        nameLabel.TextColor3 = Color3.new(0, 1, 0)
+                        distanceLabel.TextColor3 = Color3.new(0, 1, 0)
+                    end
+                else
+                    espGui:Destroy()
+                end
+            end)
+        end
+        
+        local function toggleESP()
+            while espEnabled do
+                for _, part in pairs(workspace:GetDescendants()) do
+                    if part:IsA("BasePart") and part.Name == "RootPart" then
+                        if not part:FindFirstChildOfClass("BillboardGui") then
+                            createESPForRootPart(part)
+                        end
+                    end
+                end
+                wait(60)
+            end
+        end
+
+        for _, part in pairs(workspace:GetDescendants()) do
+            if part:IsA("BasePart") and part.Name == "ShatterHitbox" then
+                createESPForShatterHitbox(part)
+            end
+        end
+        
+        toggleESP()
+      end    
+})
+Tab:AddButton({
+    Name = "Delete Esp",
+    Callback = function()
+              local function removeESP(part)
+            for _, child in ipairs(part:GetChildren()) do
+                if child:IsA("BillboardGui") or child:IsA("BoxHandleAdornment") then
+                    child:Destroy()
+                end
+            end
+        end
+        
+        local function removeAllESP()
+            for _, part in ipairs(workspace:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    removeESP(part)
+                end
+            end
+        end
+        
+        removeAllESP()
+      end    
+})
+local Tab = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+Tab:AddButton({
+    Name = "TpRandomPlayer",
+    Callback = function()
+              local function teleportToRandomPlayer()
+                local players = game.Players:GetPlayers()
+                local randomPlayer = players[math.random(1, #players)]
+                
+                if randomPlayer then
+                    local character = game.Players.LocalPlayer.Character
+                    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+                    humanoidRootPart.CFrame = randomPlayer.Character.PrimaryPart.CFrame
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    end
+                else
+                    warn("No players found.")
+                end
+            end
+            teleportToRandomPlayer()
+      end    
+})
+Tab:AddButton({
+    Name = "noclip",
+    Callback = function()
+              local Noclipping = nil
+        local speaker = game:GetService("Players").LocalPlayer
+        local RunService = game:GetService("RunService")
+        Clip = false
+        wait(0.1)
+        local function NoclipLoop()
+            if Clip == false and speaker.Character ~= nil then
+                for _, child in pairs(speaker.Character:GetDescendants()) do
+                    if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
+                        child.CanCollide = false
+                    end
+                end
+            end
+        end
+        Noclipping = RunService.Stepped:Connect(NoclipLoop)
+      end    
+})
+Tab:AddButton({
+    Name = "unnoclip",
+    Callback = function()
+              if Noclipping then
+            Noclipping:Disconnect()
+        end
+        Clip = true
+      end    
+})
+Tab:AddButton({
+    Name = "infjump",
+    Callback = function()
+              local infJump
+        local speaker = game:GetService("Players").LocalPlayer
+        local UserInputService = game:GetService("UserInputService")
+        infJumpDebounce = false
+        if infJump then infJump:Disconnect() end
+        infJumpDebounce = false
+        infJump = UserInputService.JumpRequest:Connect(function()
+            if not infJumpDebounce then
+                infJumpDebounce = true
+                speaker.Character:FindFirstChildWhichIsA("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+                wait()
+                infJumpDebounce = false
+            end
+        end)
+      end    
+})
+Tab:AddButton({
+    Name = "Fulbright",
+    Callback = function()
+              if brightLoop then
+            brightLoop:Disconnect()
+        end
+        local Lighting = game:GetService("Lighting")
+        local RunService = game:GetService("RunService")
+        local function brightFunc()
+            Lighting.Brightness = 3
+            Lighting.FogEnd = 100000
+            Lighting.GlobalShadows = false
+            Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+        end
+        brightLoop = RunService.RenderStepped:Connect(brightFunc)
+      end    
+})
+Tab:AddButton({
+    Name = "Reset Karacter",
+    Callback = function()
+              local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")  -- Menambah game.Players.LocalPlayer sebelum Character
+        if humanoid then
+            humanoid.Health = 0  -- Mengubah ChangeState menjadi Health = 0 untuk mereset karakter
+        else
+            warn("Humanoid not found.")
+         end
+      end    
+})
+Tab:AddButton({
+    Name = "+Storage Visual",
+    Callback = function()
+              local playerUpgrades = game.Players.LocalPlayer.Upgrades
+
+            if playerUpgrades:FindFirstChild("Storage") then
+                playerUpgrades.Storage.Value = 15 -- 2^63 - 1
+            else
+                -- ถ้าไม่มี StaminaRegen, สร้างใหม่และตั้งค่า Value เป็น 2^63 - 1
+                local StaminaRegen = Instance.new("IntValue", playerUpgrades)
+                Storage.Name = "Storage"
+                Storage.Value = 15 -- 2^63 - 1
+            end
+      end    
+})
+Tab:AddButton({
+    Name = "Crowbar Damage",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+        if player.Backpack:FindFirstChild("Crowbar") and player.Backpack.Crowbar:FindFirstChild("Damage") then
+            -- Unequip tools before modifying the damage value
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    humanoid:UnequipTools()
+                    wait(1)
+                end
+            end
+            -- Set the damage value after waiting
+            player.Backpack.Crowbar.Damage.Value = 20000
+        end
+        -- Unequip tools for speaker if necessary
+        local speaker = game.Players.LocalPlayer -- Update this if `speaker` refers to a different player
+        if speaker and speaker.Character then
+            local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
+            if humanoid then
+                humanoid:UnequipTools()
+                wait(1)
+            end
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "bat damage",
+    Callback = function()
+              local player = game.Players.LocalPlayer
+        if player.Backpack:FindFirstChild("Bat") and player.Backpack.Bat:FindFirstChild("Damage") then
+            -- Unequip tools before modifying the damage value
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    humanoid:UnequipTools()
+                    wait(1)
+                end
+            end
+            -- Set the damage value after waiting
+            player.Backpack.Bat.Damage.Value = 2000000
+        end
+        -- Unequip tools for speaker if necessary
+        local speaker = game.Players.LocalPlayer -- Update this if `speaker` refers to a different player
+        if speaker and speaker.Character then
+            local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
+            if humanoid then
+                humanoid:UnequipTools()
+                wait(1)
+            end
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "infstamina",
+    Callback = function()
+              local playerUpgrades = game.Players.LocalPlayer.Upgrades
+
+            if playerUpgrades:FindFirstChild("MaxStamina") then
+                playerUpgrades.MaxStamina.Value = 9223372036854775807 -- 2^63 - 1
+            else
+                -- ถ้าไม่มี MaxStamina, สร้างใหม่และตั้งค่า Value เป็น 2^63 - 1
+                local maxStamina = Instance.new("IntValue", playerUpgrades)
+                maxStamina.Name = "MaxStamina"
+                maxStamina.Value = 9223372036854775807 -- 2^63 - 1
+            end
+      end    
+})
+Tab:AddButton({
+    Name = "infenergy",
+    Callback = function()
+              local Energy = game.Workspace.LocalPlayer.Energy
+
+            if Energy then
+                Energy.Value = 922337203685807
+            end
+      end    
+})
+Tab:AddButton({
+    Name = "infstaminaregen",
+    Callback = function()
+              local playerUpgrades = game.Players.LocalPlayer.Upgrades
+
+            if playerUpgrades:FindFirstChild("StaminaRegen") then
+                playerUpgrades.StaminaRegen.Value = 9223372036854775807 -- 2^63 - 1
+            else
+                -- ถ้าไม่มี StaminaRegen, สร้างใหม่และตั้งค่า Value เป็น 2^63 - 1
+                local StaminaRegen = Instance.new("IntValue", playerUpgrades)
+                StaminaRegen.Name = "StaminaRegen"
+                StaminaRegen.Value = 9223372036854775807 -- 2^63 - 1
+            end
+      end    
+})
+local Tab = Window:MakeTab({
+	Name = "Other",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+Tab:AddButton({
+    Name = "Another Gef Script",
+    Callback = function()
+              loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/gefop.txt"))() -- error 112,433
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
+      end    
+})
+Tab:AddButton({
+    Name = "NoTree",
+    Callback = function()
+              game:GetService("Workspace").TreesNo:Destroy()
+      end    
+})
+Tab:AddButton({
+    Name = "No Fence",
+    Callback = function()
+              game:GetService("Workspace").Fence:Destroy()
+      end    
+})
+Tab:AddButton({
+    Name = "Open you Upgrade menu",
+    Callback = function()
+              local playerName = game.Players.LocalPlayer.Name
+        local player = game.Players:FindFirstChild(playerName)
+
+        if player then
+            local playerGui = player:WaitForChild("PlayerGui")
+            local startGui = playerGui:WaitForChild("StartGui")
+            local shop = startGui:FindFirstChild("Shop")
+
+            if shop then
+                shop.Visible = true
+               end
+           end
+      end    
+})
+Tab:AddButton({
+    Name = "Fly gui Make you Fly",
+    Callback = function()
+              loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+      end    
+})
+Tab:AddButton({
+    Name = "Infinite yield make you infinite",
+    Callback = function()
+              loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+      end    
+})
+Tab:AddButton({
+    Name = "Get TpTool",
+    Callback = function()
+              local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local IYMouse = LocalPlayer:GetMouse()
+        local TpTool = Instance.new("Tool")
+        TpTool.Name = "Tp Tool"
+        TpTool.RequiresHandle = false
+        TpTool.Parent = LocalPlayer.Backpack
+        TpTool.Activated:Connect(function()
+            local Char = LocalPlayer.Character or workspace:FindFirstChild(LocalPlayer.Name)
+            local HRP = Char and Char:FindFirstChild("HumanoidRootPart")
+            if not Char or not HRP then
+                return warn("Failed to find HumanoidRootPart")
+            end
+            HRP.CFrame = CFrame.new(IYMouse.Hit.Position)
+        end)
+      end    
+})
+Tab:AddButton({
+    Name = "No Gef Kill",
+    Callback = function()
+              local GEFs = game:GetService("Workspace").GEFs
+        -- Loop through each "Mini GEF" in "GEFs" and destroy "hurtbox"
+        for _, miniGEF in pairs(GEFs:GetChildren()) do
+            if miniGEF.Name == "Mini GEF" then
+                local hurtbox = miniGEF:FindFirstChild("Hurtbox")
+                if hurtbox and hurtbox:IsA("BasePart") then
+                    hurtbox:Destroy()
+                end
+            end
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Hitbox gef",
+    Callback = function()
+              local miniGEFs = workspace.GEFs:GetChildren()
+
+        for _, miniGEF in ipairs(miniGEFs) do
+            if miniGEF:IsA("Model") and miniGEF:FindFirstChild("Hitbox") then
+                miniGEF.Hitbox.Size = Vector3.new(30, 30, 30)
+                miniGEF.Hitbox.Transparency = 0.8
+            end
+        end
+      end    
+})
+Tab:AddButton({
+    Name = "Delete all house and build",
+    Callback = function()
+              local function deleteBuildings()
+            local buildings = workspace:FindFirstChild("Buildings")
+            if buildings then
+                buildings:Destroy()
+            end
+        end
+        deleteBuildings()
+      end    
+})
+local Tab = Window:MakeTab({
+	Name = "Player2",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+Tab:AddButton({
+    Name = "Infammo",
+    Callback = function()
+    local localPlayer = Players.LocalPlayer
+    
+              game:GetService("Workspace").Ammo.Shells.Value = 5000
+        game.Players.LocalPlayer.RunData.Ammo.Shells.Value = 5000
+        game:GetService("Workspace").Ammo.Bullets.Value = 5000
+        game.Players.LocalPlayer.RunData.Ammo.Bullets.Value = 5000
+      end    
+})
+Tab:AddButton({
+    Name = "Infmoney Visual",
+    Callback = function()
+              local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local originalMoneyValue = nil
+
+if localPlayer then
+    local moneyValue = localPlayer:FindFirstChild("Money")
+    if moneyValue then
+        if not originalMoneyValue then
+            originalMoneyValue = moneyValue.Value
+        end
+        
+        if moneyValue.Value == originalMoneyValue then
+            moneyValue.Value = 100000
+        else
+            moneyValue.Value = originalMoneyValue
+        end
+    else
+        warn("Value Money tidak ditemukan di LocalPlayer")
+    end
+else
+    warn("LocalPlayer tidak ditemukan di Players service")
+end
+      end    
+})
+Tab:AddButton({
+    Name = "AntiFling",
+    Callback = function()
+              local Services = setmetatable({}, {__index = function(Self, Index)
+local NewService = game.GetService(game, Index)
+if NewService then
+Self[Index] = NewService
+end
+return NewService
+end})
+
+-- [ LocalPlayer ] --
+local LocalPlayer = Services.Players.LocalPlayer
+
+-- // Functions \\ --
+local function PlayerAdded(Player)
+   local Detected = false
+   local Character;
+   local PrimaryPart;
+
+   local function CharacterAdded(NewCharacter)
+       Character = NewCharacter
+       repeat
+           wait()
+           PrimaryPart = NewCharacter:FindFirstChild("HumanoidRootPart")
+       until PrimaryPart
+       Detected = false
+   end
+
+   CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
+   Player.CharacterAdded:Connect(CharacterAdded)
+   Services.RunService.Heartbeat:Connect(function()
+       if (Character and Character:IsDescendantOf(workspace)) and (PrimaryPart and PrimaryPart:IsDescendantOf(Character)) then
+           if PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 or PrimaryPart.AssemblyLinearVelocity.Magnitude > 100 then
+               if Detected == false then
+                   game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                       Text = "Fling Exploit detected, Player: " .. tostring(Player);
+                       Color = Color3.fromRGB(255, 200, 0);
+                   })
+               end
+               Detected = true
+               for i,v in ipairs(Character:GetDescendants()) do
+                   if v:IsA("BasePart") then
+                       v.CanCollide = false
+                       v.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                       v.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                       v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+                   end
+               end
+               PrimaryPart.CanCollide = false
+               PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+               PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+               PrimaryPart.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+           end
+       end
+   end)
+end
+
+-- // Event Listeners \\ --
+for i,v in ipairs(Services.Players:GetPlayers()) do
+   if v ~= LocalPlayer then
+       PlayerAdded(v)
+   end
+end
+Services.Players.PlayerAdded:Connect(PlayerAdded)
+
+local LastPosition = nil
+Services.RunService.Heartbeat:Connect(function()
+   pcall(function()
+       local PrimaryPart = LocalPlayer.Character.PrimaryPart
+       if PrimaryPart.AssemblyLinearVelocity.Magnitude > 250 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 250 then
+           PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+           PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+           PrimaryPart.CFrame = LastPosition
+
+           game.StarterGui:SetCore("ChatMakeSystemMessage", {
+               Text = "You were fling. Neutralizing velocity.";
+               Color = Color3.fromRGB(255, 0, 0);
+           })
+       elseif PrimaryPart.AssemblyLinearVelocity.Magnitude < 50 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 then
+           LastPosition = PrimaryPart.CFrame
+       end
+       end)
+       end)
+      end    
+})
+local aimbotEnabled = false
+
+Tab:AddToggle({
+	Name = "Aimbot",
+	Default = false,
+	Callback = function(Value)
+		aimbotEnabled = Value
+
+		-- Services
+		local Players = game:GetService("Players")
+		local RunService = game:GetService("RunService")
+
+		-- Player and Camera
+		local player = Players.LocalPlayer
+		local camera = workspace.CurrentCamera
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+		-- Function to get the nearest target
+		local function getNearestTarget()
+			local nearestTarget = nil
+			local shortestDistance = math.huge
+
+			for _, obj in pairs(workspace.GEFs:GetChildren()) do
+				if obj:FindFirstChild("RootPart") then
+					local distance = (humanoidRootPart.Position - obj.RootPart.Position).Magnitude
+					if distance < shortestDistance then
+						shortestDistance = distance
+						nearestTarget = obj.RootPart
+					end
+				end
+			end
+
+			return nearestTarget
+		end
+
+		-- Function to aim at the nearest target
+		local function aimAtTarget(target)
+			if target then
+				local targetPosition = target.Position
+
+				-- Adjust the camera CFrame to aim at the target
+				local desiredCFrame = CFrame.new(camera.CFrame.Position, targetPosition)
+				camera.CFrame = desiredCFrame
+			end
+		end
+
+		-- Update character and humanoidRootPart references when character respawns
+		local function onCharacterAdded(newCharacter)
+			character = newCharacter
+			humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		end
+
+		player.CharacterAdded:Connect(onCharacterAdded)
+
+		-- Main loop to aim at the nearest target
+		RunService.RenderStepped:Connect(function()
+			if aimbotEnabled and character and humanoidRootPart then
+				local nearestTarget = getNearestTarget()
+				aimAtTarget(nearestTarget)
+			end
+		end)
+	end
+})
+
+
+-- Initialize the library
+OrionLib:Init()
