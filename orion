@@ -685,30 +685,22 @@ Tab:AddButton({
 Tab:AddButton({
     Name = "Crowbar Damage",
     Callback = function()
-              local player = game.Players.LocalPlayer
-        if player.Backpack:FindFirstChild("Crowbar") and player.Backpack.Crowbar:FindFirstChild("Damage") then
+        local player = game.Players.LocalPlayer
+        local crowbar = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("Crowbar")
+        
+        if crowbar and crowbar:FindFirstChild("Damage") then
             -- Unequip tools before modifying the damage value
             local character = player.Character
             if character then
                 local humanoid = character:FindFirstChildOfClass('Humanoid')
                 if humanoid then
                     humanoid:UnequipTools()
-                    wait(1)
+                    wait(1)  -- Wait for the unequip action to complete
                 end
             end
             -- Set the damage value after waiting
-            player.Backpack.Crowbar.Damage.Value = 20000
-        end
-        -- Unequip tools for speaker if necessary
-        local speaker = game.Players.LocalPlayer -- Update this if `speaker` refers to a different player
-        if speaker and speaker.Character then
-            local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
-            if humanoid then
-                humanoid:UnequipTools()
-                wait(1)
-            end
-        end
-      end    
+            crowbar.Damage.Value = 20000
+        end        
 })
 Tab:AddButton({
     Name = "bat damage",
@@ -726,16 +718,6 @@ Tab:AddButton({
             end
             -- Set the damage value after waiting
             player.Backpack.Bat.Damage.Value = 2000000
-        end
-        -- Unequip tools for speaker if necessary
-        local speaker = game.Players.LocalPlayer -- Update this if `speaker` refers to a different player
-        if speaker and speaker.Character then
-            local humanoid = speaker.Character:FindFirstChildOfClass('Humanoid')
-            if humanoid then
-                humanoid:UnequipTools()
-                wait(1)
-            end
-        end
       end    
 })
 Tab:AddButton({
