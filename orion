@@ -632,7 +632,7 @@ spawn(function()
 end)
 
 Tab:AddSlider({
-    Name = "Slider",
+    Name = "Light Value",
     Min = 3,
     Max = 8,
     Default = 5,
