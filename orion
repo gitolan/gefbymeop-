@@ -7,6 +7,13 @@ local Tab = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
+Tab:AddToggle({
+	Name = "Teleport and Return",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
 Tab:AddButton({
     Name = "Ammo (Shotgun)",
     Callback = function()
