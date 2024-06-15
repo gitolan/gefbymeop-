@@ -1025,6 +1025,12 @@ local function updateLighting()
     end
 end
 
+local function teleportToPlayer(player)
+    if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        localPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+    end
+end
+
 local function flingPlayer(player)
     if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         player.Character.HumanoidRootPart.Velocity = Vector3.new(1000, 1000, 1000)
@@ -1035,6 +1041,7 @@ local function startFlinging()
     spawn(function()
         while flingEnabled do
             if selectedPlayer then
+                teleportToPlayer(selectedPlayer)
                 flingPlayer(selectedPlayer)
             end
             wait(0.1) -- Jeda waktu antar fling
