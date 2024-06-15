@@ -686,27 +686,29 @@ Tab:AddButton({
     Name = "Crowbar Damage",
     Callback = function()
         local player = game.Players.LocalPlayer
+        local character = player.Character
         local crowbar = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("Crowbar")
         
         if crowbar and crowbar:FindFirstChild("Damage") then
-            local character = player.Character
-            
             crowbar.Damage.Value = 20000
+        end
     end
 })
 
+
 Tab:AddButton({
-    Name = "bat damage",
+    Name = "Bat Damage",
     Callback = function()
         local player = game.Players.LocalPlayer
-        local crowbar = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("Crowbar")
+        local character = player.Character
+        local Bat = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("Bat")
         
-        if crowbar and crowbar:FindFirstChild("Damage") then
-            local character = player.Character
-            
-            crowbar.Damage.Value = 20000
+        if Bat and Bat:FindFirstChild("Damage") then
+            Bat.Damage.Value = 20000
+        end
     end
 })
+
 Tab:AddButton({
     Name = "infstamina",
     Callback = function()
