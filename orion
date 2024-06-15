@@ -694,8 +694,6 @@ Tab:AddButton({
         end
     end
 })
-
-
 Tab:AddButton({
     Name = "Bat Damage",
     Callback = function()
@@ -708,7 +706,6 @@ Tab:AddButton({
         end
     end
 })
-
 Tab:AddButton({
     Name = "infstamina",
     Callback = function()
