@@ -542,9 +542,10 @@ Tab:AddButton({
             teleportToRandomPlayer()
       end    
 })
-Tab:AddButton({
-    Name = "Toggle Noclip",
-    Callback = function()
+Tab:AddToggle({
+	Name = "This is a toggle!",
+	Default = false,
+	Callback = function(Value)
         noclipEnabled = Value
         local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
