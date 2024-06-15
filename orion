@@ -603,10 +603,12 @@ Tab:AddButton({
       end    
 })
 local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
 
 local fullbrightEnabled = false
-local fullbrightValue = 5 -- Default value from the slider
+local fullbrightValue = 3 -- Default value from the slider
 
+-- Function to update the Lighting settings based on fullbrightEnabled state and fullbrightValue
 local function updateLighting()
     if fullbrightEnabled then
         Lighting.Brightness = fullbrightValue
@@ -621,21 +623,19 @@ local function updateLighting()
     end
 end
 
--- Start a loop that updates the lighting every 5 seconds
-spawn(function()
-    while true do
-        if fullbrightEnabled then
-            updateLighting()
-        end
-        wait(5)
-    end
+-- Initial call to set the default lighting settings
+updateLighting()
+
+-- Connect to the Heartbeat event to update lighting settings
+RunService.Heartbeat:Connect(function()
+    updateLighting()
 end)
 
 Tab:AddSlider({
     Name = "Light Value",
-    Min = 3,
+    Min = 2,
     Max = 8,
-    Default = 5,
+    Default = 3,
     Color = Color3.fromRGB(255, 255, 255),
     Increment = 1,
     ValueName = "fullbright",
@@ -644,8 +644,7 @@ Tab:AddSlider({
         if fullbrightEnabled then
             updateLighting()
         end
-        print(Value)
-    end    
+    end
 })
 
 Tab:AddButton({
@@ -653,7 +652,7 @@ Tab:AddButton({
     Callback = function()
         fullbrightEnabled = not fullbrightEnabled
         updateLighting()
-    end    
+    end
 })
 
 Tab:AddButton({
