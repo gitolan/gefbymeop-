@@ -1153,6 +1153,7 @@ Tab:AddToggle({
         flingEnabled = Value
         if flingEnabled then
             startFlinging()
+            NoclipToggle:Set(true)
         else
             stopFlinging()
         end
