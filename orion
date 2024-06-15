@@ -542,6 +542,7 @@ Tab:AddButton({
             teleportToRandomPlayer()
       end    
 })
+local aimbotEnabled = false
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
@@ -563,6 +564,7 @@ Tab:AddToggle({
     Name = "This is a toggle!",
     Default = false,
     Callback = function(Value)
+        local aimbotEnabled = Value
         if Value then
             Clip = false
             wait(0.1)
