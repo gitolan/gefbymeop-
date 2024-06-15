@@ -1010,6 +1010,9 @@ local selectedPlayer = nil
 local flingEnabled = false
 local fullbrightEnabled = false
 local fullbrightValue = 3 -- Default value from the slider
+local flingBodyAngularVelocity = nil
+local initialPosition = nil
+local initialCFrame = nil
 
 local function updateLighting()
     if fullbrightEnabled then
@@ -1025,15 +1028,69 @@ local function updateLighting()
     end
 end
 
+local function randomString(length)
+    local charset = {}
+    for i = 48, 57 do table.insert(charset, string.char(i)) end
+    for i = 65, 90 do table.insert(charset, string.char(i)) end
+    for i = 97, 122 do table.insert(charset, string.char(i)) end
+    if length == nil then length = 10 end
+    local result = ""
+    for i = 1, length do
+        result = result .. charset[math.random(1, #charset)]
+    end
+    return result
+end
+
+local function getRoot(character)
+    return character:FindFirstChild("HumanoidRootPart") or character:FindFirstChild("Torso")
+end
+
+local function setCharacterFlingProperties(character)
+    for _, child in pairs(character:GetDescendants()) do
+        if child:IsA("BasePart") then
+            child.CustomPhysicalProperties = PhysicalProperties.new(math.huge, 0.3, 0.5)
+        end
+    end
+
+    local root = getRoot(character)
+    if root then
+        flingBodyAngularVelocity = Instance.new("BodyAngularVelocity")
+        flingBodyAngularVelocity.Name = randomString()
+        flingBodyAngularVelocity.Parent = root
+        flingBodyAngularVelocity.AngularVelocity = Vector3.new(0, 99999, 0)
+        flingBodyAngularVelocity.MaxTorque = Vector3.new(0, math.huge, 0)
+        flingBodyAngularVelocity.P = math.huge
+    end
+
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.CanCollide = false
+            part.Massless = true
+            part.Velocity = Vector3.new(0, 0, 0)
+        end
+    end
+end
+
 local function teleportToPlayer(player)
-    if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        localPlayer.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
+    if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and player and player.Character then
+        local root = getRoot(player.Character)
+        if root then
+            initialPosition = localPlayer.Character.HumanoidRootPart.Position
+            initialCFrame = localPlayer.Character.HumanoidRootPart.CFrame
+            localPlayer.Character.HumanoidRootPart.CFrame = root.CFrame
+        end
     end
 end
 
 local function flingPlayer(player)
-    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        player.Character.HumanoidRootPart.Velocity = Vector3.new(1000, 1000, 1000)
+    if player and player.Character then
+        setCharacterFlingProperties(player.Character)
+    end
+end
+
+local function returnToInitialPosition()
+    if initialPosition and initialCFrame then
+        localPlayer.Character.HumanoidRootPart.CFrame = initialCFrame
     end
 end
 
@@ -1046,11 +1103,16 @@ local function startFlinging()
             end
             wait(0.1) -- Jeda waktu antar fling
         end
+        returnToInitialPosition()
     end)
 end
 
 local function stopFlinging()
-    -- Tidak perlu melakukan apapun di sini karena loop akan berhenti saat flingEnabled menjadi false
+    if flingBodyAngularVelocity then
+        flingBodyAngularVelocity:Destroy()
+        flingBodyAngularVelocity = nil
+    end
+    returnToInitialPosition()
 end
 
 -- Initial call to set the default lighting settings
