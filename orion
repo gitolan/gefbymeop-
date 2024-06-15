@@ -692,27 +692,20 @@ Tab:AddButton({
             local character = player.Character
             
             crowbar.Damage.Value = 20000
-        end
     end
 })
 
 Tab:AddButton({
     Name = "bat damage",
     Callback = function()
-              local player = game.Players.LocalPlayer
-        if player.Backpack:FindFirstChild("Bat") and player.Backpack.Bat:FindFirstChild("Damage") then
-            -- Unequip tools before modifying the damage value
+        local player = game.Players.LocalPlayer
+        local crowbar = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("Crowbar")
+        
+        if crowbar and crowbar:FindFirstChild("Damage") then
             local character = player.Character
-            if character then
-                local humanoid = character:FindFirstChildOfClass('Humanoid')
-                if humanoid then
-                    humanoid:UnequipTools()
-                    wait(1)
-                end
-            end
-            -- Set the damage value after waiting
-            player.Backpack.Bat.Damage.Value = 2000000
-      end    
+            
+            crowbar.Damage.Value = 20000
+    end
 })
 Tab:AddButton({
     Name = "infstamina",
