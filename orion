@@ -545,6 +545,7 @@ Tab:AddButton({
 Tab:AddButton({
     Name = "Toggle Noclip",
     Callback = function()
+        noclipEnabled = Value
         local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
