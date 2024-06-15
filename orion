@@ -700,7 +700,8 @@ Tab:AddButton({
             end
             -- Set the damage value after waiting
             crowbar.Damage.Value = 20000
-        end        
+        end
+    end
 })
 Tab:AddButton({
     Name = "bat damage",
