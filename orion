@@ -543,34 +543,40 @@ Tab:AddButton({
       end    
 })
 Tab:AddButton({
-    Name = "noclip",
+    Name = "Toggle Noclip",
     Callback = function()
-              local Noclipping = nil
-        local speaker = game:GetService("Players").LocalPlayer
-        local RunService = game:GetService("RunService")
-        Clip = false
-        wait(0.1)
-        local function NoclipLoop()
-            if Clip == false and speaker.Character ~= nil then
-                for _, child in pairs(speaker.Character:GetDescendants()) do
-                    if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
-                        child.CanCollide = false
-                    end
-                end
+        local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local speaker = Players.LocalPlayer
+local Clip = true
+local Noclipping
+
+local function NoclipLoop()
+    if not Clip and speaker.Character then
+        for _, child in pairs(speaker.Character:GetDescendants()) do
+            if child:IsA("BasePart") and child.CanCollide and child.Name ~= "floatName" then
+                child.CanCollide = false
             end
         end
-        Noclipping = RunService.Stepped:Connect(NoclipLoop)
-      end    
-})
-Tab:AddButton({
-    Name = "unnoclip",
-    Callback = function()
-              if Noclipping then
-            Noclipping:Disconnect()
+    end
+end
+        if Clip then
+            Clip = false
+            wait(0.1)
+            if not Noclipping then
+                Noclipping = RunService.Stepped:Connect(NoclipLoop)
+            end
+        else
+            if Noclipping then
+                Noclipping:Disconnect()
+                Noclipping = nil
+            end
+            Clip = true
         end
-        Clip = true
-      end    
+    end    
 })
+
 Tab:AddButton({
     Name = "infjump",
     Callback = function()
