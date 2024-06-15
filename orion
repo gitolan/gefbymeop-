@@ -1047,30 +1047,31 @@ Tab:AddToggle({
 		end)
 	end
 })
--- Membuat dropdown
 local players = game:GetService("Players")
-local options = {}
 
--- Menambahkan nama pemain ke dalam options
+local options = {}
 for _, player in ipairs(players:GetPlayers()) do
     table.insert(options, player.Name)
 end
 
--- Membuat dropdown dengan opsi pemain
+local selectedPlayer = nil
+local flingEnabled = false
+
+-- Membuat Dropdown untuk pemain
 Tab:AddDropdown({
-    Name = "Select Player Here",
+    Name = "PlayerDropdown",
     Default = options[1] or "",
     Options = options,
     Callback = function(Value)
-        print(Value)
-    end    
+        selectedPlayer = players:FindFirstChild(Value)
+    end
 })
 
 -- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
 players.PlayerAdded:Connect(function(player)
     table.insert(options, player.Name)
     Tab:UpdateDropdown({
-        Name = "Dropdown",
+        Name = "PlayerDropdown",
         Options = options
     })
 end)
@@ -1083,11 +1084,43 @@ players.PlayerRemoving:Connect(function(leavingPlayer)
         end
     end
     Tab:UpdateDropdown({
-        Name = "Select Player Here",
+        Name = "PlayerDropdown",
         Options = options
     })
 end)
 
+-- Membuat Toggle untuk fling
+Tab:AddToggle({
+    Name = "Fling Toggle",
+    Default = false,
+    Callback = function(Value)
+        flingEnabled = Value
+        if not flingEnabled then
+            stopFlinging()
+        else
+            startFlinging()
+        end
+    end
+})
+
+local function flingPlayer(player)
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.Velocity = Vector3.new(1000, 1000, 1000)
+    end
+end
+
+local function startFlinging()
+    while flingEnabled do
+        if selectedPlayer then
+            flingPlayer(selectedPlayer)
+        end
+        wait(0.1) -- Jeda waktu antar fling
+    end
+end
+
+local function stopFlinging()
+    -- Tidak perlu melakukan apapun di sini karena loop akan berhenti saat flingEnabled menjadi false
+end
 
 -- Initialize the library
 OrionLib:Init()
