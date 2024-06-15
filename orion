@@ -1047,6 +1047,46 @@ Tab:AddToggle({
 		end)
 	end
 })
+-- Membuat dropdown
+local players = game:GetService("Players")
+local options = {}
+
+-- Menambahkan nama pemain ke dalam options
+for _, player in ipairs(players:GetPlayers()) do
+    table.insert(options, player.Name)
+end
+
+-- Membuat dropdown dengan opsi pemain
+Tab:AddDropdown({
+    Name = "Select Player Here",
+    Default = options[1] or "",
+    Options = options,
+    Callback = function(Value)
+        print(Value)
+    end    
+})
+
+-- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
+players.PlayerAdded:Connect(function(player)
+    table.insert(options, player.Name)
+    Tab:UpdateDropdown({
+        Name = "Dropdown",
+        Options = options
+    })
+end)
+
+players.PlayerRemoving:Connect(function(leavingPlayer)
+    for i, playerName in ipairs(options) do
+        if playerName == leavingPlayer.Name then
+            table.remove(options, i)
+            break
+        end
+    end
+    Tab:UpdateDropdown({
+        Name = "Select Player Here",
+        Options = options
+    })
+end)
 
 
 -- Initialize the library
