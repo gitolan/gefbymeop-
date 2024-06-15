@@ -7,155 +7,138 @@ local Tab = Window:MakeTab({
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
+local teleportAndReturn = false
+local initialPosition = nil
+
 Tab:AddToggle({
 	Name = "Teleport and Return",
 	Default = false,
 	Callback = function(Value)
-		print(Value)
+		teleportAndReturn = Value
 	end    
 })
+
+local function teleportAndReturnHandler(pickup)
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        if teleportAndReturn and not initialPosition then
+            initialPosition = character.HumanoidRootPart.CFrame
+        end
+        
+        character.HumanoidRootPart.CFrame = pickup.CFrame
+        
+        if teleportAndReturn and initialPosition then
+            wait(1)  -- Adjust the wait time as needed
+            character.HumanoidRootPart.CFrame = initialPosition
+            initialPosition = nil  -- Reset the initial position after returning
+        end
+    end
+end
+
 Tab:AddButton({
     Name = "Ammo (Shotgun)",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Shells
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Shells
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Ammo (Handgun)",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Bullets
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Bullets
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
-    Name = "chocolate",
+    Name = "Chocolate",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Food
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Food
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Medkit",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Medkit
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Medkit
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Bat",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Bat
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Bat
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Crowbar",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Crowbar
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Crowbar
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Shotgun",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Shotgun
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Shotgun
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Glock",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Handgun
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Handgun
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Money",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Money
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Money
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Hammer",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Hammer
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Hammer
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Lamp",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Lantern
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Lantern
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Drink",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.Soda
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.Soda
+        teleportAndReturnHandler(pickup)
+    end    
 })
+
 Tab:AddButton({
     Name = "Radar",
     Callback = function()
-              local player = game.Players.LocalPlayer
-              local character = player.Character
-              local pickup = game.Workspace.Pickups.GPS
-              if character and character:FindFirstChild("HumanoidRootPart") then
-                  character.HumanoidRootPart.CFrame = pickup.CFrame
-              end
-      end    
+        local pickup = game.Workspace.Pickups.GPS
+        teleportAndReturnHandler(pickup)
+    end    
 })
 local Tab = Window:MakeTab({
 	Name = "Teleport 2",
