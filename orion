@@ -606,9 +606,8 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local Lighting = game:GetService("Lighting")
 
-local brightLoop
 local fullbrightEnabled = false
-local fullbrightValue = 3 -- Default value from the slider
+local fullbrightValue = 5 -- Default value from the slider
 
 local function updateLighting()
     if fullbrightEnabled then
@@ -620,10 +619,10 @@ local function updateLighting()
 end
 
 Tab:AddSlider({
-    Name = "light value",
+    Name = "Slider",
     Min = 3,
     Max = 8,
-    Default = 3,
+    Default = 5,
     Color = Color3.fromRGB(255,255,255),
     Increment = 1,
     ValueName = "fullbright",
@@ -641,17 +640,14 @@ Tab:AddButton({
     Callback = function()
         fullbrightEnabled = not fullbrightEnabled
         if fullbrightEnabled then
-            if brightLoop then
-                brightLoop:Disconnect()
-            end
-            while true do 
-            wait(2) 
-            Connect(updateLighting)
+            -- Start the update loop
+            spawn(function()
+                while fullbrightEnabled do
+                    updateLighting()
+                    wait(5)
+                end
+            end)
         else
-            if brightLoop then
-                brightLoop:Disconnect()
-                brightLoop = nil
-            end
             -- Reset to default lighting settings
             Lighting.Brightness = 2
             Lighting.FogEnd = 10000
@@ -660,6 +656,7 @@ Tab:AddButton({
         end
     end    
 })
+
 
 
 Tab:AddButton({
