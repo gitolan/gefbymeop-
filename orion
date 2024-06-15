@@ -542,12 +542,7 @@ Tab:AddButton({
             teleportToRandomPlayer()
       end    
 })
-Tab:AddToggle({
-	Name = "This is a toggle!",
-	Default = false,
-	Callback = function(Value)
-        noclipEnabled = Value
-        local Players = game:GetService("Players")
+local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 local speaker = Players.LocalPlayer
@@ -563,7 +558,12 @@ local function NoclipLoop()
         end
     end
 end
-        if Clip then
+
+Tab:AddToggle({
+    Name = "This is a toggle!",
+    Default = false,
+    Callback = function(Value)
+        if Value then
             Clip = false
             wait(0.1)
             if not Noclipping then
@@ -578,6 +578,7 @@ end
         end
     end    
 })
+
 
 Tab:AddButton({
     Name = "infjump",
