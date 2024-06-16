@@ -1,21 +1,20 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+-- Load Orion Library
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
 
+-- Create Main Window
 local Window = OrionLib:MakeWindow({Name = "Gef Script OP", HidePremium = false, SaveConfig = true, ConfigFolder = "GefGui"})
 
-local Tab = Window:MakeTab({
-	Name = "Teleport",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
+-- Define Tab for Teleport
+local teleportTab = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local teleportAndReturn = false
 local initialPosition = nil
 
-Tab:AddToggle({
-	Name = "Teleport and Return",
-	Default = false,
-	Callback = function(Value)
-		teleportAndReturn = Value
-	end    
+teleportTab:AddToggle({
+    Name = "Teleport and Return",
+    Default = false,
+    Callback = function(value)
+        teleportAndReturn = value
+    end
 })
 
 local function teleportAndReturnHandler(pickup)
@@ -30,463 +29,189 @@ local function teleportAndReturnHandler(pickup)
         character.HumanoidRootPart.CFrame = pickup.CFrame
         
         if teleportAndReturn and initialPosition then
-            wait(1)  -- Adjust the wait time as needed
+            wait(1)
             character.HumanoidRootPart.CFrame = initialPosition
-            initialPosition = nil  -- Reset the initial position after returning
+            initialPosition = nil
         end
     end
 end
 
-Tab:AddButton({
-    Name = "Ammo (Shotgun)",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Shells
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Ammo (Handgun)",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Bullets
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Chocolate",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Food
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Medkit",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Medkit
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Bat",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Bat
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Crowbar",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Crowbar
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Shotgun",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Shotgun
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Glock",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Handgun
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Money",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Money
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Hammer",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Hammer
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Lamp",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Lantern
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Drink",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.Soda
-        teleportAndReturnHandler(pickup)
-    end    
-})
-
-Tab:AddButton({
-    Name = "Radar",
-    Callback = function()
-        local pickup = game.Workspace.Pickups.GPS
-        teleportAndReturnHandler(pickup)
-    end    
-})
-local Tab = Window:MakeTab({
-	Name = "Teleport 2",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-Tab:AddButton({
-    Name = "TpWorkshop",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(483.749878, 3.25000095, -19.7498322)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
+local function addTeleportButton(tab, name, pickupName)
+    tab:AddButton({
+        Name = name,
+        Callback = function()
+            local pickup = game.Workspace.Pickups:FindFirstChild(pickupName)
+            if pickup then
+                teleportAndReturnHandler(pickup)
+            else
+                warn(pickupName .. " not found.")
+            end
         end
-      end    
-})
-Tab:AddButton({
-    Name = "1 St Floor Hospital",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(635, 22.4999943, 149.5, -1, 0, 0, 0, 1, 0, 0, 0, -1)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
+    })
+end
+
+local items = {"Shells", "Bullets", "Food", "Medkit", "Bat", "Crowbar", "Shotgun", "Handgun", "Money", "Hammer", "Lantern", "Soda", "GPS"}
+
+for _, item in ipairs(items) do
+    addTeleportButton(teleportTab, "Pickup " .. item, item)
+end
+
+-- Define Tab for Fixed Teleport Locations
+local teleportFixedTab = Window:MakeTab({Name = "Teleport 2", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+local locations = {
+    {"TpWorkshop", CFrame.new(483.749878, 3.25000095, -19.7498322)},
+    {"1 St Floor Hospital", CFrame.new(635, 22.4999943, 149.5, -1, 0, 0, 0, 1, 0, 0, 0, -1)},
+    {"Tower", CFrame.new(-117.500183, 54.5, -676.999817)},
+    {"Shop", CFrame.new(-20.9999962, 6, 12)},
+    {"small house", CFrame.new(581, 3, -435)},
+    {"2nd floor house", CFrame.new(-361, 7, 514)},
+    {"Water Tank", CFrame.new(-360, 43, -287)},
+    {"Spawn", CFrame.new(-65, 4, -49)},
+    {"Small house2", CFrame.new(-22, 5, -521)},
+    {"House2", CFrame.new(-280, 6, 347)},
+    {"tower2", CFrame.new(819, 57, -680)},
+    {"3rd Hospital", CFrame.new(643, 44.4999962, 254, -1, 0, 0, 0, 1, 0, 0, 0, -1)}
+}
+
+for _, location in ipairs(locations) do
+    teleportFixedTab:AddButton({
+        Name = location[1],
+        Callback = function()
+            local character = game.Players.LocalPlayer.Character
+            if character then
+                character:SetPrimaryPartCFrame(location[2])
+            else
+                warn("Character not found.")
+            end
         end
-      end    
-})
-Tab:AddButton({
-    Name = "Tower",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-117.500183, 54.5, -676.999817)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
+    })
+end
+
+-- Define Tab for ESP Functions
+local espTab = Window:MakeTab({Name = "Esp", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+local function createESP(part)
+    local billboardGui = Instance.new("BillboardGui")
+    billboardGui.AlwaysOnTop = true
+    billboardGui.Size = UDim2.new(0, 200, 0, 40)
+    billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+    
+    local textLabel = Instance.new("TextLabel")
+    textLabel.BackgroundTransparency = 1
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.Text = part.Name
+    textLabel.TextScaled = false
+    textLabel.TextSize = 24
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextColor3 = Color3.new(1, 1, 1)
+    textLabel.TextStrokeTransparency = 0.4
+    textLabel.Parent = billboardGui
+    
+    billboardGui.Parent = part
+    
+    local box = Instance.new("BoxHandleAdornment")
+    box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
+    box.Adornee = part
+    box.Color3 = Color3.new(0, 1, 0)
+    box.Transparency = 0.5
+    box.AlwaysOnTop = true
+    box.ZIndex = 5
+    box.Parent = part
+end
+
+local function updateESPSize()
+    local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    for _, part in ipairs(workspace.Pickups:GetChildren()) do
+        if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
+            local distance = (part.Position - playerPosition).Magnitude
+            part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
         end
-      end    
-})
-Tab:AddButton({
-    Name = "Shop",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-20.9999962, 6, 12)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "small house",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(581, 3, -435)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "2nd floor house",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-361, 7, 514)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "Water Tank",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-360, 43, -287)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "Spawn",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-65, 4, -49)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "Small house2",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-22, 5, -521)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "House2",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(-280, 6, 347)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "tower2",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(819, 57, -680)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-Tab:AddButton({
-    Name = "3rd Hospital",
-    Callback = function()
-              local character = game.Players.LocalPlayer.Character
-        if character then
-            local newPosition = CFrame.new(643, 44.4999962, 254, -1, 0, 0, 0, 1, 0, 0, 0, -1)
-            character:SetPrimaryPartCFrame(newPosition)
-        else
-            print("Karakter tidak ditemukan.")
-        end
-      end    
-})
-local Tab = Window:MakeTab({
-	Name = "Esp",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-Tab:AddButton({
+    end
+end
+
+local function handleNewItems(item)
+    if item:IsA("BasePart") then
+        createESP(item)
+    end
+end
+
+espTab:AddButton({
     Name = "Esp All Item",
     Callback = function()
-              local function createESP(part)
-            local billboardGui = Instance.new("BillboardGui")
-            billboardGui.AlwaysOnTop = true
-            billboardGui.Size = UDim2.new(0, 200, 0, 40)
-            billboardGui.StudsOffset = Vector3.new(0, 3, 0)
-            
-            local textLabel = Instance.new("TextLabel")
-            textLabel.BackgroundTransparency = 1
-            textLabel.Size = UDim2.new(1, 0, 1, 0)
-            textLabel.Text = part.Name
-            textLabel.TextScaled = false
-            textLabel.TextSize = 24
-            textLabel.Font = Enum.Font.SourceSansBold
-            textLabel.TextColor3 = Color3.new(1, 1, 1)
-            textLabel.TextStrokeTransparency = 0.4  
-            textLabel.Parent = billboardGui
-            
-            billboardGui.Parent = part
-            
-            local box = Instance.new("BoxHandleAdornment")
-            box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
-            box.Adornee = part
-            box.Color3 = Color3.new(0, 1, 0)
-            box.Transparency = 0.5
-            box.AlwaysOnTop = true
-            box.ZIndex = 5
-            box.Parent = part
-        end
-
-        local function updateESPSize()
-            local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-            for _, part in ipairs(workspace.Pickups:GetChildren()) do
-                if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
-                    local distance = (part.Position - playerPosition).Magnitude
-                    part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
-                end
-            end
-        end
-
-        local function handleNewItems(item)
-            if item:IsA("BasePart") then
-                createESP(item)
-            end
-        end
-
         for _, part in ipairs(workspace.Pickups:GetChildren()) do
             handleNewItems(part)
         end
-
+        
         game:GetService("RunService").RenderStepped:Connect(updateESPSize)
         workspace.Pickups.ChildAdded:Connect(handleNewItems)
-      end    
+    end
 })
-Tab:AddButton({
+
+espTab:AddButton({
     Name = "Player Esp gui",
     Callback = function()
-              loadstring(game:HttpGet("https://pastebin.com/raw/USEXe42D"))()
-      end    
+        loadstring(game:HttpGet("https://pastebin.com/raw/USEXe42D"))()
+    end
 })
-Tab:AddButton({
+
+local function createESPForGEF(part)
+    local espGui = Instance.new("BillboardGui", part)
+    espGui.Adornee = part
+    espGui.Size = UDim2.new(0, 200, 0, 50)
+    espGui.AlwaysOnTop = true
+    espGui.StudsOffset = Vector3.new(0, 3, 0)
+    
+    local nameLabel = Instance.new("TextLabel", espGui)
+    nameLabel.Text = "GEF"
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.Size = UDim2.new(0, 200, 0, 20)
+    nameLabel.Font = Enum.Font.SourceSansBold
+    nameLabel.TextSize = 18
+    
+    local distanceLabel = Instance.new("TextLabel", espGui)
+    distanceLabel.BackgroundTransparency = 1
+    distanceLabel.Size = UDim2.new(0, 200, 0, 20)
+    distanceLabel.Font = Enum.Font.SourceSansBold
+    distanceLabel.TextSize = 18
+    distanceLabel.Position = UDim2.new(0, 0, 0, 20)
+    
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if part.Parent and espGui.Parent then
+            local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
+            distanceLabel.Text = string.format("Distance: %.2f", distance)
+            
+            if distance < 50 then
+                nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
+            elseif distance < 100 then
+                nameLabel.TextColor3 = Color3.new(1, 1, 0)
+                distanceLabel.TextColor3 = Color3.new(1, 1, 0)
+            else
+                nameLabel.TextColor3 = Color3.new(0, 1, 0)
+                distanceLabel.TextColor3 = Color3.new(0, 1, 0)
+            end
+        else
+            espGui:Destroy()
+        end
+    end)
+end
+
+espTab:AddButton({
     Name = "Gefs Esp",
     Callback = function()
-              local function createESPForRootPart(part)
-            local espGui = Instance.new("BillboardGui", part)
-            espGui.Adornee = part
-            espGui.Size = UDim2.new(0, 200, 0, 50)
-            espGui.AlwaysOnTop = true
-            espGui.StudsOffset = Vector3.new(0, 3, 0)
-            
-            local nameLabel = Instance.new("TextLabel", espGui)
-            nameLabel.Text = "GEFs"
-            nameLabel.BackgroundTransparency = 1
-            nameLabel.Size = UDim2.new(0, 200, 0, 20)
-            nameLabel.Font = Enum.Font.SourceSansBold
-            nameLabel.TextSize = 18
-            
-            local distanceLabel = Instance.new("TextLabel", espGui)
-            distanceLabel.BackgroundTransparency = 1
-            distanceLabel.Size = UDim2.new(0, 200, 0, 20)
-            distanceLabel.Font = Enum.Font.SourceSansBold
-            distanceLabel.TextSize = 18
-            distanceLabel.Position = UDim2.new(0, 0, 0, 20)
-            
-            game:GetService("RunService").RenderStepped:Connect(function()
-                local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
-                distanceLabel.Text = string.format("Distance: %.2f", distance)
-                
-                if distance < 50 then
-                    nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
-                    distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
-                elseif distance < 100 then
-                    nameLabel.TextColor3 = Color3.new(1, 1, 0)
-                    distanceLabel.TextColor3 = Color3.new(1, 1, 0)
-                else
-                    nameLabel.TextColor3 = Color3.new(0, 1, 0)
-                    distanceLabel.TextColor3 = Color3.new(0, 1, 0)
-                end
-            end)
-        end
-        
-        local espEnabled = true
-        
-        local function toggleESP()
-            while espEnabled do
-                for _, part in pairs(workspace:GetDescendants()) do
-                    if part:IsA("BasePart") and part.Name == "RootPart" then
-                        if not part:FindFirstChildOfClass("BillboardGui") then
-                            createESPForRootPart(part)
-                        end
-                    end
-                end
-                wait(60)
-            end
-        end
-        toggleESP()
-      end    
-})
-Tab:AddButton({
-    Name = "GEF esp",
-    Callback = function()
-              local espEnabled = true
-        
-        local function createESPForGEF(part)
-            local espGui = Instance.new("BillboardGui", part)
-            espGui.Adornee = part
-            espGui.Size = UDim2.new(0, 200, 0, 50)
-            espGui.AlwaysOnTop = true
-            espGui.StudsOffset = Vector3.new(0, 3, 0)
-            
-            local nameLabel = Instance.new("TextLabel", espGui)
-            nameLabel.Text = "GEF"
-            nameLabel.BackgroundTransparency = 1
-            nameLabel.Size = UDim2.new(0, 200, 0, 20)
-            nameLabel.Font = Enum.Font.SourceSansBold
-            nameLabel.TextSize = 18
-            
-            local distanceLabel = Instance.new("TextLabel", espGui)
-            distanceLabel.BackgroundTransparency = 1
-            distanceLabel.Size = UDim2.new(0, 200, 0, 20)
-            distanceLabel.Font = Enum.Font.SourceSansBold
-            distanceLabel.TextSize = 18
-            distanceLabel.Position = UDim2.new(0, 0, 0, 20)
-            
-            game:GetService("RunService").RenderStepped:Connect(function()
-                if part.Parent and espGui.Parent then
-                    local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
-                    distanceLabel.Text = string.format("Distance: %.2f", distance)
-                    
-                    if distance < 50 then
-                        nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
-                        distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
-                    elseif distance < 100 then
-                        nameLabel.TextColor3 = Color3.new(1, 1, 0)
-                        distanceLabel.TextColor3 = Color3.new(1, 1, 0)
-                    else
-                        nameLabel.TextColor3 = Color3.new(0, 1, 0)
-                        distanceLabel.TextColor3 = Color3.new(0, 1, 0)
-                    end
-                else
-                    espGui:Destroy()
-                end
-            end)
-        end
-        
-        local function toggleESP()
-            while espEnabled do
-                for _, part in pairs(workspace:GetDescendants()) do
-                    if part:IsA("BasePart") and part.Name == "RootPart" then
-                        if not part:FindFirstChildOfClass("BillboardGui") then
-                            createESPForRootPart(part)
-                        end
-                    end
-                end
-                wait(60)
-            end
-        end
-
         for _, part in pairs(workspace:GetDescendants()) do
-            if part:IsA("BasePart") and part.Name == "ShatterHitbox" then
-                createESPForShatterHitbox(part)
+            if part:IsA("BasePart") and part.Name == "RootPart" and not part:FindFirstChildOfClass("BillboardGui") then
+                createESPForGEF(part)
             end
         end
-        
-        toggleESP()
-      end    
+    end
 })
-Tab:AddButton({
+
+espTab:AddButton({
     Name = "Delete Esp",
     Callback = function()
-              local function removeESP(part)
+        local function removeESP(part)
             for _, child in ipairs(part:GetChildren()) do
                 if child:IsA("BillboardGui") or child:IsA("BoxHandleAdornment") then
                     child:Destroy()
@@ -503,7 +228,7 @@ Tab:AddButton({
         end
         
         removeAllESP()
-      end    
+    end
 })
 local Tab = Window:MakeTab({
 	Name = "Player",
