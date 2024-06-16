@@ -809,10 +809,10 @@ Tab:AddButton({
     Callback = function()
     local localPlayer = Players.LocalPlayer
     
-              game:GetService("Workspace").Ammo.Shells.Value = 5000
-        game.Players.LocalPlayer.RunData.Ammo.Shells.Value = 5000
-        game:GetService("Workspace").Ammo.Bullets.Value = 5000
-        game.Players.LocalPlayer.RunData.Ammo.Bullets.Value = 5000
+        game:GetService("Workspace").Ammo.Shells.Value = 50000
+        game.Players.LocalPlayer.RunData.Ammo.Shells.Value = 50000
+        game:GetService("Workspace").Ammo.Bullets.Value = 50000
+        game.Players.LocalPlayer.RunData.Ammo.Bullets.Value = 50000
       end    
 })
 Tab:AddButton({
@@ -842,6 +842,7 @@ else
 end
       end    
 })
+
 Tab:AddButton({
     Name = "AntiFling",
     Callback = function()
