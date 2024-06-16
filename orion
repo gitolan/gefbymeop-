@@ -987,25 +987,26 @@ Tab:AddToggle({
 	end
 })
 
-local Players = game:GetService("Players")
+local players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
-local localPlayer = Players.LocalPlayer
-
--- Variables
-local selectedPlayer = nil
-local flingEnabled = false
-local fullbrightEnabled = false
-local fullbrightValue = 3
-local flingBodyAngularVelocity = nil
-local initialCFrame = nil
+local localPlayer = players.LocalPlayer
+local options = {}
 
 local options = {}
-for _, player in ipairs(Players:GetPlayers()) do
+for _, player in ipairs(players:GetPlayers()) do
     if player ~= localPlayer then
         table.insert(options, player.Name)
     end
 end
+
+local selectedPlayer = nil
+local flingEnabled = false
+local fullbrightEnabled = false
+local fullbrightValue = 3 -- Default value from the slider
+local flingBodyAngularVelocity = nil
+local initialPosition = nil
+local initialCFrame = nil
 
 local function updateLighting()
     if fullbrightEnabled then
@@ -1026,8 +1027,9 @@ local function randomString(length)
     for i = 48, 57 do table.insert(charset, string.char(i)) end
     for i = 65, 90 do table.insert(charset, string.char(i)) end
     for i = 97, 122 do table.insert(charset, string.char(i)) end
+    if length == nil then length = 10 end
     local result = ""
-    for i = 1, length or 10 do
+    for i = 1, length do
         result = result .. charset[math.random(1, #charset)]
     end
     return result
@@ -1063,39 +1065,41 @@ local function setCharacterFlingProperties(character)
     end
 end
 
-local function teleportToPlayer(targetPlayer)
-    if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer and targetPlayer.Character then
-        local root = getRoot(targetPlayer.Character)
+local function teleportToPlayer(player)
+    if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and player and player.Character then
+        local root = getRoot(player.Character)
         if root then
+            initialPosition = localPlayer.Character.HumanoidRootPart.Position
             initialCFrame = localPlayer.Character.HumanoidRootPart.CFrame
             localPlayer.Character.HumanoidRootPart.CFrame = root.CFrame
         end
     end
 end
 
-local function flingPlayer(targetPlayer)
-    if targetPlayer and targetPlayer.Character then
-        setCharacterFlingProperties(targetPlayer.Character)
+local function flingPlayer(player)
+    if player and player.Character then
+        setCharacterFlingProperties(player.Character)
     end
 end
 
 local function returnToInitialPosition()
-    if initialCFrame then
+    if initialPosition and initialCFrame then
         localPlayer.Character.HumanoidRootPart.CFrame = initialCFrame
     end
 end
 
 local function startFlinging()
-    coroutine.wrap(function()
+    spawn(function()
         while flingEnabled do
             if selectedPlayer then
                 teleportToPlayer(selectedPlayer)
                 flingPlayer(selectedPlayer)
+                Noclip:Set(true)
             end
-            wait(0.1)
+            wait(0.1) -- Jeda waktu antar fling
         end
         returnToInitialPosition()
-    end)()
+    end)
 end
 
 local function stopFlinging()
@@ -1106,36 +1110,53 @@ local function stopFlinging()
     returnToInitialPosition()
 end
 
+-- Initial call to set the default lighting settings
 updateLighting()
+
+-- Connect to the Heartbeat event to update lighting settings
 RunService.Heartbeat:Connect(updateLighting)
 
+-- Membuat Dropdown untuk pemain
+for _, player in ipairs(players:GetPlayers()) do
+    if player ~= localPlayer then
+        table.insert(options, player.Name)
+    end
+end
+
+local selectedPlayer = nil
 local Dropdown
 
+-- Function to create or update the dropdown
 local function createOrUpdateDropdown()
     if Dropdown then
+        -- Remove the old dropdown if it exists
         Dropdown:Destroy()
     end
-
+    
+    -- Create a new dropdown
     Dropdown = Tab:AddDropdown({
         Name = "PlayerDropdown",
         Default = options[1] or "",
         Options = options,
-        Callback = function(value)
-            selectedPlayer = Players:FindFirstChild(value)
+        Callback = function(Value)
+            selectedPlayer = players:FindFirstChild(Value)
         end
     })
 end
 
+-- Initial creation of the dropdown
 createOrUpdateDropdown()
 
-Players.PlayerAdded:Connect(function(player)
+-- Update dropdown when a player joins
+players.PlayerAdded:Connect(function(player)
     if player ~= localPlayer then
         table.insert(options, player.Name)
         createOrUpdateDropdown()
     end
 end)
 
-Players.PlayerRemoving:Connect(function(leavingPlayer)
+-- Update dropdown when a player leaves
+players.PlayerRemoving:Connect(function(leavingPlayer)
     for i, playerName in ipairs(options) do
         if playerName == leavingPlayer.Name then
             table.remove(options, i)
@@ -1145,11 +1166,12 @@ Players.PlayerRemoving:Connect(function(leavingPlayer)
     createOrUpdateDropdown()
 end)
 
+-- Membuat Toggle untuk fling
 Tab:AddToggle({
     Name = "Fling Toggle",
     Default = false,
-    Callback = function(value)
-        flingEnabled = value
+    Callback = function(Value)
+        flingEnabled = Value
         if flingEnabled then
             startFlinging()
         else
@@ -1166,8 +1188,8 @@ Tab:AddSlider({
     Color = Color3.fromRGB(255, 255, 255),
     Increment = 1,
     ValueName = "fullbright",
-    Callback = function(value)
-        fullbrightValue = value
+    Callback = function(Value)
+        fullbrightValue = Value
         if fullbrightEnabled then
             updateLighting()
         end
@@ -1181,7 +1203,6 @@ Tab:AddButton({
         updateLighting()
     end
 })
-
 Tab:AddButton({
     Name = "Refresh Dropdown",
     Callback = function()
