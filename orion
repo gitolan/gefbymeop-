@@ -29,7 +29,7 @@ local function teleportAndReturnHandler(pickup)
         character.HumanoidRootPart.CFrame = pickup.CFrame
         
         if teleportAndReturn and initialPosition then
-            wait(1)
+            wait(4)
             character.HumanoidRootPart.CFrame = initialPosition
             initialPosition = nil
         end
@@ -50,10 +50,10 @@ local function addTeleportButton(tab, name, pickupName)
     })
 end
 
-local items = {"Shells", "Bullets", "Food", "Medkit", "Bat", "Crowbar", "Shotgun", "Handgun", "Money", "Hammer", "Lantern", "Soda", "GPS"}
+local items = {"Ammo (shotgun)", "Ammo(handgun)", "Food", "Medkit", "Bat", "Crowbar", "Shotgun", "Handgun", "Money", "Hammer", "Lantern", "Soda", "GPS"}
 
 for _, item in ipairs(items) do
-    addTeleportButton(teleportTab, "Pickup " .. item, item)
+    addTeleportButton(teleportTab, "Tp " .. item, item)
 end
 
 -- Define Tab for Fixed Teleport Locations
