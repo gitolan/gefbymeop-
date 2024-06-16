@@ -587,7 +587,8 @@ Tab:AddButton({
             end
         end)
       end    
-})
+})
+
 Tab:AddButton({
     Name = "Reset Karacter",
     Callback = function()
@@ -984,6 +985,7 @@ Tab:AddToggle({
 		end)
 	end
 })
+
 local players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1205,13 +1207,10 @@ local function bringPlayerToMe(targetPlayer)
         end
     end
 end
-
 -- Inisialisasi opsi dropdown
 local options = {}
-
 -- Tab and UI elements setup (replace with your UI library setup)
 local Tab = {} -- Placeholder for the tab or UI section you're working with
-
 -- Fungsi untuk memperbarui dropdown
 local function updateDropdown()
     Tab:UpdateDropdown({
@@ -1219,7 +1218,6 @@ local function updateDropdown()
         Options = options
     })
 end
-
 -- Setup dropdown
 Tab:AddDropdown({
     Name = "Player",
@@ -1229,7 +1227,6 @@ Tab:AddDropdown({
         selectedPlayer = Players:FindFirstChild(value)
     end
 })
-
 -- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
 Players.PlayerAdded:Connect(function(newPlayer)
     if newPlayer ~= player then
@@ -1237,7 +1234,6 @@ Players.PlayerAdded:Connect(function(newPlayer)
         updateDropdown()
     end
 end)
-
 Players.PlayerRemoving:Connect(function(leavingPlayer)
     for i, playerName in ipairs(options) do
         if playerName == leavingPlayer.Name then
@@ -1247,7 +1243,6 @@ Players.PlayerRemoving:Connect(function(leavingPlayer)
     end
     updateDropdown()
 end)
-
 -- Setup button
 Tab:AddButton({
     Name = "Bring Player",
@@ -1259,7 +1254,6 @@ Tab:AddButton({
         end
     end    
 })
-
 -- Inisialisasi awal dropdown dengan pemain yang sudah ada
 for _, existingPlayer in pairs(Players:GetPlayers()) do
     if existingPlayer ~= player then
