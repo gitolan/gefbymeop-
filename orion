@@ -792,6 +792,81 @@ Tab:AddButton({
         deleteBuildings()
       end    
 })
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+-- Variabel untuk menyimpan pemain yang dipilih
+local selectedPlayer = nil
+
+-- Fungsi untuk memindahkan pemain target ke posisi Anda
+local function bringPlayerToMe(targetPlayer)
+    if targetPlayer and targetPlayer.Character and player.Character then
+        local targetCharacter = targetPlayer.Character
+        local playerCharacter = player.Character
+
+        local targetRoot = targetCharacter:FindFirstChild("HumanoidRootPart")
+        local playerRoot = playerCharacter:FindFirstChild("HumanoidRootPart")
+
+        if targetRoot and playerRoot then
+            targetRoot.CFrame = playerRoot.CFrame
+        end
+    end
+end
+-- Inisialisasi opsi dropdown
+local options = {}
+-- Tab and UI elements setup (replace with your UI library setup)
+local Tab = {} -- Placeholder for the tab or UI section you're working with
+-- Fungsi untuk memperbarui dropdown
+local function updateDropdown()
+    Tab:UpdateDropdown({
+        Name = "Player",
+        Options = options
+    })
+end
+-- Setup dropdown
+Tab:AddDropdown({
+    Name = "Player",
+    Default = options[1] or "",
+    Options = options,
+    Callback = function(value)
+        selectedPlayer = Players:FindFirstChild(value)
+    end
+})
+-- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
+Players.PlayerAdded:Connect(function(newPlayer)
+    if newPlayer ~= player then
+        table.insert(options, newPlayer.Name)
+        updateDropdown()
+    end
+end)
+Players.PlayerRemoving:Connect(function(leavingPlayer)
+    for i, playerName in ipairs(options) do
+        if playerName == leavingPlayer.Name then
+            table.remove(options, i)
+            break
+        end
+    end
+    updateDropdown()
+end)
+-- Setup button
+Tab:AddButton({
+    Name = "Bring Player",
+    Callback = function()
+        if selectedPlayer then
+            bringPlayerToMe(selectedPlayer)
+        else
+            print("No player selected")
+        end
+    end    
+})
+-- Inisialisasi awal dropdown dengan pemain yang sudah ada
+for _, existingPlayer in pairs(Players:GetPlayers()) do
+    if existingPlayer ~= player then
+        table.insert(options, existingPlayer.Name)
+    end
+end
+updateDropdown()
 local Tab = Window:MakeTab({
 	Name = "Player2",
 	Icon = "rbxassetid://4483345998",
@@ -1216,82 +1291,6 @@ Tab:AddButton({
         createOrUpdateDropdown()
     end    
 })
-
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local player = Players.LocalPlayer
-
--- Variabel untuk menyimpan pemain yang dipilih
-local selectedPlayer = nil
-
--- Fungsi untuk memindahkan pemain target ke posisi Anda
-local function bringPlayerToMe(targetPlayer)
-    if targetPlayer and targetPlayer.Character and player.Character then
-        local targetCharacter = targetPlayer.Character
-        local playerCharacter = player.Character
-
-        local targetRoot = targetCharacter:FindFirstChild("HumanoidRootPart")
-        local playerRoot = playerCharacter:FindFirstChild("HumanoidRootPart")
-
-        if targetRoot and playerRoot then
-            targetRoot.CFrame = playerRoot.CFrame
-        end
-    end
-end
--- Inisialisasi opsi dropdown
-local options = {}
--- Tab and UI elements setup (replace with your UI library setup)
-local Tab = {} -- Placeholder for the tab or UI section you're working with
--- Fungsi untuk memperbarui dropdown
-local function updateDropdown()
-    Tab:UpdateDropdown({
-        Name = "Player",
-        Options = options
-    })
-end
--- Setup dropdown
-Tab:AddDropdown({
-    Name = "Player",
-    Default = options[1] or "",
-    Options = options,
-    Callback = function(value)
-        selectedPlayer = Players:FindFirstChild(value)
-    end
-})
--- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
-Players.PlayerAdded:Connect(function(newPlayer)
-    if newPlayer ~= player then
-        table.insert(options, newPlayer.Name)
-        updateDropdown()
-    end
-end)
-Players.PlayerRemoving:Connect(function(leavingPlayer)
-    for i, playerName in ipairs(options) do
-        if playerName == leavingPlayer.Name then
-            table.remove(options, i)
-            break
-        end
-    end
-    updateDropdown()
-end)
--- Setup button
-Tab:AddButton({
-    Name = "Bring Player",
-    Callback = function()
-        if selectedPlayer then
-            bringPlayerToMe(selectedPlayer)
-        else
-            print("No player selected")
-        end
-    end    
-})
--- Inisialisasi awal dropdown dengan pemain yang sudah ada
-for _, existingPlayer in pairs(Players:GetPlayers()) do
-    if existingPlayer ~= player then
-        table.insert(options, existingPlayer.Name)
-    end
-end
-updateDropdown()
 
 -- Initialize the library
 OrionLib:Init()
