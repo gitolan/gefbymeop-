@@ -1094,7 +1094,6 @@ local function startFlinging()
             if selectedPlayer then
                 teleportToPlayer(selectedPlayer)
                 flingPlayer(selectedPlayer)
-                Noclip:Set(true)
             end
             wait(0.1) -- Jeda waktu antar fling
         end
