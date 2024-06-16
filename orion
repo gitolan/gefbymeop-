@@ -800,9 +800,9 @@ Tab:AddButton({
 })
 
 local Tab = Window:MakeTab({
-	Name = "Player2",
+	Name = "Player2 coming soon",
 	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+	PremiumOnly = true
 })
 Tab:AddButton({
     Name = "Infammo",
