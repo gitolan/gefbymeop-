@@ -1133,7 +1133,7 @@ local function createOrUpdateDropdown()
     end
     
     -- Create a new dropdown
-    Dropdown = Tab:AddDropdown({
+    Tab:AddDropdown({
         Name = "PlayerDropdown",
         Default = options[1] or "",
         Options = options,
