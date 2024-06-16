@@ -1067,13 +1067,13 @@ local Tab = {} -- Replace with your actual UI library's Tab object
 
 -- Function to create or update the dropdown
 local function createOrUpdateDropdown()
-    if Tab.Dropdown then
+    if Dropdown then
         -- Remove the old dropdown if it exists
         Tab.Dropdown:Destroy()
     end
 
     -- Create a new dropdown
-    Tab.Dropdown = Tab:AddDropdown({
+    Tab:AddDropdown({
         Name = "Player",
         Default = players[1] or "",
         Options = players,
