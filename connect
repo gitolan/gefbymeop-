@@ -1,0 +1,41 @@
+-- Create a new ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "CustomUI"
+screenGui.Parent = game.CoreGui
+
+-- Create a frame to hold the buttons
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 300, 0, 200)
+frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+frame.BackgroundColor3 = Color3.new(1, 1, 1)
+frame.Parent = screenGui
+
+-- Create the Normal UI button
+local normalUIButton = Instance.new("TextButton")
+normalUIButton.Size = UDim2.new(0, 280, 0, 50)
+normalUIButton.Position = UDim2.new(0, 10, 0, 10)
+normalUIButton.Text = "Normal UI"
+normalUIButton.Parent = frame
+
+-- Create the OrionLib UI button
+local orionLibUIButton = Instance.new("TextButton")
+orionLibUIButton.Size = UDim2.new(0, 280, 0, 50)
+orionLibUIButton.Position = UDim2.new(0, 10, 0, 70)
+orionLibUIButton.Text = "OrionLib UI"
+orionLibUIButton.Parent = frame
+
+-- Function to load the Normal UI script
+local function loadNormalUI()
+    screenGui:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+end
+
+-- Function to load the OrionLib UI script
+local function loadOrionLibUI()
+    screenGui:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
+end
+
+-- Connect the buttons to their respective functions
+normalUIButton.MouseButton1Click:Connect(loadNormalUI)
+orionLibUIButton.MouseButton1Click:Connect(loadOrionLibUI)
