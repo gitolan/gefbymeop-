@@ -1034,9 +1034,6 @@ Tab:AddSlider({
             updateLighting()
         end
     end,
-    -- Additional settings for mobile compatibility
-    TouchEnabled = true, -- Ensure the slider is responsive to touch input
-    TouchFeedbackColor = Color3.fromRGB(255, 0, 0) -- Optional: visual feedback for touch input
 })
 
 Tab:AddButton({
@@ -1046,21 +1043,6 @@ Tab:AddButton({
         updateLighting()
     end
 })
-
--- Ensure the slider is updated properly on touch input for mobile devices
-if game:GetService("UserInputService").TouchEnabled then
-    local function onTouchMoved(input)
-        if input.UserInputType == Enum.UserInputType.Touch then
-            local newValue =
-            fullbrightValue = newValue
-            if fullbrightEnabled then
-                updateLighting()
-            end
-        end
-    end
-
-    game:GetService("UserInputService").InputChanged:Connect(onTouchMoved)
-end
 
 
 OrionLib:Init()
