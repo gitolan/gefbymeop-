@@ -10,7 +10,7 @@ local teleportAndReturn = false
 local initialPosition = nil
 
 teleportTab:AddToggle({
-    Name = "Teleport and Return",
+    Name = "Teleport and Return 4 Sec",
     Default = false,
     Callback = function(value)
         teleportAndReturn = value
