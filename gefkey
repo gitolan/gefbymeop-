@@ -118,7 +118,7 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
     })
     wait(3)
     screenGui:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/connect"))()
     else 
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Error",
@@ -167,7 +167,7 @@ SubmitButton.MouseButton1Click:Connect(function()
             })
         end
         
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/connect"))()
     else
         game:GetService("StarterGui"):SetCore("SendNotification", {
             Title = "Wrong Key",
@@ -234,7 +234,7 @@ if localPlayer.Name == "rest_antihack" or localPlayer.Name == "lapu_laa√sap" o
         Duration = 5
     })
     wait(0.2)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/connect"))()
     screenGui:Destroy()
 end
 
