@@ -126,6 +126,10 @@ local plankConfigs = {
 -- Function to continuously build planks
 local function ContinuousBuild()
     while true do
+        local Hammer = Character:FindFirstChildOfClass("Tool")
+        if not Hammer then
+            break
+        end
         for _, args in ipairs(plankConfigs) do
             BuildPlank(args)
         end
