@@ -1264,7 +1264,8 @@ for i = 1, 7 do
 elseif i == 7 then
     Button.Text = "Orion library UI"
     Button.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy() loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
+    ScreenGui:Destroy()
+    aimbotEnabled = false  loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
     end)
     end
 end
