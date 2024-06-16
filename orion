@@ -990,6 +990,7 @@ local players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local localPlayer = players.LocalPlayer
+local options = {}
 
 local options = {}
 for _, player in ipairs(players:GetPlayers()) do
@@ -1114,26 +1115,45 @@ updateLighting()
 RunService.Heartbeat:Connect(updateLighting)
 
 -- Membuat Dropdown untuk pemain
-Tab:AddDropdown({
-    Name = "PlayerDropdown",
-    Default = options[1] or "",
-    Options = options,
-    Callback = function(Value)
-        selectedPlayer = players:FindFirstChild(Value)
+for _, player in ipairs(players:GetPlayers()) do
+    if player ~= localPlayer then
+        table.insert(options, player.Name)
     end
-})
+end
 
--- Mengupdate dropdown saat ada pemain yang bergabung atau meninggalkan server
+local selectedPlayer = nil
+local Dropdown
+
+-- Function to create or update the dropdown
+local function createOrUpdateDropdown()
+    if Dropdown then
+        -- Remove the old dropdown if it exists
+        Dropdown:Destroy()
+    end
+    
+    -- Create a new dropdown
+    Dropdown = Tab:AddDropdown({
+        Name = "PlayerDropdown",
+        Default = options[1] or "",
+        Options = options,
+        Callback = function(Value)
+            selectedPlayer = players:FindFirstChild(Value)
+        end
+    })
+end
+
+-- Initial creation of the dropdown
+createOrUpdateDropdown()
+
+-- Update dropdown when a player joins
 players.PlayerAdded:Connect(function(player)
     if player ~= localPlayer then
         table.insert(options, player.Name)
-        Tab:UpdateDropdown({
-            Name = "PlayerDropdown",
-            Options = options
-        })
+        createOrUpdateDropdown()
     end
 end)
 
+-- Update dropdown when a player leaves
 players.PlayerRemoving:Connect(function(leavingPlayer)
     for i, playerName in ipairs(options) do
         if playerName == leavingPlayer.Name then
@@ -1141,10 +1161,7 @@ players.PlayerRemoving:Connect(function(leavingPlayer)
             break
         end
     end
-    Tab:UpdateDropdown({
-        Name = "PlayerDropdown",
-        Options = options
-    })
+    createOrUpdateDropdown()
 end)
 
 -- Membuat Toggle untuk fling
@@ -1184,6 +1201,20 @@ Tab:AddButton({
         fullbrightEnabled = not fullbrightEnabled
         updateLighting()
     end
+})
+Tab:AddButton({
+    Name = "Refresh Dropdown",
+    Callback = function()
+        print("Refreshing dropdown")
+        -- Update the options list with current players (excluding local player)
+        options = {}
+        for _, player in ipairs(players:GetPlayers()) do
+            if player ~= localPlayer then
+                table.insert(options, player.Name)
+            end
+        end
+        createOrUpdateDropdown()
+    end    
 })
 
 local Players = game:GetService("Players")
