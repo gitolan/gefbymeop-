@@ -993,56 +993,57 @@ Tab:AddToggle({
 	end
 })
 
-local players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
-local RunService = game:GetService("RunService")
+local players = game:GetService("Players") 
+local Lighting = game:GetService("Lighting") 
+local RunService = game:GetService("RunService") 
 
-local fullbrightEnabled = false
-local fullbrightValue = 3 -- Default value from the slider
+local fullbrightEnabled = false 
+local fullbrightValue = 3 -- Default value from the slider 
 
-local function updateLighting()
-    if fullbrightEnabled then
-        Lighting.Brightness = fullbrightValue
-        Lighting.FogEnd = 100000
-        Lighting.GlobalShadows = false
-        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-    else
-        Lighting.Brightness = 2
-        Lighting.FogEnd = 10000
-        Lighting.GlobalShadows = true
-        Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
-    end
-end
+local function updateLighting() 
+    if fullbrightEnabled then 
+        Lighting.Brightness = fullbrightValue 
+        Lighting.FogEnd = 100000 
+        Lighting.GlobalShadows = false 
+        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128) 
+    else 
+        Lighting.Brightness = 2 
+        Lighting.FogEnd = 10000 
+        Lighting.GlobalShadows = true 
+        Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0) 
+    end 
+end 
 
--- Initial call to set the default lighting settings
-updateLighting()
+-- Initial call to set the default lighting settings 
+updateLighting() 
 
--- Connect to the Heartbeat event to update lighting settings
-RunService.Heartbeat:Connect(updateLighting)
+-- Connect to the Heartbeat event to update lighting settings 
+RunService.Heartbeat:Connect(updateLighting) 
 
-Tab:AddSlider({
-    Name = "Light Value",
-    Min = 2,
-    Max = 8,
-    Default = 3,
-    Color = Color3.fromRGB(255, 255, 255),
-    Increment = 1,
-    ValueName = "fullbright",
-    Callback = function(Value)
-        fullbrightValue = Value
-        if fullbrightEnabled then
-            updateLighting()
-        end
-    end,
-})
+Tab:AddSlider({ 
+    Name = "Light Value", 
+    Min = 2, 
+    Max = 8, 
+    Default = 3, 
+    Color = Color3.fromRGB(255, 255, 255), 
+    Increment = 1, 
+    ValueName = "fullbright", 
+    Callback = function(Value) 
+        fullbrightValue = Value 
+        if fullbrightEnabled then 
+            updateLighting() 
+        end 
+    end 
+}) 
 
-Tab:AddButton({
-    Name = "Fullbright",
-    Callback = function()
-        fullbrightEnabled = not fullbrightEnabled
-        updateLighting()
-    end
-})
+Tab:AddButton({ 
+    Name = "Fullbright", 
+    Callback = function() 
+        fullbrightEnabled = not fullbrightEnabled 
+        updateLighting() 
+    end 
+}) 
+
 
 
 OrionLib:Init()
