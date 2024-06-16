@@ -705,8 +705,7 @@ Tab:AddButton({
 })
 Tab:AddButton({
     Name = "Normal UI",
-    Callback = function()
-        https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori
+    Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
     end
 })
 Tab:AddButton({
