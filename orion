@@ -1051,9 +1051,7 @@ Tab:AddButton({
 if game:GetService("UserInputService").TouchEnabled then
     local function onTouchMoved(input)
         if input.UserInputType == Enum.UserInputType.Touch then
-            -- Logic to handle touch input specifically for sliders
-            -- Update the fullbrightValue based on touch position
-            local newValue = -- calculate the new value based on touch position
+            local newValue =
             fullbrightValue = newValue
             if fullbrightEnabled then
                 updateLighting()
