@@ -527,7 +527,7 @@ Tab:AddButton({
 local Tab = Window:MakeTab({
 	Name = "Player2 coming soon",
 	Icon = "rbxassetid://4483345998",
-	PremiumOnly = true
+	PremiumOnly = false
 })
 Tab:AddButton({
     Name = "Infammo",
@@ -719,6 +719,11 @@ Tab:AddToggle({
 	end
 })
 
+local Tab = Window:MakeTab({
+	Name = "Test tab",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = true
+})
 local players = game:GetService("Players") 
 local Lighting = game:GetService("Lighting") 
 local RunService = game:GetService("RunService") 
