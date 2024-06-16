@@ -1,4 +1,4 @@
--- Fungsi untuk menunggu objek muncul di dalam Workspace
+-- Wait function to find a child of a specific class
 local function WaitForChildOfClass(parent, className)
     local child = parent:FindFirstChildOfClass(className)
     while not child do
@@ -10,151 +10,128 @@ local function WaitForChildOfClass(parent, className)
     return child
 end
 
--- Menunggu hingga objek Hammer muncul di dalam LocalPlayer.Character
+-- Get necessary services and references
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or WaitForChildOfClass(LocalPlayer, "Model")
 local Hammer = WaitForChildOfClass(Character, "Tool")
-then 
-while true do 
-wait(1)
 
-local args = {
-    [1] = Vector3.new(36.223228454589844, 13, 144.70372009277344),
-    [2] = Vector3.new(36, 3.5677287578582764, 144.5894775390625),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [5] = Vector3.new(-0, -1, -0)
+-- Function to build a plank at given arguments
+local function BuildPlank(args)
+    game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
+end
+
+-- Coordinates and args for building planks
+local plankConfigs = {
+    {
+        Vector3.new(36.223228454589844, 13, 144.70372009277344),
+        Vector3.new(36, 3.5677287578582764, 144.5894775390625),
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        Vector3.new(-0, -1, -0)
+    },
+    {
+        Vector3.new(36, 13.029484748840332, 139.6868133544922),
+        Vector3.new(36, 3.172894239425659, 139.467041015625),
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-1, 0, 0)
+    },
+    {
+        Vector3.new(36.356712341308594, 13, 150.3737335205078),
+        Vector3.new(36, 3.7067208290100098, 150.94387817382812),
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        Vector3.new(-0, -1, -0)
+    },
+    {
+        Vector3.new(36.79045867919922, 13, 153.58612060546875),
+        Vector3.new(36, 3.7124717235565186, 153.29820251464844),
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        Vector3.new(-0, -1, -0)
+    },
+    {
+        Vector3.new(36, 13.019261360168457, 147.80044555664062),
+        Vector3.new(36, 3.620089054107666, 147.97108459472656),
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        Vector3.new(-1, 0, 0)
+    },
+    {
+        Vector3.new(35.49855041503906, 6.892942428588867, 147.6226043701172),
+        Vector3.new(24.46463966369629, 1, 140.8197021484375),
+        workspace.Planks.Plank,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Base,
+        Vector3.new(-1, -0.000009417533874511719, -0.000009268522262573242)
+    },
+    {
+        Vector3.new(36, 13.725208282470703, 142.36453247070312),
+        Vector3.new(36, 3.008547782897949, 142.26986694335938),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-1, 0, 0)
+    },
+    {
+        Vector3.new(36, 13.131596565246582, 137.2288055419922),
+        Vector3.new(36, 3.092043161392212, 137.43609619140625),
+        workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-1, 0, 0)
+    },
+    {
+        Vector3.new(31.661243438720703, 10.342901229858398, 158),
+        Vector3.new(19.651123046875, 9.470248222351074, 158),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-0, -0, -1)
+    },
+    {
+        Vector3.new(30.905014038085938, 4.160674571990967, 158),
+        Vector3.new(21.187538146972656, 4.927298069000244, 158),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-0, -0, -1)
+    },
+    {
+        Vector3.new(32.24363327026367, 19, 153.3012237548828),
+        Vector3.new(22.01605224609375, 19, 152.7181854248047),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-0, -1, -0)
+    },
+    {
+        Vector3.new(31.887683868408203, 19, 148.96168518066406),
+        Vector3.new(22.692771911621094, 19, 149.38304138183594),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-0, -1, -0)
+    },
+    {
+        Vector3.new(30.700727462768555, 19, 144.32740783691406),
+        Vector3.new(22.970998764038086, 19, 145.52732849121094),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-0, -1, -0)
+    },
+    {
+        Vector3.new(30.156801223754883, 19, 140.16920471191406),
+        Vector3.new(24.128984451293945, 19, 141.04132080078125),
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        workspace.Buildings:FindFirstChild("Shop3 Template").Part,
+        Vector3.new(-0, -1, -0)
+    }
 }
 
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
+-- Function to continuously build planks
+local function ContinuousBuild()
+    while true do
+        for _, args in ipairs(plankConfigs) do
+            BuildPlank(args)
+        end
+        wait(0.1) -- Adjust the wait time as necessary
+    end
+end
 
-local args = {
-    [1] = Vector3.new(36, 13.029484748840332, 139.6868133544922),
-    [2] = Vector3.new(36, 3.172894239425659, 139.467041015625),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-1, 0, 0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(36.356712341308594, 13, 150.3737335205078),
-    [2] = Vector3.new(36, 3.7067208290100098, 150.94387817382812),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [5] = Vector3.new(-0, -1, -0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(36.79045867919922, 13, 153.58612060546875),
-    [2] = Vector3.new(36, 3.7124717235565186, 153.29820251464844),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [5] = Vector3.new(-0, -1, -0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(36, 13.019261360168457, 147.80044555664062),
-    [2] = Vector3.new(36, 3.620089054107666, 147.97108459472656),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [5] = Vector3.new(-1, 0, 0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(35.49855041503906, 6.892942428588867, 147.6226043701172),
-    [2] = Vector3.new(24.46463966369629, 1, 140.8197021484375),
-    [3] = workspace.Planks.Plank,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Base,
-    [5] = Vector3.new(-1, -0.000009417533874511719, -0.000009268522262573242)
-}
-
-game:GetService("Players").LocalPlayer.Backpack.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(36, 13.725208282470703, 142.36453247070312),
-    [2] = Vector3.new(36, 3.008547782897949, 142.26986694335938),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-1, 0, 0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(36, 13.131596565246582, 137.2288055419922),
-    [2] = Vector3.new(36, 3.092043161392212, 137.43609619140625),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").WindowFrame.Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-1, 0, 0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(31.661243438720703, 10.342901229858398, 158),
-    [2] = Vector3.new(19.651123046875, 9.470248222351074, 158),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-0, -0, -1)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(30.905014038085938, 4.160674571990967, 158),
-    [2] = Vector3.new(21.187538146972656, 4.927298069000244, 158),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-0, -0, -1)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(32.24363327026367, 19, 153.3012237548828),
-    [2] = Vector3.new(22.01605224609375, 19, 152.7181854248047),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-0, -1, -0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(31.887683868408203, 19, 148.96168518066406),
-    [2] = Vector3.new(22.692771911621094, 19, 149.38304138183594),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-0, -1, -0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(30.700727462768555, 19, 144.32740783691406),
-    [2] = Vector3.new(22.970998764038086, 19, 145.52732849121094),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-0, -1, -0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
-
-local args = {
-    [1] = Vector3.new(30.156801223754883, 19, 140.16920471191406),
-    [2] = Vector3.new(24.128984451293945, 19, 141.04132080078125),
-    [3] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [4] = workspace.Buildings:FindFirstChild("Shop3 Template").Part,
-    [5] = Vector3.new(-0, -1, -0)
-}
-
-game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
+-- Start the continuous building process
+ContinuousBuild()
