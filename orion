@@ -792,95 +792,6 @@ Tab:AddButton({
         deleteBuildings()
       end    
 })
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-
--- Variable to store the selected player
-local selectedPlayer = nil
-
--- Function to bring the target player to your position
-local function bringPlayerToMe(targetPlayer)
-    if targetPlayer and targetPlayer.Character and player.Character then
-        local targetCharacter = targetPlayer.Character
-        local playerCharacter = player.Character
-
-        local targetRoot = targetCharacter:FindFirstChild("HumanoidRootPart")
-        local playerRoot = playerCharacter:FindFirstChild("HumanoidRootPart")
-
-        if targetRoot and playerRoot then
-            targetRoot.CFrame = playerRoot.CFrame
-        end
-    end
-end
-
--- Initialize options
-local options = {}
-
--- Placeholder for the tab or UI section you're working with
-local Tab = {} -- Replace with your actual UI library's Tab object
-
--- Function to create or update the dropdown
-local function createOrUpdateDropdown()
-    if Tab.Dropdown then
-        -- Remove the old dropdown if it exists
-        Tab.Dropdown:Destroy()
-    end
-
-    -- Create a new dropdown
-    Tab.Dropdown = Tab:AddDropdown({
-        Name = "Player",
-        Default = options[1] or "",
-        Options = options,
-        Callback = function(value)
-            selectedPlayer = Players:FindFirstChild(value)
-        end
-    })
-end
-
--- Initial setup of the dropdown
-createOrUpdateDropdown()
-
--- Event to update dropdown when a player joins
-Players.PlayerAdded:Connect(function(newPlayer)
-    if newPlayer ~= player then
-        table.insert(options, newPlayer.Name)
-        createOrUpdateDropdown()
-    end
-end)
-
--- Event to update dropdown when a player leaves
-Players.PlayerRemoving:Connect(function(leavingPlayer)
-    for i, playerName in ipairs(options) do
-        if playerName == leavingPlayer.Name then
-            table.remove(options, i)
-            break
-        end
-    end
-    createOrUpdateDropdown()
-end)
-
--- Setup button to bring the selected player
-Tab:AddButton({
-    Name = "Bring Player",
-    Callback = function()
-        if selectedPlayer then
-            bringPlayerToMe(selectedPlayer)
-        else
-            print("No player selected")
-        end
-    end    
-})
-
--- Initialize dropdown with existing players
-for _, existingPlayer in ipairs(Players:GetPlayers()) do
-    if existingPlayer ~= player then
-        table.insert(options, existingPlayer.Name)
-    end
-end
-
--- Final update to populate the initial dropdown
-createOrUpdateDropdown()
-
 local Tab = Window:MakeTab({
 	Name = "Player2",
 	Icon = "rbxassetid://4483345998",
@@ -1075,8 +986,8 @@ Tab:AddToggle({
 	end
 })
 
+
 local players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 local localPlayer = players.LocalPlayer
 local options = {}
@@ -1087,6 +998,95 @@ for _, player in ipairs(players:GetPlayers()) do
         table.insert(options, player.Name)
     end
 end
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Variable to store the selected player
+local selectedPlayer = nil
+
+-- Function to bring the target player to your position
+local function bringPlayerToMe(targetPlayer)
+    if targetPlayer and targetPlayer.Character and player.Character then
+        local targetCharacter = targetPlayer.Character
+        local playerCharacter = player.Character
+
+        local targetRoot = targetCharacter:FindFirstChild("HumanoidRootPart")
+        local playerRoot = playerCharacter:FindFirstChild("HumanoidRootPart")
+
+        if targetRoot and playerRoot then
+            targetRoot.CFrame = playerRoot.CFrame
+        end
+    end
+end
+
+-- Initialize options
+local options = {}
+
+-- Placeholder for the tab or UI section you're working with
+local Tab = {} -- Replace with your actual UI library's Tab object
+
+-- Function to create or update the dropdown
+local function createOrUpdateDropdown()
+    if Tab.Dropdown then
+        -- Remove the old dropdown if it exists
+        Tab.Dropdown:Destroy()
+    end
+
+    -- Create a new dropdown
+    Tab.Dropdown = Tab:AddDropdown({
+        Name = "Player",
+        Default = options[1] or "",
+        Options = options,
+        Callback = function(value)
+            selectedPlayer = Players:FindFirstChild(value)
+        end
+    })
+end
+
+-- Initial setup of the dropdown
+createOrUpdateDropdown()
+
+-- Event to update dropdown when a player joins
+Players.PlayerAdded:Connect(function(newPlayer)
+    if newPlayer ~= player then
+        table.insert(options, newPlayer.Name)
+        createOrUpdateDropdown()
+    end
+end)
+
+-- Event to update dropdown when a player leaves
+Players.PlayerRemoving:Connect(function(leavingPlayer)
+    for i, playerName in ipairs(options) do
+        if playerName == leavingPlayer.Name then
+            table.remove(options, i)
+            break
+        end
+    end
+    createOrUpdateDropdown()
+end)
+
+-- Setup button to bring the selected player
+Tab:AddButton({
+    Name = "Bring Player",
+    Callback = function()
+        if selectedPlayer then
+            bringPlayerToMe(selectedPlayer)
+        else
+            print("No player selected")
+        end
+    end    
+})
+
+-- Initialize dropdown with existing players
+for _, existingPlayer in ipairs(Players:GetPlayers()) do
+    if existingPlayer ~= player then
+        table.insert(options, existingPlayer.Name)
+    end
+end
+
+-- Final update to populate the initial dropdown
+createOrUpdateDropdown()
+
 
 local selectedPlayer = nil
 local flingEnabled = false
