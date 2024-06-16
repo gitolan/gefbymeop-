@@ -729,7 +729,7 @@ local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService") 
 
 local fullbrightEnabled = false 
-local fullbrightValue = 3 -- Default value from the slider 
+local fullbrightValue = 5 -- Default value from the slider 
 
 local function updateLighting() 
     if fullbrightEnabled then 
@@ -738,7 +738,7 @@ local function updateLighting()
         Lighting.GlobalShadows = false 
         Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128) 
     else 
-        Lighting.Brightness = 2 
+        Lighting.Brightness = 3
         Lighting.FogEnd = 10000 
         Lighting.GlobalShadows = true 
         Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0) 
@@ -753,9 +753,9 @@ RunService.Heartbeat:Connect(updateLighting)
 
 Tab:AddSlider({ 
     Name = "Light Value", 
-    Min = 2, 
+    Min = 3, 
     Max = 8, 
-    Default = 3, 
+    Default = 5, 
     Color = Color3.fromRGB(255, 255, 255), 
     Increment = 1, 
     ValueName = "fullbright", 
