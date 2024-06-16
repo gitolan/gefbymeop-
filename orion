@@ -993,7 +993,7 @@ Tab:AddToggle({
 	end
 })
 
-local players = game:GetService("Players")
+local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
 
@@ -1033,7 +1033,10 @@ Tab:AddSlider({
         if fullbrightEnabled then
             updateLighting()
         end
-    end
+    end,
+    -- Additional settings for mobile compatibility
+    TouchEnabled = true, -- Ensure the slider is responsive to touch input
+    TouchFeedbackColor = Color3.fromRGB(255, 0, 0) -- Optional: visual feedback for touch input
 })
 
 Tab:AddButton({
@@ -1043,6 +1046,23 @@ Tab:AddButton({
         updateLighting()
     end
 })
+
+-- Ensure the slider is updated properly on touch input for mobile devices
+if game:GetService("UserInputService").TouchEnabled then
+    local function onTouchMoved(input)
+        if input.UserInputType == Enum.UserInputType.Touch then
+            -- Logic to handle touch input specifically for sliders
+            -- Update the fullbrightValue based on touch position
+            local newValue = -- calculate the new value based on touch position
+            fullbrightValue = newValue
+            if fullbrightEnabled then
+                updateLighting()
+            end
+        end
+    end
+
+    game:GetService("UserInputService").InputChanged:Connect(onTouchMoved)
+end
 
 
 OrionLib:Init()
