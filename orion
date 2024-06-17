@@ -2,7 +2,7 @@
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
 
 -- Create Main Window
-local Window = OrionLib:MakeWindow({Name = "Gef Script OP", HidePremium = false, SaveConfig = true, ConfigFolder = "GefGui"})
+local Window = OrionLib:MakeWindow({Name = "Gef Script OP", HidePremium = true, SaveConfig = true, ConfigFolder = "GefGui"})
 
 -- Define Tab for Teleport
 local teleportTab = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
