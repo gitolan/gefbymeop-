@@ -752,7 +752,7 @@ updateLighting()
 -- Connect to the Heartbeat event to update lighting settings 
 RunService.Heartbeat:Connect(updateLighting) 
 
-Tab:AddSlider({ 
+Prem:AddSlider({ 
     Name = "Light Value", 
     Min = 3, 
     Max = 8, 
