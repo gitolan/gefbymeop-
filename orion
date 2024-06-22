@@ -526,7 +526,7 @@ Tab:AddButton({
 
 local Tab = Window:MakeTab({
 	Name = "Player2",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://13285615784",
 	PremiumOnly = false
 })
 Tab:AddButton({
