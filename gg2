@@ -1,0 +1,94 @@
+
+local function sendPlayerInfo()
+    local Players = game:GetService("Players")
+    local HttpService = game:GetService("HttpService")
+
+    -- Replace this with your webhook URL
+    local webhookUrl = "https://discord.com/api/webhooks/1251060163398467625/zLMibUZzFIdx_ZsAr-dBT1DFbp3K4w1Q0qFvrunDzlsiuEzbE-tlmqoync5eh_Qhjl9h"
+
+    -- Function to get the name of the LocalPlayer
+    local function getLocalPlayerName()
+        local localPlayer = Players.LocalPlayer
+        return localPlayer and localPlayer.Name or "Unknown"
+    end
+
+    -- Function to send player info to Discord
+    local function sendInfo()
+        local playerName = getLocalPlayerName()
+        local data = {
+            ["content"] = "LocalPlayer executing the script: " .. playerName
+        }
+        local jsonData = HttpService:JSONEncode(data)
+
+        local response = nil
+
+        if syn and syn.request then
+            response = syn.request({
+                Url = webhookUrl,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = jsonData
+            })
+        elseif http and http.request then
+            response = http.request({
+                Url = webhookUrl,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = jsonData
+            })
+        elseif request then
+            response = request({
+                Url = webhookUrl,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = jsonData
+            })
+        elseif http_request then
+            response = http_request({
+                Url = webhookUrl,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = jsonData
+            })
+        elseif solara and solara.request then
+            response = solara.request({
+                Url = webhookUrl,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = jsonData
+            })
+        elseif curl then
+            local cmd = string.format('curl -X POST -H "Content-Type: application/json" -d \'%s\' %s', jsonData, webhookUrl)
+            local handle = io.popen(cmd)
+            local result = handle:read("*a")
+            handle:close()
+            response = {StatusCode = 200, StatusMessage = result}
+        else
+            return
+        end
+    end
+
+    -- Main loop to send information every 20 seconds
+    local function main()
+        while true do
+            sendInfo()
+            wait(20)  -- Delay for 20 seconds
+        end
+    end
+
+    -- Ensure the script waits until LocalPlayer is ready
+    repeat wait() until Players.LocalPlayer
+    main()
+end
+
+sendPlayerInfo()
