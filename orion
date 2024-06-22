@@ -721,7 +721,7 @@ Tab:AddToggle({
 
 local Tab = Window:MakeTab({
 	Name = "Test tab",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://4989003129",
 	PremiumOnly = true
 })
 local players = game:GetService("Players") 
