@@ -529,6 +529,8 @@ local Tab = Window:MakeTab({
 	Icon = "rbxassetid://13285615784",
 	PremiumOnly = false
 })
+local aimbotEnabled = false
+
 Tab:AddButton({
     Name = "Infammo",
     Callback = function()
@@ -654,7 +656,6 @@ Services.RunService.Heartbeat:Connect(function()
        end)
       end    
 })
-local aimbotEnabled = false
 
 Tab:AddToggle({
 	Name = "Aimbot",
@@ -719,7 +720,7 @@ Tab:AddToggle({
 	end
 })
 
-local Tab = Window:MakeTab({
+local Prem = Window:MakeTab({
 	Name = "Test tab",
 	Icon = "rbxassetid://4989003129",
 	PremiumOnly = true
@@ -767,7 +768,7 @@ Tab:AddSlider({
     end 
 }) 
 
-Tab:AddButton({ 
+Prem:AddButton({ 
     Name = "Fullbright", 
     Callback = function() 
         fullbrightEnabled = not fullbrightEnabled 
