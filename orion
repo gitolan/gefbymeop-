@@ -232,7 +232,7 @@ espTab:AddButton({
 })
 local Tab = Window:MakeTab({
 	Name = "Player",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://12823489278",
 	PremiumOnly = false
 })
 Tab:AddButton({
@@ -406,7 +406,7 @@ Tab:AddButton({
 })
 local Tab = Window:MakeTab({
 	Name = "Other",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://7539983780/",
 	PremiumOnly = false
 })
 Tab:AddButton({
