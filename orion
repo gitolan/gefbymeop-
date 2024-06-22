@@ -5,7 +5,7 @@ local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shle
 local Window = OrionLib:MakeWindow({Name = "Gef Script OP", HidePremium = true, SaveConfig = true, ConfigFolder = "GefGui"})
 
 -- Define Tab for Teleport
-local teleportTab = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local teleportTab = Window:MakeTab({Name = "Teleport", Icon = "rbxassetid://6723742959", PremiumOnly = false})
 local teleportAndReturn = false
 local initialPosition = nil
 
@@ -57,7 +57,7 @@ for _, item in ipairs(items) do
 end
 
 -- Define Tab for Fixed Teleport Locations
-local teleportFixedTab = Window:MakeTab({Name = "Teleport 2", Icon = "rbxassetid://12941020189", PremiumOnly = false})
+local teleportFixedTab = Window:MakeTab({Name = "Teleport 2", Icon = "rbxassetid://6723742959", PremiumOnly = false})
 
 local locations = {
     {"TpWorkshop", CFrame.new(483.749878, 3.25000095, -19.7498322)},
