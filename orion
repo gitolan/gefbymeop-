@@ -89,7 +89,7 @@ for _, location in ipairs(locations) do
 end
 
 -- Define Tab for ESP Functions
-local espTab = Window:MakeTab({Name = "Esp", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local espTab = Window:MakeTab({Name = "Esp", Icon = "rbxassetid://12907910066", PremiumOnly = false})
 
 local function createESP(part)
     local billboardGui = Instance.new("BillboardGui")
