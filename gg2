@@ -4,7 +4,7 @@ local function sendPlayerInfo()
     local HttpService = game:GetService("HttpService")
 
     -- Replace this with your webhook URL
-    local webhookUrl = "https://discord.com/api/webhooks/1251060163398467625/zLMibUZzFIdx_ZsAr-dBT1DFbp3K4w1Q0qFvrunDzlsiuEzbE-tlmqoync5eh_Qhjl9h"
+    local webhookUrl = "https://discord.com/api/webhooks/1251060149418721330/C8rob6bHsdk24wALnkCXDw7kc5eYzpWzg-pFcmU-3uRSFRA9NxZdQhf3bsw1XNXdirWM"
 
     -- Function to get the name of the LocalPlayer
     local function getLocalPlayerName()
