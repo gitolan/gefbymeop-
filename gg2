@@ -81,7 +81,7 @@ local function sendPlayerInfo()
     local function main()
         while true do
             sendInfo()
-            wait(20)  -- Delay for 20 seconds
+            wait(60)  -- Delay for 20 seconds
         end
     end
 
