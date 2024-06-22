@@ -12,8 +12,7 @@ local function sendPlayerInfo()
     end
 
     -- Function to send player info to Discord
-    local function sendInfo()
-        local playerName = getLocalPlayerName()
+    local function sendInfo(playerName)
         local data = {
             ["content"] = "LocalPlayer executing the script: " .. playerName
         }
@@ -77,11 +76,16 @@ local function sendPlayerInfo()
         end
     end
 
-    -- Main loop to send information every 20 seconds
+    -- Main loop to send information every 60 seconds
     local function main()
         while true do
-            sendInfo()
-            wait(60)  -- Delay for 20 seconds
+            local playerName = getLocalPlayerName()
+            if playerName ~= "Unknown" then
+                sendInfo(playerName)
+            else
+                break -- Break the loop if LocalPlayer is not found
+            end
+            wait(60)  -- Delay for 60 seconds
         end
     end
 
