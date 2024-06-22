@@ -7,22 +7,40 @@ screenGui.Parent = game.CoreGui
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 300, 0, 200)
 frame.Position = UDim2.new(0.5, -150, 0.5, -100)
-frame.BackgroundColor3 = Color3.new(1, 1, 1)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.BorderSizePixel = 0
 frame.Parent = screenGui
+
+-- Function to style buttons
+local function styleButton(button)
+    button.Size = UDim2.new(0, 280, 0, 50)
+    button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    button.BorderSizePixel = 0
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Font = Enum.Font.SourceSans
+    button.TextSize = 24
+end
 
 -- Create the Normal UI button
 local normalUIButton = Instance.new("TextButton")
-normalUIButton.Size = UDim2.new(0, 280, 0, 50)
 normalUIButton.Position = UDim2.new(0, 10, 0, 10)
 normalUIButton.Text = "Normal UI"
+styleButton(normalUIButton)
 normalUIButton.Parent = frame
 
 -- Create the OrionLib UI button
 local orionLibUIButton = Instance.new("TextButton")
-orionLibUIButton.Size = UDim2.new(0, 280, 0, 50)
 orionLibUIButton.Position = UDim2.new(0, 10, 0, 70)
 orionLibUIButton.Text = "OrionLib UI"
+styleButton(orionLibUIButton)
 orionLibUIButton.Parent = frame
+
+-- Create the Close button
+local closeButton = Instance.new("TextButton")
+closeButton.Position = UDim2.new(0, 10, 0, 130)
+closeButton.Text = "Close"
+styleButton(closeButton)
+closeButton.Parent = frame
 
 -- Function to load the Normal UI script
 local function loadNormalUI()
@@ -36,6 +54,12 @@ local function loadOrionLibUI()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
 end
 
+-- Function to close the GUI
+local function closeGUI()
+    screenGui:Destroy()
+end
+
 -- Connect the buttons to their respective functions
 normalUIButton.MouseButton1Click:Connect(loadNormalUI)
 orionLibUIButton.MouseButton1Click:Connect(loadOrionLibUI)
+closeButton.MouseButton1Click:Connect(closeGUI)
