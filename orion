@@ -57,7 +57,7 @@ for _, item in ipairs(items) do
 end
 
 -- Define Tab for Fixed Teleport Locations
-local teleportFixedTab = Window:MakeTab({Name = "Teleport 2", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+local teleportFixedTab = Window:MakeTab({Name = "Teleport 2", Icon = "rbxassetid://12941020189", PremiumOnly = false})
 
 local locations = {
     {"TpWorkshop", CFrame.new(483.749878, 3.25000095, -19.7498322)},
