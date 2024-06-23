@@ -1,4 +1,3 @@
--- Setup awal
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -9,13 +8,13 @@ screenGui.Parent = player:WaitForChild("PlayerGui")
 
 -- Buat Frame
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 150, 0, 80) -- Ukuran frame disesuaikan untuk menampung dua tombol
+frame.Size = UDim2.new(0, 150, 0, 120) -- Ukuran frame disesuaikan untuk menampung tiga tombol
 frame.Position = UDim2.new(0, 10, 0, 10) -- Posisi di kiri atas dengan margin 10px
 frame.Parent = screenGui
 
 -- Buat Button untuk teleport dan kembali
 local teleportButton = Instance.new("TextButton")
-teleportButton.Size = UDim2.new(1, 0, 0.5, 0) -- Ukuran button diperkecil
+teleportButton.Size = UDim2.new(1, 0, 0.33, 0) -- Ukuran button diperkecil
 teleportButton.Position = UDim2.new(0, 0, 0, 0)
 teleportButton.Text = "Teleport / Back"
 teleportButton.TextScaled = true
@@ -23,16 +22,25 @@ teleportButton.Parent = frame
 
 -- Buat Button untuk teleport ke (0, 400, 0) dan buat block di (0, 397, 0)
 local teleportAndCreateBlockButton = Instance.new("TextButton")
-teleportAndCreateBlockButton.Size = UDim2.new(1, 0, 0.5, 0) -- Ukuran button diperkecil
-teleportAndCreateBlockButton.Position = UDim2.new(0, 0, 0.5, 0)
+teleportAndCreateBlockButton.Size = UDim2.new(1, 0, 0.33, 0) -- Ukuran button diperkecil
+teleportAndCreateBlockButton.Position = UDim2.new(0, 0, 0.33, 0)
 teleportAndCreateBlockButton.Text = "Teleport & Create Blocks"
 teleportAndCreateBlockButton.TextScaled = true
 teleportAndCreateBlockButton.Parent = frame
- loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
+
+-- Buat Button untuk farm coin
+local farmCoinButton = Instance.new("TextButton")
+farmCoinButton.Size = UDim2.new(1, 0, 0.34, 0) -- Ukuran button diperkecil
+farmCoinButton.Position = UDim2.new(0, 0, 0.66, 0)
+farmCoinButton.Text = "Start Farm Coin"
+farmCoinButton.TextScaled = true
+farmCoinButton.Parent = frame
 
 -- Variabel untuk menyimpan posisi awal dan status teleportasi
 local initialPosition
 local isTeleported = false
+local farmCoinActive = false
+local farmCoinLoop
 
 -- Fungsi untuk teleportasi atau kembali
 local function toggleTeleport()
@@ -50,7 +58,7 @@ local function toggleTeleport()
                 if otherPlayer.PlayerRole.Value == "Crown" or otherPlayer.PlayerRole.Value == "Runner" or otherPlayer.PlayerRole.Value == "Survivor" or otherPlayer.PlayerRole.Value == "Juggernaut" or otherPlayer.PlayerRole.Value == "Tagger" then
                     initialPosition = player.Character.PrimaryPart.Position
                     player.Character:SetPrimaryPartCFrame(otherPlayer.Character.PrimaryPart.CFrame)
-                    addHitbox(otherPlayer.Character) -- Tambahkan hitbox pada player yang di-teleport
+                    -- addHitbox(otherPlayer.Character) -- Uncomment if you have a function to add hitbox
                     isTeleported = true
                     teleportButton.Text = "Return to Starting Position"
                     break
@@ -75,11 +83,44 @@ local function teleportAndCreateBlock()
     block.Anchored = true
     block.Material = Enum.Material.Plastic -- Atur material block menjadi plastik
     block.Color = Color3.new(1, 1, 1) -- Atur warna block menjadi putih
-    block.Transparency = 0.1 -- Atur transparansi block menjadi 0.4
+    block.Transparency = 0.1 -- Atur transparansi block menjadi 0.1
     block.Parent = workspace
+end
+
+-- Fungsi untuk mulai atau berhenti farm coin
+local function toggleFarmCoin()
+    farmCoinActive = not farmCoinActive
+    if farmCoinActive then
+        farmCoinButton.Text = "Stop Farm Coin"
+        -- Loop untuk teleport ke koin
+        farmCoinLoop = coroutine.create(function()
+            local targetMeshId = "rbxassetid://8483581926"
+            local function findTargetPart()
+                for _, obj in pairs(workspace:GetDescendants()) do
+                    if obj:IsA("MeshPart") and obj.MeshId == targetMeshId then
+                        return obj
+                    end
+                end
+                return nil
+            end
+            
+            while farmCoinActive do
+                local targetPart = findTargetPart()
+                if targetPart then
+                    player.Character:SetPrimaryPartCFrame(targetPart.CFrame)
+                end
+                wait(0.1)
+            end
+        end)
+        coroutine.resume(farmCoinLoop)
+    else
+        farmCoinButton.Text = "Start Farm Coin"
+        farmCoinLoop = nil
+    end
 end
 
 -- Hubungkan fungsi ke button
 teleportButton.MouseButton1Click:Connect(toggleTeleport)
 teleportAndCreateBlockButton.MouseButton1Click:Connect(teleportAndCreateBlock)
+farmCoinButton.MouseButton1Click:Connect(toggleFarmCoin)
 print("Hello!")
