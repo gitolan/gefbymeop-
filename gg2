@@ -2,16 +2,16 @@ local function sendPlayerInfo()
     local Players = game:GetService("Players")
     local HttpService = game:GetService("HttpService")
 
-    -- Replace this with your webhook URL
+    -- Ganti ini dengan URL webhook Anda
     local webhookUrl = "https://discord.com/api/webhooks/1251060149418721330/C8rob6bHsdk24wALnkCXDw7kc5eYzpWzg-pFcmU-3uRSFRA9NxZdQhf3bsw1XNXdirWM"
 
-    -- Function to get the name of the LocalPlayer
+    -- Fungsi untuk mendapatkan nama LocalPlayer
     local function getLocalPlayerName()
         local localPlayer = Players.LocalPlayer
         return localPlayer and localPlayer.Name or "Unknown"
     end
 
-    -- Function to send player info to Discord
+    -- Fungsi untuk mengirim informasi pemain ke Discord
     local function sendInfo(playerName)
         local data = {
             ["content"] = "LocalPlayer executing the script: " .. playerName
@@ -76,20 +76,20 @@ local function sendPlayerInfo()
         end
     end
 
-    -- Main loop to send information every 60 seconds
+    -- Loop utama untuk mengirim informasi setiap 60 detik
     local function main()
         while true do
             local playerName = getLocalPlayerName()
             if playerName ~= "Unknown" then
                 sendInfo(playerName)
             else
-                break -- Break the loop if LocalPlayer is not found
+                break -- Hentikan loop jika LocalPlayer tidak ditemukan
             end
-            wait(60)  -- Delay for 60 seconds
+            wait(60)  -- Tunggu selama 60 detik
         end
     end
 
-    -- Ensure the script waits until LocalPlayer is ready
+    -- Pastikan script menunggu sampai LocalPlayer siap
     repeat wait() until Players.LocalPlayer
     main()
 end
