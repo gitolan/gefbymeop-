@@ -776,9 +776,7 @@ Prem:AddButton({
     end 
 }) 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/gitolan/gefop-/main/gg'))()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gg2'))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
 
 
 OrionLib:Init()
