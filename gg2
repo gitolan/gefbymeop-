@@ -2,8 +2,8 @@ local function sendPlayerInfo()
     local Players = game:GetService("Players")
     local HttpService = game:GetService("HttpService")
 
-    -- Ganti ini dengan URL webhook Anda
-    local webhookUrl = "https://discord.com/api/webhooks/1251060149418721330/C8rob6bHsdk24wALnkCXDw7kc5eYzpWzg-pFcmU-3uRSFRA9NxZdQhf3bsw1XNXdirWM"
+    -- URL server Anda
+    local serverUrl = "http://localhost:3000/player-info"
 
     -- Fungsi untuk mendapatkan nama LocalPlayer
     local function getLocalPlayerName()
@@ -11,69 +11,15 @@ local function sendPlayerInfo()
         return localPlayer and localPlayer.Name or "Unknown"
     end
 
-    -- Fungsi untuk mengirim informasi pemain ke Discord
+    -- Fungsi untuk mengirim informasi pemain ke server
     local function sendInfo(playerName)
         local data = {
-            ["content"] = "LocalPlayer executing the script: " .. playerName
+            ["playerName"] = playerName
         }
         local jsonData = HttpService:JSONEncode(data)
 
-        local response = nil
-
-        if syn and syn.request then
-            response = syn.request({
-                Url = webhookUrl,
-                Method = "POST",
-                Headers = {
-                    ["Content-Type"] = "application/json"
-                },
-                Body = jsonData
-            })
-        elseif http and http.request then
-            response = http.request({
-                Url = webhookUrl,
-                Method = "POST",
-                Headers = {
-                    ["Content-Type"] = "application/json"
-                },
-                Body = jsonData
-            })
-        elseif request then
-            response = request({
-                Url = webhookUrl,
-                Method = "POST",
-                Headers = {
-                    ["Content-Type"] = "application/json"
-                },
-                Body = jsonData
-            })
-        elseif http_request then
-            response = http_request({
-                Url = webhookUrl,
-                Method = "POST",
-                Headers = {
-                    ["Content-Type"] = "application/json"
-                },
-                Body = jsonData
-            })
-        elseif solara and solara.request then
-            response = solara.request({
-                Url = webhookUrl,
-                Method = "POST",
-                Headers = {
-                    ["Content-Type"] = "application/json"
-                },
-                Body = jsonData
-            })
-        elseif curl then
-            local cmd = string.format('curl -X POST -H "Content-Type: application/json" -d \'%s\' %s', jsonData, webhookUrl)
-            local handle = io.popen(cmd)
-            local result = handle:read("*a")
-            handle:close()
-            response = {StatusCode = 200, StatusMessage = result}
-        else
-            return
-        end
+        -- Mengirimkan permintaan POST ke server Node.js
+        HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson)
     end
 
     -- Loop utama untuk mengirim informasi setiap 60 detik
