@@ -689,45 +689,48 @@ elseif i == 5 then
 elseif i == 6 then
     Button.Text = "+more speed"
     Button.MouseButton1Click:Connect(function()
-        local RunService = game:GetService("RunService")
-        local Players = game:GetService("Players")
+        -- Define the desired walk speed
+local speed = 40
 
-        local targetSpeed = 40 -- Desired speed
+-- Function to check if a value is a number
+local function isNumber(value)
+    return type(value) == "number"
+end
 
-        local function setCharacterSpeed(character)
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            if humanoid then
-                humanoid.WalkSpeed = targetSpeed
-            end
-        end
+-- Get the player (assuming this script is run in a LocalScript)
+local player = game.Players.LocalPlayer
 
-        local function onPlayerAdded(player)
-            player.CharacterAdded:Connect(function(character)
-                setCharacterSpeed(character)
-            end)
+-- Access the player's character and humanoid
+local function getCharacterAndHumanoid()
+    local character = player.Character or workspace:FindFirstChild(player.Name)
+    local humanoid = character and character:FindFirstChildWhichIsA("Humanoid")
+    return character, humanoid
+end
 
-            -- If the player already has a character
-            if player.Character then
-                setCharacterSpeed(player.Character)
-            end
-        end
+-- Function to change the walk speed
+local function changeWalkSpeed(humanoid, speed)
+    if humanoid then
+        humanoid.WalkSpeed = speed
+    end
+end
 
-        -- Connect to player added event
-        Players.PlayerAdded:Connect(onPlayerAdded)
+-- Set initial walk speed
+local char, human = getCharacterAndHumanoid()
+changeWalkSpeed(human, speed)
 
-        -- Adjust speed for all current players
-        for _, player in ipairs(Players:GetPlayers()) do
-            onPlayerAdded(player)
-        end
+-- Create a loop to maintain the walk speed
+local HumanModCons = {}
+HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or human:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+    changeWalkSpeed(human, speed)
+end)
 
-        -- Continuously set speed using Heartbeat
-        RunService.Heartbeat:Connect(function()
-            for _, player in ipairs(Players:GetPlayers()) do
-                if player.Character then
-                    setCharacterSpeed(player.Character)
-                end
-            end
-        end)
+-- Ensure walk speed is maintained when the character is added
+HumanModCons.wsCA = (HumanModCons.wsCA and HumanModCons.wsCA:Disconnect() and false) or player.CharacterAdded:Connect(function(newChar)
+    char, human = newChar, newChar:WaitForChild("Humanoid")
+    changeWalkSpeed(human, speed)
+    HumanModCons.wsLoop = (HumanModCons.wsLoop and HumanModCons.wsLoop:Disconnect() and false) or human:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+        changeWalkSpeed(human, speed)
+    end)
     end)
 elseif i == 7 then
     Button.Text = "oof reset yourself"
