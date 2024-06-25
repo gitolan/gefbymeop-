@@ -1,9 +1,9 @@
--- Create a new ScreenGui
+-- Buat ScreenGui baru
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CustomUI"
-screenGui.Parent = game.CoreGui
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Create a frame to hold the buttons
+-- Buat frame untuk menampung tombol-tombol
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 300, 0, 200)
 frame.Position = UDim2.new(0.5, -150, 0.5, -100)
@@ -11,7 +11,7 @@ frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
 
--- Function to style buttons
+-- Fungsi untuk mengatur gaya tombol
 local function styleButton(button)
     button.Size = UDim2.new(0, 280, 0, 50)
     button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
@@ -21,45 +21,55 @@ local function styleButton(button)
     button.TextSize = 24
 end
 
--- Create the Normal UI button
+-- Buat tombol Normal UI
 local normalUIButton = Instance.new("TextButton")
 normalUIButton.Position = UDim2.new(0, 10, 0, 10)
 normalUIButton.Text = "Normal UI"
 styleButton(normalUIButton)
 normalUIButton.Parent = frame
 
--- Create the OrionLib UI button
+-- Buat tombol OrionLib UI
 local orionLibUIButton = Instance.new("TextButton")
 orionLibUIButton.Position = UDim2.new(0, 10, 0, 70)
 orionLibUIButton.Text = "OrionLib UI"
 styleButton(orionLibUIButton)
 orionLibUIButton.Parent = frame
 
--- Create the Close button
+-- Buat tombol Close
 local closeButton = Instance.new("TextButton")
 closeButton.Position = UDim2.new(0, 10, 0, 130)
 closeButton.Text = "Close"
 styleButton(closeButton)
 closeButton.Parent = frame
 
--- Function to load the Normal UI script
+-- Fungsi untuk memuat skrip Normal UI
 local function loadNormalUI()
     screenGui:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefori"))()
+    end)
+    if not success then
+        warn("Failed to load Normal UI script XD")
+    end
 end
 
--- Function to load the OrionLib UI script
+-- Fungsi untuk memuat skrip OrionLib UI
 local function loadOrionLibUI()
     screenGui:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
+    end)
+    if not success then
+        warn("Failed to load OrionLib UI script XD")
+    end
 end
 
--- Function to close the GUI
+-- Fungsi untuk menutup GUI
 local function closeGUI()
     screenGui:Destroy()
 end
 
--- Connect the buttons to their respective functions
+-- Hubungkan tombol dengan fungsi mereka masing-masing
 normalUIButton.MouseButton1Click:Connect(loadNormalUI)
 orionLibUIButton.MouseButton1Click:Connect(loadOrionLibUI)
 closeButton.MouseButton1Click:Connect(closeGUI)
