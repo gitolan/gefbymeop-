@@ -20,6 +20,9 @@ local title2 = Instance.new("TextLabel")
 local Checkbox = Instance.new("TextButton")
 print("loading...")
 
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
 -- Set Colors
 local colors = {
     red = Color3.fromRGB(255, 0, 0),
