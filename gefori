@@ -709,7 +709,7 @@ while true do
     setWalkSpeed(player)
 
     -- Wait for a short duration before repeating the loop
-    wait(0.1)
+    wait(.0000000000000001)
       end
     end)
 elseif i == 7 then
