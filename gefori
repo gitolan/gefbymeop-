@@ -830,6 +830,7 @@ HumanModCons.wsCA = (HumanModCons.wsCA and HumanModCons.wsCA:Disconnect() and fa
         changeWalkSpeed(human, speed)
     end)
     end)
+    end)
 elseif i == 7 then
     Button.Text = "oof reset yourself"
     Button.MouseButton1Click:Connect(function()
