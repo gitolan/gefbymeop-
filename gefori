@@ -689,28 +689,46 @@ elseif i == 5 then
 elseif i == 6 then
     Button.Text = "+more speed"
     Button.MouseButton1Click:Connect(function()
-        -- Define the target walk speed
-local targetSpeed = 40
+        -- File path: game/ReplicatedFirst/LoopSpeedScript.lua
 
--- Function to set the player's walk speed
-local function setWalkSpeed(player)
-    -- Check if the player's character exists and has a Humanoid
-    if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-        player.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = targetSpeed
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+local targetSpeed = 40 -- Desired speed
+
+local function setCharacterSpeed(character)
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.WalkSpeed = targetSpeed
     end
 end
 
--- Loop to continuously set the player's walk speed
-while true do
-    -- Get the local player
-    local player = game.Players.LocalPlayer
+local function onPlayerAdded(player)
+    player.CharacterAdded:Connect(function(character)
+        setCharacterSpeed(character)
+    end)
+    
+    -- If the player already has a character
+    if player.Character then
+        setCharacterSpeed(player.Character)
+    end
+end
 
-    -- Set the player's walk speed
-    setWalkSpeed(player)
+-- Connect to player added event
+Players.PlayerAdded:Connect(onPlayerAdded)
 
-    -- Wait for a short duration before repeating the loop
-    wait(.0000000000000001)
-      end
+-- Adjust speed for all current players
+for _, player in ipairs(Players:GetPlayers()) do
+    onPlayerAdded(player)
+end
+
+-- Continuously set speed using Heartbeat
+RunService.Heartbeat:Connect(function()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character then
+            setCharacterSpeed(player.Character)
+        end
+    end
     end)
 elseif i == 7 then
     Button.Text = "oof reset yourself"
