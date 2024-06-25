@@ -308,24 +308,29 @@ for i = 1, 13 do
 
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
-        local rootPart = player.Character.HumanoidRootPart
-        local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
-
-        rootPart.CFrame = adjustedCFrame
-        wait(0.1) 
+        local rootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        if rootPart then
+            local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
+            rootPart.CFrame = adjustedCFrame
+            wait(0.1)
+        else
+            warn("HumanoidRootPart not found in player's character.")
+        end
     end
 
     local function teleportAndReturn(destinationCFrame)
         local player = game.Players.LocalPlayer
-        local rootPart = player.Character.HumanoidRootPart
-        local originalPosition = rootPart.CFrame
-        -- Add a small offset to avoid falling through the ground
-        local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
-
-        rootPart.CFrame = adjustedCFrame
-        wait(2)
-        rootPart.CFrame = originalPosition
-        wait(0.1) -- Small delay to help character settle
+        local rootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        if rootPart then
+            local originalPosition = rootPart.CFrame
+            local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
+            rootPart.CFrame = adjustedCFrame
+            wait(2)
+            rootPart.CFrame = originalPosition
+            wait(0.1)
+        else
+            warn("HumanoidRootPart not found in player's character.")
+        end
     end
 
     local function handleTeleport(destinationCFrame)
@@ -374,7 +379,7 @@ for i = 1, 13 do
             if food then
                 handleTeleport(food.CFrame)
             else
-                warn("Coklat not found in Workspace.")
+                warn("Chocolate not found in Workspace.")
             end
         end)
     elseif i == 5 then
