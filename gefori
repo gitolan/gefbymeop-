@@ -20,9 +20,6 @@ local title2 = Instance.new("TextLabel")
 local Checkbox = Instance.new("TextButton")
 print("loading...")
 
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
 -- Set Colors
 local colors = {
     red = Color3.fromRGB(255, 0, 0),
@@ -34,13 +31,17 @@ local colors = {
 }
 -- end
 
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "ScreenGui"
 ScreenGui.Parent = playerGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.ResetOnSpawn = false
 
--- Buat MainFrame
+-- Create MainFrame
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
@@ -53,7 +54,7 @@ MainFrame.Draggable = true
 MainFrame.Active = true
 MainFrame.Visible = false
 
--- Buat OpenButton
+-- Create OpenButton
 local OpenButton = Instance.new("TextButton")
 OpenButton.Name = "OpenButton"
 OpenButton.Parent = ScreenGui
@@ -66,34 +67,34 @@ OpenButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
--- Fungsi untuk memastikan tombol tetap dalam batas layar
+-- Function to ensure button stays within screen bounds
 local function ensureButtonInBounds(button)
     if button then
         local screenSize = game.Workspace.CurrentCamera.ViewportSize
         local buttonSize = button.AbsoluteSize
 
-        -- Hitung batas minimum dan maksimum untuk posisi X dan Y
+        -- Calculate min and max bounds for X and Y positions
         local minX = 0
         local maxX = screenSize.X - buttonSize.X
         local minY = 0
         local maxY = screenSize.Y - buttonSize.Y
 
-        -- Ambil posisi saat ini dari tombol
+        -- Get current button position
         local posX = button.Position.X.Offset
         local posY = button.Position.Y.Offset
 
-        -- Koreksi posisi jika keluar dari batas
+        -- Clamp position if out of bounds
         posX = math.clamp(posX, minX, maxX)
         posY = math.clamp(posY, minY, maxY)
 
-        -- Setel posisi tombol dengan mempertimbangkan skala
+        -- Set button position with consideration of scale
         button.Position = UDim2.new(button.Position.X.Scale, posX, button.Position.Y.Scale, posY)
     else
         warn("Button is nil!")
     end
 end
 
--- Pastikan posisi awal OpenButton dalam batas layar
+-- Ensure initial OpenButton position is within screen bounds
 ensureButtonInBounds(OpenButton)
 
 -- Pindahkan deklarasi aimbotEnabled ke luar untuk menjadikannya global
