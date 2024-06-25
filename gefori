@@ -471,8 +471,8 @@ for i = 1, 13 do
             else
                 warn("Ammo (HandGun) not found in Workspace.")
             end
-        end)
-    end
+end)
+end
 end
 
 -- สร้างปุ่ม Esp Gefs และ Esp Menu Players
