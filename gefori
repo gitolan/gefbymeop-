@@ -689,8 +689,6 @@ elseif i == 5 then
 elseif i == 6 then
     Button.Text = "+more speed"
     Button.MouseButton1Click:Connect(function()
-        -- File path: game/ReplicatedFirst/LoopSpeedScript.lua
-
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
@@ -728,7 +726,6 @@ RunService.Heartbeat:Connect(function()
         if player.Character then
             setCharacterSpeed(player.Character)
         end
-    end
     end)
 elseif i == 7 then
     Button.Text = "oof reset yourself"
