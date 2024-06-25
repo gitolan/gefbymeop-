@@ -2,6 +2,7 @@
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CustomUI"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = false
 
 -- Buat frame untuk menampung tombol-tombol
 local frame = Instance.new("Frame")
