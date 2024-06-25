@@ -58,7 +58,8 @@ closeButton.Font = Enum.Font.SourceSansBold
 
 -- Load button click event to load the script
 loadButton.MouseButton1Click:Connect(function()
-screenGui:Destroy() loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefkey"))()
+screenGui:Destroy()
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefkey"))()
 end)
 
 -- Close button click event to close the GUI
