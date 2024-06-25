@@ -336,71 +336,136 @@ for i = 1, 13 do
         end
     end
 
-    -- Define teleport buttons
+    -- Define teleport buttons with error handling
     if i == 1 then
         Button.Text = "Shotgun"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Shotgun.CFrame)
+            local shotgun = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Shotgun")
+            if shotgun then
+                handleTeleport(shotgun.CFrame)
+            else
+                warn("Shotgun not found in Workspace.")
+            end
         end)
     elseif i == 2 then
         Button.Text = "Ammo (Shotgun)"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Shells.CFrame)
+            local shells = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Shells")
+            if shells then
+                handleTeleport(shells.CFrame)
+            else
+                warn("Ammo (Shotgun) not found in Workspace.")
+            end
         end)
     elseif i == 3 then
         Button.Text = "Medkit"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Medkit.CFrame)
+            local medkit = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Medkit")
+            if medkit then
+                handleTeleport(medkit.CFrame)
+            else
+                warn("Medkit not found in Workspace.")
+            end
         end)
     elseif i == 4 then
-        Button.Text = "Coklat"
+        Button.Text = "Chocolate"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Food.CFrame)
+            local food = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Food")
+            if food then
+                handleTeleport(food.CFrame)
+            else
+                warn("Coklat not found in Workspace.")
+            end
         end)
     elseif i == 5 then
         Button.Text = "Bat"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Bat.CFrame)
+            local bat = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Bat")
+            if bat then
+                handleTeleport(bat.CFrame)
+            else
+                warn("Bat not found in Workspace.")
+            end
         end)
     elseif i == 6 then
         Button.Text = "Crowbar"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Crowbar.CFrame)
+            local crowbar = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Crowbar")
+            if crowbar then
+                handleTeleport(crowbar.CFrame)
+            else
+                warn("Crowbar not found in Workspace.")
+            end
         end)
     elseif i == 7 then
         Button.Text = "Hammer"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Hammer.CFrame)
+            local hammer = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Hammer")
+            if hammer then
+                handleTeleport(hammer.CFrame)
+            else
+                warn("Hammer not found in Workspace.")
+            end
         end)
     elseif i == 8 then
         Button.Text = "Drink"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Soda.CFrame)
+            local soda = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Soda")
+            if soda then
+                handleTeleport(soda.CFrame)
+            else
+                warn("Drink not found in Workspace.")
+            end
         end)
     elseif i == 9 then
         Button.Text = "Money"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Money.CFrame)
+            local money = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Money")
+            if money then
+                handleTeleport(money.CFrame)
+            else
+                warn("Money not found in Workspace.")
+            end
         end)
     elseif i == 10 then
         Button.Text = "Handgun"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Handgun.CFrame)
+            local handgun = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Handgun")
+            if handgun then
+                handleTeleport(handgun.CFrame)
+            else
+                warn("Handgun not found in Workspace.")
+            end
         end)
     elseif i == 11 then
         Button.Text = "Lamp"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Lantern.CFrame)
+            local lantern = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Lantern")
+            if lantern then
+                handleTeleport(lantern.CFrame)
+            else
+                warn("Lamp not found in Workspace.")
+            end
         end)
     elseif i == 12 then
         Button.Text = "Radar"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.GPS.CFrame)
+            local gps = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("GPS")
+            if gps then
+                handleTeleport(gps.CFrame)
+            else
+                warn("Radar not found in Workspace.")
+            end
         end)
-elseif i == 13 then
-        Button.Text = "Ammon (HandGun)"
+    elseif i == 13 then
+        Button.Text = "Ammo (HandGun)"
         Button.MouseButton1Click:Connect(function()
-            handleTeleport(game:GetService("Workspace").Pickups.Bullets.CFrame)
+            local bullets = game:GetService("Workspace"):FindFirstChild("Pickups"):FindFirstChild("Bullets")
+            if bullets then
+                handleTeleport(bullets.CFrame)
+            else
+                warn("Ammo (HandGun) not found in Workspace.")
+            end
         end)
     end
 end
