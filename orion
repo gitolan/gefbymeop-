@@ -235,6 +235,46 @@ local Tab = Window:MakeTab({
 	Icon = "rbxassetid://12823489278",
 	PremiumOnly = false
 })
+-- Import library or define Tab here
+
+Tab:AddToggle({
+    Name = "This is a toggle!",
+    Default = false,
+    Callback = function(Value)
+        local targetSpeed = 40
+
+        -- Function to set the player's walk speed
+        local function setWalkSpeed(player)
+            -- Check if the player's character exists and has a Humanoid
+            if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                player.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = targetSpeed
+            end
+        end
+
+        -- If toggle is on, start the loop
+        if Value then
+            -- Create a separate thread for the loop
+            spawn(function()
+                while Value do
+                    -- Get the local player
+                    local player = game.Players.LocalPlayer
+
+                    -- Set the player's walk speed
+                    setWalkSpeed(player)
+
+                    -- Wait for a short duration before repeating the loop
+                    wait(0.1)
+                end
+            end)
+        else
+            -- If toggle is off, set the walk speed to default (16 is Roblox default walk speed)
+            local player = game.Players.LocalPlayer
+            if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                player.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = 16
+            end
+        end
+    end
+})
 Tab:AddButton({
     Name = "TpRandomPlayer",
     Callback = function()
@@ -776,7 +816,8 @@ Prem:AddButton({
     end 
 }) 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
+
 
 
 OrionLib:Init()
