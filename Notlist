@@ -1,0 +1,48 @@
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ScriptLoaderGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create Title TextLabel
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "TitleLabel"
+titleLabel.Parent = screenGui
+titleLabel.Size = UDim2.new(0, 400, 0, 50)
+titleLabel.Position = UDim2.new(0.5, -200, 0.3, -25)
+titleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.BorderSizePixel = 2
+titleLabel.Text = "The game you are playing is not on the list!"
+titleLabel.TextSize = 20
+titleLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+titleLabel.Font = Enum.Font.SourceSansBold
+
+-- Create Subtext TextLabel
+local subtextLabel = Instance.new("TextLabel")
+subtextLabel.Name = "SubtextLabel"
+subtextLabel.Parent = screenGui
+subtextLabel.Size = UDim2.new(0, 400, 0, 30)
+subtextLabel.Position = UDim2.new(0.5, -200, 0.4, -15)
+subtextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+subtextLabel.BorderSizePixel = 2
+subtextLabel.Text = "Load script?"
+subtextLabel.TextSize = 18
+subtextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+subtextLabel.Font = Enum.Font.SourceSansBold
+
+-- Create TextButton
+local loadButton = Instance.new("TextButton")
+loadButton.Name = "LoadButton"
+loadButton.Parent = screenGui
+loadButton.Size = UDim2.new(0, 200, 0, 50)
+loadButton.Position = UDim2.new(0.5, -100, 0.5, -25)
+loadButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+loadButton.BorderSizePixel = 2
+loadButton.Text = "Gef Script"
+loadButton.TextSize = 20
+loadButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+loadButton.Font = Enum.Font.SourceSansBold
+
+-- Button click event to load the script
+loadButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefkey"))()
+end)
