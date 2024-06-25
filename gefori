@@ -689,43 +689,45 @@ elseif i == 5 then
 elseif i == 6 then
     Button.Text = "+more speed"
     Button.MouseButton1Click:Connect(function()
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
+        local RunService = game:GetService("RunService")
+        local Players = game:GetService("Players")
 
-local targetSpeed = 40 -- Desired speed
+        local targetSpeed = 40 -- Desired speed
 
-local function setCharacterSpeed(character)
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if humanoid then
-        humanoid.WalkSpeed = targetSpeed
-    end
-end
-
-local function onPlayerAdded(player)
-    player.CharacterAdded:Connect(function(character)
-        setCharacterSpeed(character)
-    end)
-    
-    -- If the player already has a character
-    if player.Character then
-        setCharacterSpeed(player.Character)
-    end
-end
-
--- Connect to player added event
-Players.PlayerAdded:Connect(onPlayerAdded)
-
--- Adjust speed for all current players
-for _, player in ipairs(Players:GetPlayers()) do
-    onPlayerAdded(player)
-end
-
--- Continuously set speed using Heartbeat
-RunService.Heartbeat:Connect(function()
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player.Character then
-            setCharacterSpeed(player.Character)
+        local function setCharacterSpeed(character)
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.WalkSpeed = targetSpeed
+            end
         end
+
+        local function onPlayerAdded(player)
+            player.CharacterAdded:Connect(function(character)
+                setCharacterSpeed(character)
+            end)
+
+            -- If the player already has a character
+            if player.Character then
+                setCharacterSpeed(player.Character)
+            end
+        end
+
+        -- Connect to player added event
+        Players.PlayerAdded:Connect(onPlayerAdded)
+
+        -- Adjust speed for all current players
+        for _, player in ipairs(Players:GetPlayers()) do
+            onPlayerAdded(player)
+        end
+
+        -- Continuously set speed using Heartbeat
+        RunService.Heartbeat:Connect(function()
+            for _, player in ipairs(Players:GetPlayers()) do
+                if player.Character then
+                    setCharacterSpeed(player.Character)
+                end
+            end
+        end)
     end)
 elseif i == 7 then
     Button.Text = "oof reset yourself"
