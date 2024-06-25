@@ -20,6 +20,10 @@ local title2 = Instance.new("TextLabel")
 local Checkbox = Instance.new("TextButton")
 print("loading...")
 
+print("ScreenGui:", ScreenGui)
+print("MainFrame:", MainFrame)
+print("OpenButton:", OpenButton)
+
 -- Set Colors
 local colors = {
     red = Color3.fromRGB(255, 0, 0),
