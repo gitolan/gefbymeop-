@@ -1,6 +1,7 @@
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "ScriptLoaderGui"
+screenGui.ResetOnSpawn = false -- Tambahkan ini
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Create Title TextLabel
@@ -29,12 +30,12 @@ subtextLabel.TextSize = 18
 subtextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 subtextLabel.Font = Enum.Font.SourceSansBold
 
--- Create TextButton
+-- Create Load Button
 local loadButton = Instance.new("TextButton")
 loadButton.Name = "LoadButton"
 loadButton.Parent = screenGui
 loadButton.Size = UDim2.new(0, 200, 0, 50)
-loadButton.Position = UDim2.new(0.5, -100, 0.5, -25)
+loadButton.Position = UDim2.new(0.5, -210, 0.5, -25) -- Geser ke kiri untuk memberi ruang bagi tombol Close
 loadButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 loadButton.BorderSizePixel = 2
 loadButton.Text = "Gef Script"
@@ -42,7 +43,25 @@ loadButton.TextSize = 20
 loadButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 loadButton.Font = Enum.Font.SourceSansBold
 
--- Button click event to load the script
+-- Create Close Button
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Parent = screenGui
+closeButton.Size = UDim2.new(0, 200, 0, 50)
+closeButton.Position = UDim2.new(0.5, 10, 0.5, -25) -- Geser ke kanan untuk berada di samping tombol Load
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+closeButton.BorderSizePixel = 2
+closeButton.Text = "Close"
+closeButton.TextSize = 20
+closeButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+closeButton.Font = Enum.Font.SourceSansBold
+
+-- Load button click event to load the script
 loadButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefkey"))()
+screenGui:Destroy() loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/gefkey"))()
+end)
+
+-- Close button click event to close the GUI
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
 end)
