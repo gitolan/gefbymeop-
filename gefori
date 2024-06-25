@@ -84,6 +84,8 @@ local function ensureButtonInBounds(button)
     end
 end
 
+-- Pastikan posisi awal OpenButton dalam batas layar
+ensureButtonInBounds(OpenButton)
 
 -- Pindahkan deklarasi aimbotEnabled ke luar untuk menjadikannya global
 local aimbotEnabled = false
