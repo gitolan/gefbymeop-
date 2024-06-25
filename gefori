@@ -59,18 +59,22 @@ OpenButton.MouseButton1Click:Connect(function()
 end)
 
 local function ensureButtonInBounds(button)
-    local screenSize = game.Workspace.CurrentCamera.ViewportSize
-    local buttonSize = button.AbsoluteSize
+    if button then
+        local screenSize = game.Workspace.CurrentCamera.ViewportSize
+        local buttonSize = button.AbsoluteSize
 
-    local minX = buttonSize.X / 2
-    local maxX = screenSize.X - buttonSize.X / 2
-    local minY = buttonSize.Y / 2
-    local maxY = screenSize.Y - buttonSize.Y / 2
+        local minX = buttonSize.X / 2
+        local maxX = screenSize.X - buttonSize.X / 2
+        local minY = buttonSize.Y / 2
+        local maxY = screenSize.Y - buttonSize.Y / 2
 
-    local posX = math.clamp(button.Position.X.Offset, minX, maxX)
-    local posY = math.clamp(button.Position.Y.Offset, minY, maxY)
+        local posX = math.clamp(button.Position.X.Offset, minX, maxX)
+        local posY = math.clamp(button.Position.Y.Offset, minY, maxY)
 
-    button.Position = UDim2.new(button.Position.X.Scale, posX, button.Position.Y.Scale, posY)
+        button.Position = UDim2.new(button.Position.X.Scale, posX, button.Position.Y.Scale, posY)
+    else
+        warn("Button is nil!")
+    end
 end
 
 -- Pindahkan deklarasi aimbotEnabled ke luar untuk menjadikannya global
