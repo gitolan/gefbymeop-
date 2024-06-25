@@ -580,7 +580,7 @@ elseif i == 5 then
 end
 end
 
-for i = 1, 12 do
+for i = 1, 13 do
     local Button = Instance.new("TextButton")
     Button.Parent = PlayerMenu
     Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- สีขาว
@@ -672,6 +672,32 @@ elseif i == 5 then
         brightLoop = RunService.RenderStepped:Connect(brightFunc)
     end)
 elseif i == 6 then
+    Button.Text = "+more speed"
+    Button.MouseButton1Click:Connect(function()
+        -- Define the target walk speed
+local targetSpeed = 40
+
+-- Function to set the player's walk speed
+local function setWalkSpeed(player)
+    -- Check if the player's character exists and has a Humanoid
+    if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+        player.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = targetSpeed
+    end
+end
+
+-- Loop to continuously set the player's walk speed
+while true do
+    -- Get the local player
+    local player = game.Players.LocalPlayer
+
+    -- Set the player's walk speed
+    setWalkSpeed(player)
+
+    -- Wait for a short duration before repeating the loop
+    wait(0.1)
+      end
+    end)
+elseif i == 7 then
     Button.Text = "oof reset yourself"
     Button.MouseButton1Click:Connect(function()
         local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")  -- Menambah game.Players.LocalPlayer sebelum Character
@@ -681,7 +707,7 @@ elseif i == 6 then
             warn("Humanoid not found.")
          end
       end)
-      elseif i == 7 then
+      elseif i == 8 then
     Button.Text = "+storage visual"
     Button.MouseButton1Click:Connect(function()
         local playerUpgrades = game.Players.LocalPlayer.Upgrades
@@ -695,7 +721,7 @@ elseif i == 6 then
                 Storage.Value = 15 -- 2^63 - 1
             end
         end)
-        elseif i == 8 then
+        elseif i == 9 then
     Button.Text = "DamageCrowbar no drop money"
     Button.MouseButton1Click:Connect(function()
         local player = game.Players.LocalPlayer
@@ -722,7 +748,7 @@ elseif i == 6 then
             end
         end
     end)
-        elseif i == 9 then
+        elseif i == 10 then
     Button.Text = "infmaxstamina"
     Button.MouseButton1Click:Connect(function()
         local playerUpgrades = game.Players.LocalPlayer.Upgrades
@@ -736,7 +762,7 @@ elseif i == 6 then
                 maxStamina.Value = 9223372036854775807 -- 2^63 - 1
             end
         end)
-      elseif i == 10 then
+      elseif i == 11 then
     Button.Text = "infenergy"
     Button.MouseButton1Click:Connect(function()
         local Energy = game.Workspace.LocalPlayer.Energy
@@ -745,7 +771,7 @@ elseif i == 6 then
                 Energy.Value = 922337203685807
             end
         end)
-      elseif i == 11 then
+      elseif i == 12 then
     Button.Text = "infstaminaregen"
     Button.MouseButton1Click:Connect(function()
         local playerUpgrades = game.Players.LocalPlayer.Upgrades
@@ -759,7 +785,7 @@ elseif i == 6 then
                 StaminaRegen.Value = 9223372036854775807 -- 2^63 - 1
             end
         end)
-        elseif i == 12 then
+        elseif i == 13 then
     Button.Text = "DamageBat no money drop"
     Button.MouseButton1Click:Connect(function()
         local player = game.Players.LocalPlayer
@@ -1291,7 +1317,7 @@ for i = 1,5 do
     createSeparator(EspMenu, UDim2.new(0, 0, 0, (i * 25) - 4))
 end
 
-for i = 1, 12 do
+for i = 1, 13 do
     createSeparator(PlayerMenu, UDim2.new(0, 0, 0, (i * 25) - 4))
 end
 
