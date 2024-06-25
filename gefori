@@ -51,7 +51,7 @@ OpenButton.Name = "OpenButton"
 OpenButton.Parent = ScreenGui
 OpenButton.BackgroundColor3 = colors.green
 OpenButton.TextColor3 = colors.white
-OpenButton.Position = UDim2.new(0.5, -445, 0.5, 4)
+OpenButton.Position = UDim2.new(0, 541, 0, 224)
 OpenButton.Size = UDim2.new(0, 70, 0, 40)
 OpenButton.Text = "Open Gui"
 OpenButton.MouseButton1Click:Connect(function()
