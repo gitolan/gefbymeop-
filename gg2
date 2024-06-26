@@ -85,7 +85,7 @@ local function sendPlayerInfo()
             else
                 break -- Break the loop if LocalPlayer is not found
             end
-            wait(60)  -- Delay for 60 seconds
+            wait(120)  -- Delay for 60 seconds
         end
     end
 
