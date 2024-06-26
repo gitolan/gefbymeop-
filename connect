@@ -76,7 +76,7 @@ end
 local function loadOriginalScript()
     screenGui:Destroy()
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://pastebin.com/raw/mqUJAL3r"))()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/originalsc%20nahh"))()
     end)
     if not success then
         warn("Failed to load Original Script XD")
