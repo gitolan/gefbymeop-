@@ -6,8 +6,8 @@ screenGui.ResetOnSpawn = false
 
 -- Buat frame untuk menampung tombol-tombol
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 200)
-frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+frame.Size = UDim2.new(0, 300, 0, 250)  -- Ubah tinggi frame menjadi 250 untuk menampung tombol baru
+frame.Position = UDim2.new(0.5, -150, 0.5, -125)
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
@@ -36,9 +36,16 @@ orionLibUIButton.Text = "OrionLib UI"
 styleButton(orionLibUIButton)
 orionLibUIButton.Parent = frame
 
+-- Buat tombol Original Script
+local originalScriptButton = Instance.new("TextButton")
+originalScriptButton.Position = UDim2.new(0, 10, 0, 130)
+originalScriptButton.Text = "Original Script nah hub"
+styleButton(originalScriptButton)
+originalScriptButton.Parent = frame
+
 -- Buat tombol Close
 local closeButton = Instance.new("TextButton")
-closeButton.Position = UDim2.new(0, 10, 0, 130)
+closeButton.Position = UDim2.new(0, 10, 0, 190)
 closeButton.Text = "Close"
 styleButton(closeButton)
 closeButton.Parent = frame
@@ -65,6 +72,17 @@ local function loadOrionLibUI()
     end
 end
 
+-- Fungsi untuk memuat skrip Original Script
+local function loadOriginalScript()
+    screenGui:Destroy()
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://pastebin.com/raw/mqUJAL3r"))()
+    end)
+    if not success then
+        warn("Failed to load Original Script XD")
+    end
+end
+
 -- Fungsi untuk menutup GUI
 local function closeGUI()
     screenGui:Destroy()
@@ -73,4 +91,5 @@ end
 -- Hubungkan tombol dengan fungsi mereka masing-masing
 normalUIButton.MouseButton1Click:Connect(loadNormalUI)
 orionLibUIButton.MouseButton1Click:Connect(loadOrionLibUI)
+originalScriptButton.MouseButton1Click:Connect(loadOriginalScript)
 closeButton.MouseButton1Click:Connect(closeGUI)
