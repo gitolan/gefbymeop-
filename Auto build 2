@@ -14,6 +14,10 @@ local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or WaitForChildOfClass(LocalPlayer, "Model")
 local Hammer = WaitForChildOfClass(Character, "Tool")
 
+local function BuildPlank(args)
+    game:GetService("Players").LocalPlayer.Character.Hammer.BuildPlank:FireServer(unpack(args))
+end
+
 local plankConfigs = {
     {
         Vector3.new(-308.5, 12.170199394226074, 382.6943359375),
