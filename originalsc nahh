@@ -266,5 +266,3 @@ EspButton.MouseButton1Click:Connect(function()
     EspMenu.Visible = not EspMenu.Visible
     TeleportMenu.Visible = false
 end)
-
--- ตั้งค่า Hotkey เพื่อเปิด/ปิด GUI ตามสคริปต์ก่อนหน้านี้
