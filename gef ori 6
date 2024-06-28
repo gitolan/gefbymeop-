@@ -347,6 +347,24 @@ for i = 1, 13 do
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
     end
 
+    local function autoClick()
+        local pickups_folder = workspace.Pickups
+        local plr = game.Players.LocalPlayer
+        local playerPosition = plr.Character.HumanoidRootPart.Position
+
+        for _, v in ipairs(pickups_folder:GetChildren()) do
+            local proximityPrompt = v:FindFirstChildOfClass("ProximityPrompt")
+            if proximityPrompt then
+                local promptPosition = proximityPrompt.Parent.Position
+                local distance = (promptPosition - playerPosition).Magnitude
+                if distance <= 7 then
+                    fireproximityprompt(proximityPrompt)
+                    wait(0.1)
+                end
+            end
+        end
+    end
+
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
         local rootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
@@ -356,6 +374,7 @@ for i = 1, 13 do
             wait(0.1)
             if autoClickEnabled then
                 simulateKeyPress()
+                autoClick()
             end
         else
             warn("HumanoidRootPart not found in player's character.")
@@ -372,6 +391,7 @@ for i = 1, 13 do
             wait(0.1)
             if autoClickEnabled then
                 simulateKeyPress()
+                autoClick()
                 wait(1) -- Waktu jeda sebelum kembali ke posisi semula
             end
             rootPart.CFrame = originalPosition
@@ -648,20 +668,18 @@ elseif i == 3 then
         end
         toggleESP()
     end)
-elseif i == 4 then
-    Button.Text = "Giant Gef Esp"
+elseif i == 3 then
+    Button.Text = "Gef Esp V2"
     Button.MouseButton1Click:Connect(function()
-        local espEnabled = true
-        
-        local function createESPForGEF(part)
+        local function createESPForRootPart(part)
             local espGui = Instance.new("BillboardGui", part)
             espGui.Adornee = part
-            espGui.Size = UDim2.new(0, 200, 0, 50)
+            espGui.Size = UDim2.new(0, 200, 0, 70)
             espGui.AlwaysOnTop = true
             espGui.StudsOffset = Vector3.new(0, 3, 0)
             
             local nameLabel = Instance.new("TextLabel", espGui)
-            nameLabel.Text = "GiantGef"
+            nameLabel.Text = "sGEFs"
             nameLabel.BackgroundTransparency = 1
             nameLabel.Size = UDim2.new(0, 200, 0, 20)
             nameLabel.Font = Enum.Font.SourceSansBold
@@ -674,46 +692,55 @@ elseif i == 4 then
             distanceLabel.TextSize = 18
             distanceLabel.Position = UDim2.new(0, 0, 0, 20)
             
+            local healthLabel = Instance.new("TextLabel", espGui)
+            healthLabel.BackgroundTransparency = 1
+            healthLabel.Size = UDim2.new(0, 200, 0, 20)
+            healthLabel.Font = Enum.Font.SourceSansBold
+            healthLabel.TextSize = 18
+            healthLabel.Position = UDim2.new(0, 0, 0, 40)
+            
             game:GetService("RunService").RenderStepped:Connect(function()
-                if part.Parent and espGui.Parent then
-                    local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
-                    distanceLabel.Text = string.format("Distance: %.2f", distance)
-                    
-                    if distance < 50 then
-                        nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
-                        distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
-                    elseif distance < 100 then
-                        nameLabel.TextColor3 = Color3.new(1, 1, 0)
-                        distanceLabel.TextColor3 = Color3.new(1, 1, 0)
-                    else
-                        nameLabel.TextColor3 = Color3.new(0, 1, 0)
-                        distanceLabel.TextColor3 = Color3.new(0, 1, 0)
-                    end
+                local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
+                distanceLabel.Text = string.format("Distance: %.2f", distance)
+                
+                if distance < 50 then
+                    nameLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                    distanceLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                elseif distance < 100 then
+                    nameLabel.TextColor3 = Color3.new(1, 1, 0)
+                    distanceLabel.TextColor3 = Color3.new(1, 1, 0)
                 else
-                    espGui:Destroy()
+                    nameLabel.TextColor3 = Color3.new(0, 1, 0)
+                    distanceLabel.TextColor3 = Color3.new(0, 1, 0)
+                end
+
+                -- Update health label
+                local health = workspace.GEFs["Mini GEF"].Health.Value
+                healthLabel.Text = string.format("Health: %d", health)
+                if health >= 70 then
+                    healthLabel.TextColor3 = Color3.new(0, 1, 0) -- Green
+                elseif health >= 30 then
+                    healthLabel.TextColor3 = Color3.new(1, 0.5, 0) -- Orange
+                else
+                    healthLabel.TextColor3 = Color3.new(1, 0, 0) -- Red
                 end
             end)
         end
         
+        local espEnabled = true
+        
         local function toggleESP()
             while espEnabled do
                 for _, part in pairs(workspace:GetDescendants()) do
-                    if part:IsA("BasePart") and part.Name == "GEF" then
+                    if part:IsA("BasePart") and part.Name == "RootPart" then
                         if not part:FindFirstChildOfClass("BillboardGui") then
-                            createESPForGEF(part)
+                            createESPForRootPart(part)
                         end
                     end
                 end
                 wait(60)
             end
         end
-
-        for _, part in pairs(workspace:GetDescendants()) do
-            if part:IsA("BasePart") and part.Name == "GEF" then
-                createESPForGEF(part)
-            end
-        end
-        
         toggleESP()
     end)
 elseif i == 5 then
