@@ -134,7 +134,7 @@ local plankConfigs = {
     {
         Vector3.new(-50, 9.2667818069458, -508.64508056640625),
         Vector3.new(-41.24699783325195, 2, -510.7314453125),
-workspace.Buildings.Shack1.Part,
+        workspace.Buildings.Shack1.Part,
         workspace.Buildings.Shack1.Part,
         Vector3.new(1, -0, -0)
     },
@@ -158,70 +158,56 @@ workspace.Buildings.Shack1.Part,
         workspace.Buildings.Shack1.Part,
         workspace.Buildings.Shack1.Part,
         Vector3.new(1, -0, -0)
+    },
+    {
+        Vector3.new(-50, 9.885909080505371, -534.029296875),
+        Vector3.new(-50, 9.99016284942627, -524.6865234375),
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        Vector3.new(1, -0, -0)
+    },
+    {
+        Vector3.new(-50.0973014831543, 6.501209259033203, -534),
+        Vector3.new(-50, 6.826535701751709, -524.7442626953125),
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        Vector3.new(0, 0, 1)
+    },
+    {
+        Vector3.new(-42.17695999145508, 5.704081058502197, -504.5),
+        Vector3.new(-34.21406936645508, 5.976844787597656, -504.5),
+        workspace.Buildings.Shack1.Part,
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        Vector3.new(-0, -0, -1)
+    },
+    {
+        Vector3.new(-7, 5.593432903289795, -514.24755859375),
+        Vector3.new(-7, 5.703981399536133, -527.6881713867188),
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        workspace.Buildings.Shack1.WindowFrame.WindowSill,
+        Vector3.new(-1, 0, 0)
+    },
+    {
+        Vector3.new(-39.54737091064453, 17.46018409729004, -517.7936401367188),
+        Vector3.new(-27.387407302856445, 17.538841247558594, -518.0362548828125),
+        workspace.Buildings.Shack1.Roof,
+        workspace.Buildings.Shack1.Roof,
+        Vector3.new(0.0000013262033462524414, -0.951242208480835, -0.3084449768066406)
+    },
+    {
+        Vector3.new(-39.37306594848633, 15.508594512939453, -511.77593994140625),
+        Vector3.new(-26.277507781982422, 15.610334396362305, -512.0897216796875),
+        workspace.Buildings.Shack1.Roof,
+        workspace.Buildings.Shack1.Roof,
+        Vector3.new(0.0000013262033462524414, -0.951242208480835, -0.3084449768066406)
+    },
+    {
+        Vector3.new(-11.575428009033203, 15.063004493713379, -531.5972900390625),
+        Vector3.new(-13.901445388793945, 2, -527.94091796875),
+        workspace.Buildings.Shack1.Roof,
+        workspace.Buildings.Shack1.Part,
+        Vector3.new(0.0000013262033462524414, -0.951242208480835, 0.3084449768066406)
     }
-
-
-{
-    Vector3.new(-50, 9.885909080505371, -534.029296875),
-    Vector3.new(-50, 9.99016284942627, -524.6865234375),
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    Vector3.new(1, -0, -0)
-}
-
-
-{
-    Vector3.new(-50.0973014831543, 6.501209259033203, -534),
-    Vector3.new(-50, 6.826535701751709, -524.7442626953125),
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    Vector3.new(0, 0, 1)
-}
-
-
-{
-    Vector3.new(-42.17695999145508, 5.704081058502197, -504.5),
-    Vector3.new(-34.21406936645508, 5.976844787597656, -504.5),
-    workspace.Buildings.Shack1.Part,
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    Vector3.new(-0, -0, -1)
-}
-
-
-{
-    Vector3.new(-7, 5.593432903289795, -514.24755859375),
-    Vector3.new(-7, 5.703981399536133, -527.6881713867188),
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    workspace.Buildings.Shack1.WindowFrame.WindowSill,
-    Vector3.new(-1, 0, 0)
-}
-
-
-{
-    Vector3.new(-39.54737091064453, 17.46018409729004, -517.7936401367188),
-    Vector3.new(-27.387407302856445, 17.538841247558594, -518.0362548828125),
-    workspace.Buildings.Shack1.Roof,
-    workspace.Buildings.Shack1.Roof,
-    Vector3.new(0.0000013262033462524414, -0.951242208480835, -0.3084449768066406)
-}
-
-
-{
-    Vector3.new(-39.37306594848633, 15.508594512939453, -511.77593994140625),
-    Vector3.new(-26.277507781982422, 15.610334396362305, -512.0897216796875),
-    workspace.Buildings.Shack1.Roof,
-    workspace.Buildings.Shack1.Roof,
-    Vector3.new(0.0000013262033462524414, -0.951242208480835, -0.3084449768066406)
-}
-
-
-{
-    Vector3.new(-11.575428009033203, 15.063004493713379, -531.5972900390625),
-    Vector3.new(-13.901445388793945, 2, -527.94091796875),
-    workspace.Buildings.Shack1.Roof,
-    workspace.Buildings.Shack1.Part,
-    Vector3.new(0.0000013262033462524414, -0.951242208480835, 0.3084449768066406)
-}
 }
 
 local function ContinuousBuild()
