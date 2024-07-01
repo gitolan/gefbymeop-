@@ -110,7 +110,7 @@ keylessButton.Parent = frame
 --------------------------------------------------------------------
 -- Logic to load string from KeySystem file and execute the script if correct
 local success, keyString = pcall(readfile, "GEFKeySystem.txt")
-if success and keyString == "LZtFFzJkgcoKQtGfg" then
+if success and keyString == "9u8JaFwTXirihPo" then
 game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "Loaded",
         Text = "Please wait",
@@ -129,7 +129,7 @@ end
 
 SubmitButton.MouseButton1Click:Connect(function()
     local KeySystem = KeySystem.Text
-    if KeySystem == "LZtFFzJkgcoKQtGfg" then
+    if KeySystem == "9u8JaFwTXirihPo" then
         screenGui:Destroy()
         wait(1)
         for i = 1, 2 do
@@ -157,7 +157,7 @@ SubmitButton.MouseButton1Click:Connect(function()
             end
         end
         -- Write KeySystem to a file
-        local keyString = "LZtFFzJkgcoKQtGfg"
+        local keyString = "9u8JaFwTXirihPo"
         local writeSuccess, errorMsg = pcall(writefile, "GEFKeySystem.txt", keyString)
         if not writeSuccess then
             game:GetService("StarterGui"):SetCore("SendNotification", {
@@ -178,7 +178,7 @@ SubmitButton.MouseButton1Click:Connect(function()
 end)
 
 GetKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("https://gateway.platoboost.com/l/21621/570df47j")
+    setclipboard("https://pastebin.com/raw/MLj8huVy")
 end)
 
 --------------------------------------------------------------------------
