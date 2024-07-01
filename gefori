@@ -610,7 +610,7 @@ if i == 1 then
     end)
 
 elseif i == 2 then
-    Button.Text = "Esp Menu Players"
+    Button.Text = "Esp Players"
     Button.MouseButton1Click:Connect(function()
 
         local connections = {}
