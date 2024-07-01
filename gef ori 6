@@ -346,7 +346,6 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
     local function simulateKeyPress()
         local VirtualInputManager = game:GetService("VirtualInputManager")
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-        wait(0.1) -- Waktu jeda antara klik
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
     end
 
@@ -369,7 +368,6 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
                     -- Jika perangkat adalah PC
                     fireproximityprompt(proximityPrompt, 1)
                     wait(0.1)
-                    -- Fallback jika fireproximityprompt tidak berfungsi dengan baik di PC
                     if not proximityPrompt.Enabled then
                         simulateKeyPress(proximityPrompt)
                     end
