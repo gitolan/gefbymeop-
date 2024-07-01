@@ -320,15 +320,15 @@ AutoClickCheckbox.Parent = TeleportMenu
 AutoClickCheckbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 AutoClickCheckbox.Size = UDim2.new(0, 200, 0, 20)
 AutoClickCheckbox.Position = UDim2.new(0, 1, 0, 25)
-AutoClickCheckbox.Text = "Auto Click E (Disabled)"
+AutoClickCheckbox.Text = "Auto Collect (Disabled)"
 
 AutoClickCheckbox.MouseButton1Click:Connect(function()
     autoClickEnabled = not autoClickEnabled
     if autoClickEnabled then
-        AutoClickCheckbox.Text = "Auto Click E (Enabled)"
+        AutoClickCheckbox.Text = "Auto Collect (Enabled)"
         AutoClickCheckbox.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
     else
-        AutoClickCheckbox.Text = "Auto Click E (Disabled)"
+        AutoClickCheckbox.Text = "Auto Collect (Disabled)"
         AutoClickCheckbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     end
 end)
