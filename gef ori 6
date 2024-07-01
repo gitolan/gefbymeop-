@@ -553,84 +553,87 @@ for i = 1, 5 do
 if i == 1 then
     Button.Text = "Esp All item"
     Button.MouseButton1Click:Connect(function()
-        
+
+        local connections = {}
+
         local function createESP(part)
-    local billboardGui = Instance.new("BillboardGui")
-    billboardGui.AlwaysOnTop = true
-    billboardGui.Size = UDim2.new(0, 200, 0, 40)
-    billboardGui.StudsOffset = Vector3.new(0, 3, 0)
-    
-    local textLabel = Instance.new("TextLabel")
-    textLabel.BackgroundTransparency = 1
-    textLabel.Size = UDim2.new(1, 0, 1, 0)
-    textLabel.Text = part.Name
-    textLabel.TextScaled = false
-    textLabel.TextSize = 24
-    textLabel.Font = Enum.Font.SourceSansBold
-    textLabel.TextColor3 = Color3.new(1, 1, 1)
-    textLabel.TextStrokeTransparency = 0.4  
-    textLabel.Parent = billboardGui
-    
-    billboardGui.Parent = part
-    
-    local box = Instance.new("BoxHandleAdornment")
-    box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
-    box.Adornee = part
-    box.Color3 = Color3.new(0, 1, 0)
-    box.Transparency = 0.5
-    box.AlwaysOnTop = true
-    box.ZIndex = 5
-    box.Parent = part
-end
-
-local function updateESPSize()
-    local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-    for _, part in ipairs(workspace.Pickups:GetChildren()) do
-        if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
-            local distance = (part.Position - playerPosition).Magnitude
-            part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
+            local billboardGui = Instance.new("BillboardGui")
+            billboardGui.AlwaysOnTop = true
+            billboardGui.Size = UDim2.new(0, 200, 0, 40)
+            billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+            
+            local textLabel = Instance.new("TextLabel")
+            textLabel.BackgroundTransparency = 1
+            textLabel.Size = UDim2.new(1, 0, 1, 0)
+            textLabel.Text = part.Name
+            textLabel.TextScaled = false
+            textLabel.TextSize = 24
+            textLabel.Font = Enum.Font.SourceSansBold
+            textLabel.TextColor3 = Color3.new(1, 1, 1)
+            textLabel.TextStrokeTransparency = 0.4  
+            textLabel.Parent = billboardGui
+            
+            billboardGui.Parent = part
+            
+            local box = Instance.new("BoxHandleAdornment")
+            box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
+            box.Adornee = part
+            box.Color3 = Color3.new(0, 1, 0)
+            box.Transparency = 0.5
+            box.AlwaysOnTop = true
+            box.ZIndex = 5
+            box.Parent = part
         end
-    end
-end
 
-local function handleNewItems(item)
-    if item:IsA("BasePart") then
-        createESP(item)
-    end
-end
+        local function updateESPSize()
+            local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            for _, part in ipairs(workspace.Pickups:GetChildren()) do
+                if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
+                    local distance = (part.Position - playerPosition).Magnitude
+                    part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
+                end
+            end
+        end
 
-for _, part in ipairs(workspace.Pickups:GetChildren()) do
-    handleNewItems(part)
-end
+        local function handleNewItems(item)
+            if item:IsA("BasePart") then
+                createESP(item)
+            end
+        end
 
-game:GetService("RunService").RenderStepped:Connect(updateESPSize)
-workspace.Pickups.ChildAdded:Connect(handleNewItems)
+        for _, part in ipairs(workspace.Pickups:GetChildren()) do
+            handleNewItems(part)
+        end
+
+        table.insert(connections, game:GetService("RunService").RenderStepped:Connect(updateESPSize))
+        table.insert(connections, workspace.Pickups.ChildAdded:Connect(handleNewItems))
     end)
--- Pastikan bagian ini berada di tempat yang benar dalam skrip Anda
+
 elseif i == 2 then
     Button.Text = "Esp Menu Players"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
         local Players = game:GetService("Players")
         local Workspace = game:GetService("Workspace")
         local RunService = game:GetService("RunService")
 
-        -- Function to create ESP for a player
         local function createESP(player)
             if not player.Character or not player.Character:FindFirstChild("Head") then return end
 
             local billboard = Instance.new("BillboardGui")
             billboard.Name = "ESP"
             billboard.AlwaysOnTop = true
-            billboard.Size = UDim2.new(4, 0, 2, 0)  -- Ukuran yang lebih kecil dari sebelumnya
+            billboard.Size = UDim2.new(4, 0, 2, 0)  
             billboard.Adornee = player.Character.Head
 
             local textLabel = Instance.new("TextLabel", billboard)
             textLabel.Size = UDim2.new(1, 0, 1, 0)
             textLabel.BackgroundTransparency = 1
             textLabel.TextColor3 = Color3.new(1, 0, 0)
-            textLabel.TextStrokeTransparency = 0  -- Membuat teks lebih tebal dengan garis luar
-            textLabel.Font = Enum.Font.SourceSansBold  -- Menetapkan font tebal
-            textLabel.TextSize = 25  -- Ukuran teks sedikit lebih kecil
+            textLabel.TextStrokeTransparency = 0  
+            textLabel.Font = Enum.Font.SourceSansBold  
+            textLabel.TextSize = 25  
 
             local function updateText()
                 local inventory = "N/A"
@@ -641,10 +644,8 @@ elseif i == 2 then
                 textLabel.Text = "Name: " .. player.DisplayName .. "\nUsername: " .. player.Name .. "\nInventory: " .. inventory
             end
 
-            -- Initial update
             updateText()
 
-            -- Update text on Heartbeat
             local connection
             connection = RunService.Heartbeat:Connect(function()
                 if not player.Character or not player.Character:FindFirstChild("Head") then
@@ -653,11 +654,11 @@ elseif i == 2 then
                 end
                 updateText()
             end)
+            table.insert(connections, connection)
 
             billboard.Parent = player.Character.Head
         end
 
-        -- Function to remove ESP
         local function removeESP(player)
             if player.Character and player.Character:FindFirstChild("Head") then
                 local esp = player.Character.Head:FindFirstChild("ESP")
@@ -667,22 +668,19 @@ elseif i == 2 then
             end
         end
 
-        -- Connect the player added event
         Players.PlayerAdded:Connect(function(player)
             player.CharacterAdded:Connect(function()
-                wait(1) -- Wait for the character to load
+                wait(1) 
                 createESP(player)
             end)
         end)
 
-        -- Initial ESP for existing players
         for _, player in pairs(Players:GetPlayers()) do
             if player.Character then
                 createESP(player)
             end
         end
 
-        -- Recreate ESP for all players on button click
         for _, player in pairs(Players:GetPlayers()) do
             if player.Character then
                 removeESP(player)
@@ -690,9 +688,13 @@ elseif i == 2 then
             end
         end
     end)
+
 elseif i == 3 then
     Button.Text = "Gef Esp V2"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
+
         local function createESPForRootPart(part)
             local espGui = Instance.new("BillboardGui", part)
             espGui.Adornee = part
@@ -721,7 +723,7 @@ elseif i == 3 then
             healthLabel.TextSize = 18
             healthLabel.Position = UDim2.new(0, 0, 0, 40)
             
-            game:GetService("RunService").RenderStepped:Connect(function()
+            table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
                 local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
                 distanceLabel.Text = string.format("Distance: %.2f", distance)
                 
@@ -736,17 +738,16 @@ elseif i == 3 then
                     distanceLabel.TextColor3 = Color3.new(0, 1, 0)
                 end
 
-                -- Update health label
                 local health = workspace.GEFs["Mini GEF"].Health.Value
                 healthLabel.Text = string.format("Health: %d", health)
                 if health >= 70 then
-                    healthLabel.TextColor3 = Color3.new(0, 1, 0) -- Green
+                    healthLabel.TextColor3 = Color3.new(0, 1, 0)
                 elseif health >= 30 then
-                    healthLabel.TextColor3 = Color3.new(1, 0.5, 0) -- Orange
+                    healthLabel.TextColor3 = Color3.new(1, 0.5, 0)
                 else
-                    healthLabel.TextColor3 = Color3.new(1, 0, 0) -- Red
+                    healthLabel.TextColor3 = Color3.new(1, 0, 0)
                 end
-            end)
+            end))
         end
         
         local espEnabled = true
@@ -765,11 +766,14 @@ elseif i == 3 then
         end
         toggleESP()
     end)
-    elseif i == 4 then
+
+elseif i == 4 then
     Button.Text = "Giant Gef Esp"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
         local espEnabled = true
-        
+
         local function createESPForGEF(part)
             local espGui = Instance.new("BillboardGui", part)
             espGui.Adornee = part
@@ -791,7 +795,7 @@ elseif i == 3 then
             distanceLabel.TextSize = 18
             distanceLabel.Position = UDim2.new(0, 0, 0, 20)
             
-            game:GetService("RunService").RenderStepped:Connect(function()
+            table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
                 if part.Parent and espGui.Parent then
                     local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
                     distanceLabel.Text = string.format("Distance: %.2f", distance)
@@ -809,7 +813,7 @@ elseif i == 3 then
                 else
                     espGui:Destroy()
                 end
-            end)
+            end))
         end
         
         local function toggleESP()
@@ -833,9 +837,13 @@ elseif i == 3 then
         
         toggleESP()
     end)
+
 elseif i == 5 then
     Button.Text = "Delete esp"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
+
         local function removeESP(part)
             for _, child in ipairs(part:GetChildren()) do
                 if child:IsA("BillboardGui") or child:IsA("BoxHandleAdornment") then
@@ -853,6 +861,11 @@ elseif i == 5 then
         end
         
         removeAllESP()
+
+        for _, connection in ipairs(connections) do
+            connection:Disconnect()
+        end
+        connections = {}
     end)
 end
 end
