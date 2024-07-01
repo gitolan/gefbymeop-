@@ -374,6 +374,7 @@ for i = 1, 13 do
         end
     end
 end
+
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
         local rootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
