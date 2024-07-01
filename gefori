@@ -9,12 +9,14 @@ local PlayerButton = Instance.new("TextButton")
 local OtherButton = Instance.new("TextButton")
 local Teleport2Button = Instance.new("TextButton")
 local Player2Button = Instance.new("TextButton")
+local AutoBuildButton = Instance.new("TextButton")
 local TeleportMenu = Instance.new("Frame")
 local EspMenu = Instance.new("Frame")
 local PlayerMenu = Instance.new("Frame")
 local OtherMenu = Instance.new("Frame")
 local Teleport2Menu = Instance.new("Frame")
 local Player2Menu = Instance.new("Frame")
+local AutoBuildMenu = Instance.new("Frame")
 local title = Instance.new("TextLabel")
 local title2 = Instance.new("TextLabel")
 local Checkbox = Instance.new("TextButton")
@@ -218,6 +220,13 @@ Player2Button.Position = UDim2.new(0, 0, 0, 250)
 Player2Button.Size = UDim2.new(0, 190, 0, 50)
 Player2Button.Text = "Player2"
 
+AutoBuildButton.Name = "AutoBuildButton"
+AutoBuildButton.Parent = MainFrame
+AutoBuildButton.BackgroundColor3 = colors.red -- Using colors table
+AutoBuildButton.Position = UDim2.new(0, 0, 0, 300)
+AutoBuildButton.Size = UDim2.new(0, 190, 0, 50)
+AutoBuildButton.Text = "AutoBuild"
+
 TeleportMenu.Name = "TeleportMenu"
 TeleportMenu.Parent = MainFrame
 TeleportMenu.BackgroundColor3 = colors.gray -- Using colors table
@@ -261,6 +270,13 @@ Player2Menu.Position = UDim2.new(0, 200, 0, 0)
 Player2Menu.Size = UDim2.new(0, 200, 0, 100)
 Player2Menu.Visible = false
 
+AutoBuildMenu.Name = "AutoBuildMenu"
+AutoBuildMenu.Parent = MainFrame
+AutoBuildMenu.BackgroundColor3 = colors.gray -- Using colors table
+AutoBuildMenu.Position = UDim2.new(0, 200, 0, 0)
+AutoBuildMenu.Size = UDim2.new(0, 200, 0, 100)
+AutoBuildMenu.Visible = false
+
 title.Size = UDim2.new(1, 0, 0, 20)
 title.Position = UDim2.new(0, 0, 0, -20) 
 title.Text = "Rof Hub"
@@ -277,9 +293,12 @@ title2.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
 
 -- สร้างปุ่มย่อยใน TeleportMenu และกำหนดฟังก์ชันเทเลพอร์ต 
 local teleportAndReturnEnabled = false
+local autoClickEnabled = false
 
+-- Checkbox untuk Teleport and Return
+local Checkbox = Instance.new("TextButton")
 Checkbox.Parent = TeleportMenu
-Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
+Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 Checkbox.Size = UDim2.new(0, 200, 0, 20)
 Checkbox.Position = UDim2.new(0, 1, 0, 0)
 Checkbox.Text = "Teleport and Return (Disabled)"
@@ -288,10 +307,29 @@ Checkbox.MouseButton1Click:Connect(function()
     teleportAndReturnEnabled = not teleportAndReturnEnabled
     if teleportAndReturnEnabled then
         Checkbox.Text = "Teleport and Return (Enabled)"
-        Checkbox.BackgroundColor3 = Color3.fromRGB(0, 255, 0) 
+        Checkbox.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
     else
         Checkbox.Text = "Teleport and Return (Disabled)"
-        Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
+        Checkbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    end
+end)
+
+-- Checkbox untuk Auto Click
+local AutoClickCheckbox = Instance.new("TextButton")
+AutoClickCheckbox.Parent = TeleportMenu
+AutoClickCheckbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+AutoClickCheckbox.Size = UDim2.new(0, 200, 0, 20)
+AutoClickCheckbox.Position = UDim2.new(0, 1, 0, 25)
+AutoClickCheckbox.Text = "Auto Click E (Disabled)"
+
+AutoClickCheckbox.MouseButton1Click:Connect(function()
+    autoClickEnabled = not autoClickEnabled
+    if autoClickEnabled then
+        AutoClickCheckbox.Text = "Auto Click E (Enabled)"
+        AutoClickCheckbox.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    else
+        AutoClickCheckbox.Text = "Auto Click E (Disabled)"
+        AutoClickCheckbox.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     end
 end)
 
@@ -300,7 +338,32 @@ for i = 1, 13 do
     Button.Parent = TeleportMenu
     Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White
     Button.Size = UDim2.new(0, 200, 0, 20)
-    Button.Position = UDim2.new(0, 1, 0, (i - 1) * 25 + 25)
+    Button.Position = UDim2.new(0, 1, 0, (i - 1) * 25 + 50)
+
+    local function simulateKeyPress()
+        local VirtualInputManager = game:GetService("VirtualInputManager")
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+        wait(0.1) -- Waktu jeda antara klik
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+    end
+
+    local function autoClick()
+        local pickups_folder = workspace.Pickups
+        local plr = game.Players.LocalPlayer
+        local playerPosition = plr.Character.HumanoidRootPart.Position
+
+        for _, v in ipairs(pickups_folder:GetChildren()) do
+            local proximityPrompt = v:FindFirstChildOfClass("ProximityPrompt")
+            if proximityPrompt then
+                local promptPosition = proximityPrompt.Parent.Position
+                local distance = (promptPosition - playerPosition).Magnitude
+                if distance <= 7 then
+                    fireproximityprompt(proximityPrompt)
+                    wait(0.1)
+                end
+            end
+        end
+    end
 
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
@@ -309,6 +372,10 @@ for i = 1, 13 do
             local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
             rootPart.CFrame = adjustedCFrame
             wait(0.1)
+            if autoClickEnabled then
+                simulateKeyPress()
+                autoClick()
+            end
         else
             warn("HumanoidRootPart not found in player's character.")
         end
@@ -321,9 +388,13 @@ for i = 1, 13 do
             local originalPosition = rootPart.CFrame
             local adjustedCFrame = destinationCFrame + Vector3.new(0, 5, 0)
             rootPart.CFrame = adjustedCFrame
-            wait(2)
-            rootPart.CFrame = originalPosition
             wait(0.1)
+            if autoClickEnabled then
+                simulateKeyPress()
+                autoClick()
+                wait(1) -- Waktu jeda sebelum kembali ke posisi semula
+            end
+            rootPart.CFrame = originalPosition
         else
             warn("HumanoidRootPart not found in player's character.")
         end
@@ -482,76 +553,157 @@ for i = 1, 5 do
 if i == 1 then
     Button.Text = "Esp All item"
     Button.MouseButton1Click:Connect(function()
-        
+
+        local connections = {}
+
         local function createESP(part)
-    local billboardGui = Instance.new("BillboardGui")
-    billboardGui.AlwaysOnTop = true
-    billboardGui.Size = UDim2.new(0, 200, 0, 40)
-    billboardGui.StudsOffset = Vector3.new(0, 3, 0)
-    
-    local textLabel = Instance.new("TextLabel")
-    textLabel.BackgroundTransparency = 1
-    textLabel.Size = UDim2.new(1, 0, 1, 0)
-    textLabel.Text = part.Name
-    textLabel.TextScaled = false
-    textLabel.TextSize = 24
-    textLabel.Font = Enum.Font.SourceSansBold
-    textLabel.TextColor3 = Color3.new(1, 1, 1)
-    textLabel.TextStrokeTransparency = 0.4  
-    textLabel.Parent = billboardGui
-    
-    billboardGui.Parent = part
-    
-    local box = Instance.new("BoxHandleAdornment")
-    box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
-    box.Adornee = part
-    box.Color3 = Color3.new(0, 1, 0)
-    box.Transparency = 0.5
-    box.AlwaysOnTop = true
-    box.ZIndex = 5
-    box.Parent = part
-end
-
-local function updateESPSize()
-    local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-    for _, part in ipairs(workspace.Pickups:GetChildren()) do
-        if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
-            local distance = (part.Position - playerPosition).Magnitude
-            part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
+            local billboardGui = Instance.new("BillboardGui")
+            billboardGui.AlwaysOnTop = true
+            billboardGui.Size = UDim2.new(0, 200, 0, 40)
+            billboardGui.StudsOffset = Vector3.new(0, 3, 0)
+            
+            local textLabel = Instance.new("TextLabel")
+            textLabel.BackgroundTransparency = 1
+            textLabel.Size = UDim2.new(1, 0, 1, 0)
+            textLabel.Text = part.Name
+            textLabel.TextScaled = false
+            textLabel.TextSize = 24
+            textLabel.Font = Enum.Font.SourceSansBold
+            textLabel.TextColor3 = Color3.new(1, 1, 1)
+            textLabel.TextStrokeTransparency = 0.4  
+            textLabel.Parent = billboardGui
+            
+            billboardGui.Parent = part
+            
+            local box = Instance.new("BoxHandleAdornment")
+            box.Size = part.Size + Vector3.new(0.2, 0.2, 0.2)
+            box.Adornee = part
+            box.Color3 = Color3.new(0, 1, 0)
+            box.Transparency = 0.5
+            box.AlwaysOnTop = true
+            box.ZIndex = 5
+            box.Parent = part
         end
-    end
-end
 
-local function handleNewItems(item)
-    if item:IsA("BasePart") then
-        createESP(item)
-    end
-end
+        local function updateESPSize()
+            local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            for _, part in ipairs(workspace.Pickups:GetChildren()) do
+                if part:IsA("BasePart") and part:FindFirstChild("BillboardGui") then
+                    local distance = (part.Position - playerPosition).Magnitude
+                    part.BillboardGui.Size = UDim2.new(0, 200 / distance, 0, 58 / distance)
+                end
+            end
+        end
 
-for _, part in ipairs(workspace.Pickups:GetChildren()) do
-    handleNewItems(part)
-end
+        local function handleNewItems(item)
+            if item:IsA("BasePart") then
+                createESP(item)
+            end
+        end
 
-game:GetService("RunService").RenderStepped:Connect(updateESPSize)
-workspace.Pickups.ChildAdded:Connect(handleNewItems)
+        for _, part in ipairs(workspace.Pickups:GetChildren()) do
+            handleNewItems(part)
+        end
+
+        table.insert(connections, game:GetService("RunService").RenderStepped:Connect(updateESPSize))
+        table.insert(connections, workspace.Pickups.ChildAdded:Connect(handleNewItems))
     end)
+
 elseif i == 2 then
     Button.Text = "Esp Menu Players"
     Button.MouseButton1Click:Connect(function()
-loadstring(game:HttpGet("https://pastebin.com/raw/USEXe42D"))()
+
+        local connections = {}
+        local Players = game:GetService("Players")
+        local Workspace = game:GetService("Workspace")
+        local RunService = game:GetService("RunService")
+
+        local function createESP(player)
+            if not player.Character or not player.Character:FindFirstChild("Head") then return end
+
+            local billboard = Instance.new("BillboardGui")
+            billboard.Name = "ESP"
+            billboard.AlwaysOnTop = true
+            billboard.Size = UDim2.new(2, 0, 1, 0)  -- Mengecilkan ukuran ESP
+            billboard.Adornee = player.Character.Head
+
+            local textLabel = Instance.new("TextLabel", billboard)
+            textLabel.Size = UDim2.new(1, 0, 1, 0)
+            textLabel.BackgroundTransparency = 1
+            textLabel.TextColor3 = Color3.new(1, 0, 0)
+            textLabel.TextStrokeTransparency = 0  
+            textLabel.Font = Enum.Font.SourceSansBold  
+            textLabel.TextSize = 18  -- Mengecilkan ukuran teks
+
+            local function updateText()
+                local inventory = "N/A"
+                local stats = Workspace:FindFirstChild(player.Name) and Workspace[player.Name]:FindFirstChild("Stats")
+                if stats and stats:FindFirstChild("Inventory") then
+                    inventory = tostring(stats.Inventory.Value)
+                end
+                textLabel.Text = "Name: " .. player.DisplayName .. "\nUsername: " .. player.Name .. "\nInventory: " .. inventory
+            end
+
+            updateText()
+
+            local connection
+            connection = RunService.Heartbeat:Connect(function()
+                if not player.Character or not player.Character:FindFirstChild("Head") then
+                    connection:Disconnect()
+                    return
+                end
+                updateText()
+            end)
+            table.insert(connections, connection)
+
+            billboard.Parent = player.Character.Head
+        end
+
+        local function removeESP(player)
+            if player.Character and player.Character:FindFirstChild("Head") then
+                local esp = player.Character.Head:FindFirstChild("ESP")
+                if esp then
+                    esp:Destroy()
+                end
+            end
+        end
+
+        Players.PlayerAdded:Connect(function(player)
+            player.CharacterAdded:Connect(function()
+                wait(1) 
+                createESP(player)
+            end)
+        end)
+
+        for _, player in pairs(Players:GetPlayers()) do
+            if player.Character then
+                createESP(player)
+            end
+        end
+
+        for _, player in pairs(Players:GetPlayers()) do
+            if player.Character then
+                removeESP(player)
+                createESP(player)
+            end
+        end
     end)
+
 elseif i == 3 then
     Button.Text = "Gef Esp V2"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
+
         local function createESPForRootPart(part)
             local espGui = Instance.new("BillboardGui", part)
             espGui.Adornee = part
-            espGui.Size = UDim2.new(0, 200, 0, 50)
+            espGui.Size = UDim2.new(0, 200, 0, 70)
             espGui.AlwaysOnTop = true
             espGui.StudsOffset = Vector3.new(0, 3, 0)
             
             local nameLabel = Instance.new("TextLabel", espGui)
-            nameLabel.Text = "GEF"
+            nameLabel.Text = "sGEFs"
             nameLabel.BackgroundTransparency = 1
             nameLabel.Size = UDim2.new(0, 200, 0, 20)
             nameLabel.Font = Enum.Font.SourceSansBold
@@ -564,7 +716,14 @@ elseif i == 3 then
             distanceLabel.TextSize = 18
             distanceLabel.Position = UDim2.new(0, 0, 0, 20)
             
-            game:GetService("RunService").RenderStepped:Connect(function()
+            local healthLabel = Instance.new("TextLabel", espGui)
+            healthLabel.BackgroundTransparency = 1
+            healthLabel.Size = UDim2.new(0, 200, 0, 20)
+            healthLabel.Font = Enum.Font.SourceSansBold
+            healthLabel.TextSize = 18
+            healthLabel.Position = UDim2.new(0, 0, 0, 40)
+            
+            table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
                 local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
                 distanceLabel.Text = string.format("Distance: %.2f", distance)
                 
@@ -578,7 +737,17 @@ elseif i == 3 then
                     nameLabel.TextColor3 = Color3.new(0, 1, 0)
                     distanceLabel.TextColor3 = Color3.new(0, 1, 0)
                 end
-            end)
+
+                local health = workspace.GEFs["Mini GEF"].Health.Value
+                healthLabel.Text = string.format("Health: %d", health)
+                if health >= 70 then
+                    healthLabel.TextColor3 = Color3.new(0, 1, 0)
+                elseif health >= 30 then
+                    healthLabel.TextColor3 = Color3.new(1, 0.5, 0)
+                else
+                    healthLabel.TextColor3 = Color3.new(1, 0, 0)
+                end
+            end))
         end
         
         local espEnabled = true
@@ -597,11 +766,14 @@ elseif i == 3 then
         end
         toggleESP()
     end)
+
 elseif i == 4 then
     Button.Text = "Giant Gef Esp"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
         local espEnabled = true
-        
+
         local function createESPForGEF(part)
             local espGui = Instance.new("BillboardGui", part)
             espGui.Adornee = part
@@ -623,7 +795,7 @@ elseif i == 4 then
             distanceLabel.TextSize = 18
             distanceLabel.Position = UDim2.new(0, 0, 0, 20)
             
-            game:GetService("RunService").RenderStepped:Connect(function()
+            table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
                 if part.Parent and espGui.Parent then
                     local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - part.Position).Magnitude
                     distanceLabel.Text = string.format("Distance: %.2f", distance)
@@ -641,7 +813,7 @@ elseif i == 4 then
                 else
                     espGui:Destroy()
                 end
-            end)
+            end))
         end
         
         local function toggleESP()
@@ -665,9 +837,13 @@ elseif i == 4 then
         
         toggleESP()
     end)
+
 elseif i == 5 then
     Button.Text = "Delete esp"
     Button.MouseButton1Click:Connect(function()
+
+        local connections = {}
+
         local function removeESP(part)
             for _, child in ipairs(part:GetChildren()) do
                 if child:IsA("BillboardGui") or child:IsA("BoxHandleAdornment") then
@@ -685,6 +861,11 @@ elseif i == 5 then
         end
         
         removeAllESP()
+
+        for _, connection in ipairs(connections) do
+            connection:Disconnect()
+        end
+        connections = {}
     end)
 end
 end
@@ -1219,7 +1400,7 @@ elseif i == 12 then
   end
 end
 
-for i = 1, 7 do
+for i = 1, 10 do
     local Button = Instance.new("TextButton")
     Button.Parent = Player2Menu
     Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Warna putih
@@ -1423,8 +1604,97 @@ elseif i == 7 then
     ScreenGui:Destroy()
     aimbotEnabled = false  loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/orion"))()
     end)
+    elseif i == 8 then
+        Button.Text = "Upgrade Stamina Regen"
+        Button.MouseButton1Click:Connect(function()
+            local args = {
+                [1] = "StaminaRegen"
+            }
+            game:GetService("ReplicatedStorage").Events.PurchaseEvent:FireServer(unpack(args))
+        end)
+    elseif i == 9 then
+        Button.Text = "Upgrade MaxStamina"
+        Button.MouseButton1Click:Connect(function()
+            local args = {
+                [1] = "MaxStamina"
+            }
+            game:GetService("ReplicatedStorage").Events.PurchaseEvent:FireServer(unpack(args))
+        end)
+    elseif i == 10 then
+        Button.Text = "Upgrade Storage"
+        Button.MouseButton1Click:Connect(function()
+            local args = {
+                [1] = "Storage"
+            }
+            game:GetService("ReplicatedStorage").Events.PurchaseEvent:FireServer(unpack(args))
+        end)
     end
 end
+
+for i = 1, 6 do
+    local Button = Instance.new("TextButton")
+    Button.Parent = AutoBuildMenu
+    Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Warna putih
+    Button.Size = UDim2.new(0, 200, 0, 20)
+    Button.Position = UDim2.new(0, 1, 0, (i - 1) * 25)
+    
+    if i == 1 then
+        Button.Text = "AutoBuildv1"
+        Button.MouseButton1Click:Connect(function()
+            print("nonev1")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/auto%20build"))()
+        end)
+        elseif i == 2 then
+        Button.Text = "Tpv1"
+        Button.MouseButton1Click:Connect(function()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local teleportPosition = Vector3.new(26, 6, 147)
+
+-- Pastikan karakter sudah ada sebelum memindahkannya
+if character then
+    character:MoveTo(teleportPosition)
+end
+        end)
+        elseif i == 3 then
+        Button.Text = "AutoBuildv2"
+        Button.MouseButton1Click:Connect(function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/Auto%20build%202"))()
+        end)
+        elseif i == 4 then
+        Button.Text = "Tpv2"
+        Button.MouseButton1Click:Connect(function()
+            local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local teleportPosition = Vector3.new(-290, 4, 367)
+
+-- Pastikan karakter sudah ada sebelum memindahkannya
+if character then
+    character:MoveTo(teleportPosition)
+end
+        end)
+        elseif i == 5 then
+        Button.Text = "AutoBuildv3"
+        Button.MouseButton1Click:Connect(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefbymeop-/main/Auto%20Build%203"))()
+        end)
+        elseif i == 6 then
+        Button.Text = "Tpv3"
+        Button.MouseButton1Click:Connect(function()
+            local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local teleportPosition = Vector3.new(-28, 6, -523)
+
+-- Pastikan karakter sudah ada sebelum memindahkannya
+if character then
+    character:MoveTo(teleportPosition)
+end
+        end)
+        end
+        end
 
 print("end")
 
@@ -1459,8 +1729,12 @@ for i = 1, 12 do
     createSeparator(Teleport2Menu, UDim2.new(0, 0, 0, (i * 25) - 4))
 end
 
-for i = 1, 7 do
+for i = 1, 10 do
     createSeparator(Player2Menu, UDim2.new(0, 0, 0, (i * 25) - 4))
+end
+
+for i = 1, 6 do
+    createSeparator(AutoBuildMenu, UDim2.new(0, 0, 0, (i * 25) - 4))
 end
 
 -- ฟังก์ชันสำหรับแสดง/ซ่อนเมนู
@@ -1471,6 +1745,7 @@ TeleportButton.MouseButton1Click:Connect(function()
     OtherMenu.Visible = false
     Teleport2Menu.Visible = false
     Player2Menu.Visible = false
+    AutoBuildMenu.Visible = false
 end)
 
 EspButton.MouseButton1Click:Connect(function()
@@ -1480,6 +1755,7 @@ EspButton.MouseButton1Click:Connect(function()
     OtherMenu.Visible = false
     Teleport2Menu.Visible = false
     Player2Menu.Visible = false
+    AutoBuildMenu.Visible = false
 end)
 
 PlayerButton.MouseButton1Click:Connect(function()
@@ -1489,6 +1765,7 @@ PlayerButton.MouseButton1Click:Connect(function()
     OtherMenu.Visible = false
     Teleport2Menu.Visible = false
     Player2Menu.Visible = false
+    AutoBuildMenu.Visible = false
 end)
 
 OtherButton.MouseButton1Click:Connect(function()
@@ -1498,6 +1775,7 @@ OtherButton.MouseButton1Click:Connect(function()
     PlayerMenu.Visible = false
     Teleport2Menu.Visible = false
     Player2Menu.Visible = false
+    AutoBuildMenu.Visible = false
 end)
 
 Teleport2Button.MouseButton1Click:Connect(function()
@@ -1507,6 +1785,7 @@ Teleport2Button.MouseButton1Click:Connect(function()
     PlayerMenu.Visible = false
     OtherMenu.Visible = false
     Player2Menu.Visible = false
+    AutoBuildMenu.Visible = false
 end)
 
 Player2Button.MouseButton1Click:Connect(function()
@@ -1516,6 +1795,17 @@ Player2Button.MouseButton1Click:Connect(function()
     PlayerMenu.Visible = false
     OtherMenu.Visible = false
     Teleport2Menu.Visible = false
+    AutoBuildMenu.Visible = false
+end)
+
+AutoBuildButton.MouseButton1Click:Connect(function()
+    AutoBuildMenu.Visible = not AutoBuildMenu.Visible
+    TeleportMenu.Visible = false
+    EspMenu.Visible = false 
+    PlayerMenu.Visible = false
+    OtherMenu.Visible = false
+    Teleport2Menu.Visible = false
+    Player2Menu.Visible = false
 end)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/creditgef.txt"))()
@@ -1523,8 +1813,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/gitolan/gefop-/main/c
 local function toggleBackground()
     while true do
         for i = 1, 3 do
-            MainFrame.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
-            wait(0.1)
             MainFrame.BackgroundColor3 = Color3.new(1, 1, 1)
             wait(0.1)
             MainFrame.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
