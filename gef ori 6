@@ -340,14 +340,15 @@ for i = 1, 13 do
     Button.Size = UDim2.new(0, 200, 0, 20)
     Button.Position = UDim2.new(0, 1, 0, (i - 1) * 25 + 50)
 
+local UserInputService = game:GetService("UserInputService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
     local function simulateKeyPress()
         local VirtualInputManager = game:GetService("VirtualInputManager")
         VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
         wait(0.1) -- Waktu jeda antara klik
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
     end
-
-    local UserInputService = game:GetService("UserInputService")
 
     local function autoClick()
     local pickups_folder = workspace.Pickups
