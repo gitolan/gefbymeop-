@@ -358,7 +358,7 @@ for i = 1, 13 do
             local promptPosition = proximityPrompt.Parent.Position
             local distance = (promptPosition - playerPosition).Magnitude
             if distance <= 7 then
-                fireproximityprompt(proximityPrompt, true) -- Menambahkan argumen kedua
+                fireproximityprompt(proximityPrompt)
                 wait(0.1)
             end
         end
