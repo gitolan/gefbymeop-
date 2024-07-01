@@ -350,7 +350,7 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
     end
 
-    local function autoClick()
+   local function autoClick()
     local pickups_folder = workspace.Pickups
     local plr = game.Players.LocalPlayer
     local playerPosition = plr.Character.HumanoidRootPart.Position
@@ -368,6 +368,11 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
                 else
                     -- Jika perangkat adalah PC
                     fireproximityprompt(proximityPrompt, 1)
+                    wait(0.1)
+                    -- Fallback jika fireproximityprompt tidak berfungsi dengan baik di PC
+                    if not proximityPrompt.Enabled then
+                        simulateKeyPress(proximityPrompt)
+                    end
                 end
                 wait(0.1)
             end
