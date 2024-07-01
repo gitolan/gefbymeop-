@@ -358,13 +358,19 @@ for i = 1, 13 do
             local promptPosition = proximityPrompt.Parent.Position
             local distance = (promptPosition - playerPosition).Magnitude
             if distance <= 7 then
-                fireproximityprompt(proximityPrompt)
+                -- Memeriksa perangkat
+                if UserInputService.TouchEnabled then
+                    -- Jika perangkat adalah touchscreen (Android)
+                    fireproximityprompt(proximityPrompt, true)
+                else
+                    -- Jika perangkat adalah PC
+                    fireproximityprompt(proximityPrompt, 1)
+                end
                 wait(0.1)
             end
         end
     end
 end
-
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
         local rootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
