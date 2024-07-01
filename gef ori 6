@@ -346,7 +346,6 @@ for i = 1, 13 do
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
     end
 
-<<<<<<< HEAD
     local function autoClick()
         local pickups_folder = workspace:WaitForChild("Pickups")
         local plr = game.Players.LocalPlayer
@@ -367,41 +366,12 @@ for i = 1, 13 do
                         fireproximityprompt(proximityPrompt)
                         wait(0.1)
                     end
-=======
-   local function autoClick()
-    local pickups_folder = workspace.Pickups
-    local plr = game.Players.LocalPlayer
-    local playerPosition = plr.Character.HumanoidRootPart.Position
-
-    for _, v in ipairs(pickups_folder:GetChildren()) do
-        local proximityPrompt = v:FindFirstChildOfClass("ProximityPrompt")
-        if proximityPrompt then
-            local promptPosition = proximityPrompt.Parent.Position
-            local distance = (promptPosition - playerPosition).Magnitude
-            if distance <= 7 then
-                -- Memeriksa perangkat
-                if UserInputService.TouchEnabled then
-                    -- Jika perangkat adalah touchscreen (Android)
-                    fireproximityprompt(proximityPrompt, true)
-                else
-                    -- Jika perangkat adalah PC
-                    fireproximityprompt(proximityPrompt, 1)
-                    wait(0.1)
-                    if not proximityPrompt.Enabled then
-                        simulateKeyPress(proximityPrompt)
-                    end
->>>>>>> f5fc27627ab94dd6efd9e7fd09d4ac7c741061a9
                 end
             end
             wait(0.1)
         end
     end
-<<<<<<< HEAD
         
-=======
-end
-
->>>>>>> f5fc27627ab94dd6efd9e7fd09d4ac7c741061a9
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
         local rootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
