@@ -348,22 +348,22 @@ for i = 1, 13 do
     end
 
     local function autoClick()
-        local pickups_folder = workspace.Pickups
-        local plr = game.Players.LocalPlayer
-        local playerPosition = plr.Character.HumanoidRootPart.Position
+    local pickups_folder = workspace.Pickups
+    local plr = game.Players.LocalPlayer
+    local playerPosition = plr.Character.HumanoidRootPart.Position
 
-        for _, v in ipairs(pickups_folder:GetChildren()) do
-            local proximityPrompt = v:FindFirstChildOfClass("ProximityPrompt")
-            if proximityPrompt then
-                local promptPosition = proximityPrompt.Parent.Position
-                local distance = (promptPosition - playerPosition).Magnitude
-                if distance <= 7 then
-                    fireproximityprompt(proximityPrompt)
-                    wait(0.1)
-                end
+    for _, v in ipairs(pickups_folder:GetChildren()) do
+        local proximityPrompt = v:FindFirstChildOfClass("ProximityPrompt")
+        if proximityPrompt then
+            local promptPosition = proximityPrompt.Parent.Position
+            local distance = (promptPosition - playerPosition).Magnitude
+            if distance <= 7 then
+                fireproximityprompt(proximityPrompt, true) -- Menambahkan argumen kedua
+                wait(0.1)
             end
         end
     end
+end
 
     local function teleport(destinationCFrame)
         local player = game.Players.LocalPlayer
