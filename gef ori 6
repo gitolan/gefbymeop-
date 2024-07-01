@@ -349,7 +349,6 @@ for i = 1, 13 do
 
     local UserInputService = game:GetService("UserInputService")
 
-
     local function autoClick()
     local pickups_folder = workspace.Pickups
     local plr = game.Players.LocalPlayer
