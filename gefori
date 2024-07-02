@@ -347,27 +347,32 @@ for i = 1, 13 do
         VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
     end
 
-    local function autoClick()
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local function autoClick()
+    while autoClickEnabled do
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
--- Fungsi untuk memicu ProximityPrompt
-local function triggerProximityPrompt(proximityPrompt)
-    fireproximityprompt(proximityPrompt, 1) -- '1' adalah jarak interaksi default
-end
-
--- Loop melalui semua anak di Workspace.Pickups
-for _, pickup in pairs(workspace.Pickups:GetChildren()) do
-    -- Periksa apakah objek memiliki ProximityPrompt
-    local proximityPrompt = pickup:FindFirstChildOfClass("ProximityPrompt")
-    if proximityPrompt then
-        -- Hitung jarak antara pemain dan pickup
-        local distance = (pickup.Position - humanoidRootPart.Position).Magnitude
-        -- Jika jarak kurang dari atau sama dengan 5 unit, picu ProximityPrompt
-        if distance <= 5 then
-            triggerProximityPrompt(proximityPrompt)
+        -- Fungsi untuk memicu ProximityPrompt
+        local function triggerProximityPrompt(proximityPrompt)
+            fireproximityprompt(proximityPrompt, 1) -- '1' adalah jarak interaksi default
         end
+
+        -- Loop melalui semua anak di Workspace.Pickups
+        for _, pickup in pairs(workspace.Pickups:GetChildren()) do
+            -- Periksa apakah objek memiliki ProximityPrompt
+            local proximityPrompt = pickup:FindFirstChildOfClass("ProximityPrompt")
+            if proximityPrompt then
+                -- Hitung jarak antara pemain dan pickup
+                local distance = (pickup.Position - humanoidRootPart.Position).Magnitude
+                -- Jika jarak kurang dari atau sama dengan 5 unit, picu ProximityPrompt
+                if distance <= 5 then
+                    triggerProximityPrompt(proximityPrompt)
+                end
+            end
+        end
+
+        wait(1) -- Tunggu 1 detik sebelum mengecek kembali
     end
 end
 
